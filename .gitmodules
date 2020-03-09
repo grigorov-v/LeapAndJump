@@ -1,0 +1,3 @@
+[submodule "Assets/Submodules/EventsHelper"]
+	path = Assets/Submodules/EventsHelper
+	url = https://github.com/grigorov2205valera/EventsHelper
