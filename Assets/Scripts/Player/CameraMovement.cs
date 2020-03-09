@@ -9,6 +9,12 @@ public class CameraMovement : MonoBehaviour {
 
     public Vector2   offset  = Vector2.zero;
 
+    void Awake() {
+        if ( !Player ) {
+            Player = FindObjectOfType<PlayerMovement>()?.transform;
+        }    
+    }
+
     void FixedUpdate() {
         var curPos = transform.position;
         curPos = Vector2.Lerp(curPos, Player.position, Lerp * Time.deltaTime);

@@ -57,9 +57,6 @@ public class PlayerMovement : MonoBehaviour {
             if ( AutoPlay ) {
                 var rand = Random.Range(0, 100);
                 _jumpTrigger = (rand <= _jumpProbability);
-                if ( _jumpTrigger ) {
-                    _jumpProbability = Random.Range(10, 60);
-                }
             }
         }
     }
