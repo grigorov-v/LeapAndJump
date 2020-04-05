@@ -1101,6 +1101,8 @@ MonoBehaviour:
   Blocks:
   - {fileID: 6719573491447116398, guid: 0f3495cd31826bf478cc04a3e1223d30, type: 3}
   - {fileID: 6719573491447116398, guid: cac6e9e98dfccf444a286a709b456094, type: 3}
+  - {fileID: 6719573491447116398, guid: 20f32a79ad9c7fc44ac0b1adc8a39b9a, type: 3}
+  - {fileID: 6719573491447116398, guid: 96021bcfc6a23484f951a8efc65146df, type: 3}
   CountBlocks: 4
 --- !u!4 &994987202
 Transform:

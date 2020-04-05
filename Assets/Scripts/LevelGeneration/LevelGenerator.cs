@@ -2,8 +2,10 @@
 using UnityEngine;
 
 using EventsHelper;
+using NaughtyAttributes;
 
 public class LevelGenerator : MonoBehaviour {
+    [ReorderableList]
     public List<LevelBlock> Blocks      = new List<LevelBlock>();
     public int              CountBlocks = 4;
 

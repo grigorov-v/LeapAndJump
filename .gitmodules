@@ -1,3 +1,6 @@
 [submodule "Assets/Submodules/EventsHelper"]
 	path = Assets/Submodules/EventsHelper
 	url = https://github.com/grigorov2205valera/EventsHelper
+[submodule "Assets/Submodules/NaughtyAttributes"]
+	path = Assets/Submodules/NaughtyAttributes
+	url = https://github.com/grigorov-v/NaughtyAttributes
