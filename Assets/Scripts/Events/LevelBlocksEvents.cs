@@ -7,3 +7,11 @@
         Player = player;
     }
 }
+
+public struct DestructionObjectPlayerCollision {
+    public DestructionObject DestructionObject;
+
+    public DestructionObjectPlayerCollision (DestructionObject destructionObject) {
+        DestructionObject = destructionObject;
+    }
+}

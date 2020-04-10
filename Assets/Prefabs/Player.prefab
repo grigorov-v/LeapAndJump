@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5567065004624593356}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   _wallTrigger: {fileID: 0}
   _floorTrigger: {fileID: 0}
   AutoPlay: 0
-  _jumpProbability: 30
+  _jumpProbability: 10
 --- !u!114 &5567065004624593356
 MonoBehaviour:
   m_ObjectHideFlags: 0

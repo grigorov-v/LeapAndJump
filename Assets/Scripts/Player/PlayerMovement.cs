@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using EventsHelper;
+
 using KeyAnim = AnimationControl.KeyAnim;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -135,6 +137,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D other) {
+        var destructionObject = other.gameObject.GetComponent<DestructionObject>();
+        if ( destructionObject ) {
+            EventManager.Fire<DestructionObjectPlayerCollision>(new DestructionObjectPlayerCollision(destructionObject));
+            return;
+        }
+ 
         var normal = other.GetContact(0).normal;
         if ( IsWall(normal) && !_wallTrigger ) {
             _wallTrigger = other.collider;
