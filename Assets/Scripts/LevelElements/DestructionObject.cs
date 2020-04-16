@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
+
 using EventsHelper;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class DestructionObject : MonoBehaviour {
@@ -9,18 +12,22 @@ public class DestructionObject : MonoBehaviour {
     Rigidbody2D  _rb        = null;
     Collider2D[] _colliders = null;
     float        _curHp     = 0;
+    Image        _image     = null;
+
+    Tween        _tweenShake = null;
 
     void Awake() {
         _rb = GetComponent<Rigidbody2D>();   
         _rb.isKinematic = true;
         _curHp = Hp;
         _colliders = GetComponentsInChildren<Collider2D>();
+        _image = GetComponent<Image>();
 
         EventManager.Subscribe<DestructionObjectPlayerCollision>(this, OnDestructionObjectPlayerCollision);
     }
 
     void OnDestroy() {
-        EventManager.Unsubscribe<DestructionObjectPlayerCollision>(OnDestructionObjectPlayerCollision);    
+        EventManager.Unsubscribe<DestructionObjectPlayerCollision>(OnDestructionObjectPlayerCollision);
     }
 
     public void Destruct() {
@@ -39,7 +46,13 @@ public class DestructionObject : MonoBehaviour {
         if ( _curHp <= 0 ) {
             _curHp = 0;
             Destruct();
+            return;
         }
-        Debug.Log("!!!");
+
+        if ( _tweenShake != null ) {
+            _tweenShake.Kill();
+            _tweenShake = null;
+        }
+        _tweenShake = transform.DOShakePosition(1, 0.1f);
     }
 }
