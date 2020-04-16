@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update() {
         if ( !_jumpTrigger ) {
-            _jumpTrigger = Input.GetMouseButtonDown(0);
+            _jumpTrigger = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
 
             if ( AutoPlay ) {
                 var rand = Random.Range(0, 100);
