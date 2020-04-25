@@ -5,23 +5,25 @@ using KeyAnim = AnimationControl.KeyAnim;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(AnimationControl))]
-public class PlayerMovement : MonoBehaviour {
+public class PlayerControl : MonoBehaviour {
     public float   Speed         = 10;
     public Vector2 JumpForce     = Vector2.one;
     public Vector2 SlideVelosity = Vector2.right;
+    public Bounds  LocalBounds   = new Bounds();
 
     Rigidbody2D      _rb               = null;
     AnimationControl _animationControl = null;
-    [SerializeField] Collider2D       _wallTrigger      = null;
-    [SerializeField] Collider2D       _floorTrigger     = null;
+    Collider2D       _wallTrigger      = null;
+    Collider2D       _floorTrigger     = null;
     Vector2          _wallNormal       = Vector2.zero;  
    
     bool             _jumpTrigger      = false;
     bool             _allowSecondJump  = false;
     bool             _jumpProcess      = false;
 
+    [Header("Debug")]
     public bool AutoPlay = false;
-    [SerializeField] float _jumpProbability = 30;
+    float _jumpProbability = 30;
 
     bool CanMoveLeftOrRight {
         get {
@@ -44,6 +46,14 @@ public class PlayerMovement : MonoBehaviour {
     bool CanSlideInWall {
         get {
             return !_floorTrigger && _wallTrigger && !_jumpProcess;
+        }
+    }
+
+    Bounds Bounds {
+        get {
+            var worldBounds = LocalBounds;
+            worldBounds.center = transform.TransformPoint(LocalBounds.center);
+            return worldBounds;
         }
     }
 
@@ -142,6 +152,11 @@ public class PlayerMovement : MonoBehaviour {
             EventManager.Fire<DestructionObjectPlayerCollision>(new DestructionObjectPlayerCollision(destructionObject));
             return;
         }
+
+        var contactPoint = other.GetContact(0).point;
+        if ( Bounds.Contains(contactPoint) ) {
+            return;
+        }
  
         var normal = other.GetContact(0).normal;
         if ( IsWall(normal) && !_wallTrigger ) {
@@ -167,5 +182,11 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         _jumpProcess = false;
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(Bounds.center, 0.05f);
+        Gizmos.DrawWireCube(Bounds.center, Bounds.size);
     }
 }

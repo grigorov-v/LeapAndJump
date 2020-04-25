@@ -1,8 +1,8 @@
 ﻿public struct PlayerIntoBlockTriggerEnter {
     public LevelBlock     LevelBlock;
-    public PlayerMovement Player;
+    public PlayerControl Player;
 
-    public PlayerIntoBlockTriggerEnter (LevelBlock levelBlock, PlayerMovement player) {
+    public PlayerIntoBlockTriggerEnter (LevelBlock levelBlock, PlayerControl player) {
         LevelBlock = levelBlock;
         Player = player;
     }

@@ -11,7 +11,7 @@ public class CameraMovement : MonoBehaviour {
     Camera    _camera = null;
 
     void Awake() {
-        _player = FindObjectOfType<PlayerMovement>()?.transform;
+        _player = FindObjectOfType<PlayerControl>()?.transform;
         _camera = GetComponent<Camera>();
     }
 

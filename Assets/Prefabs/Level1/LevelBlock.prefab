@@ -613,7 +613,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009595513, y: 0.8251486}
+  m_Offset: {x: 0.009595394, y: 0.44819784}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -624,7 +624,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.586296, y: 11.5926075}
+  m_Size: {x: 5.586296, y: 11.084014}
   m_EdgeRadius: 0
 --- !u!1 &6719573491545316320
 GameObject:
@@ -860,7 +860,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.016168356, y: 0}
+  m_Offset: {x: 0.46, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0.65, y: 0.22, z: 0.65, w: 0.22}
     pivot: {x: 0.5, y: 0.5}
@@ -871,7 +871,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10.9747505, y: 0.57}
+  m_Size: {x: 12, y: 0.57}
   m_EdgeRadius: 0
 --- !u!1 &6719573492093532132
 GameObject:
@@ -1045,7 +1045,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.035315275, y: 0}
+  m_Offset: {x: 0.46, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0.65, y: 0.22, z: 0.65, w: 0.22}
     pivot: {x: 0.5, y: 0.5}
@@ -1056,7 +1056,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.022678, y: 0.57}
+  m_Size: {x: 12, y: 0.57}
   m_EdgeRadius: 0
 --- !u!1 &6719573492507681086
 GameObject:
@@ -1147,7 +1147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6719573492624896487}
   - component: {fileID: 6719573492624896484}
-  - component: {fileID: 6719573492624896485}
+  - component: {fileID: 7694712327294613918}
   m_Layer: 8
   m_Name: Floor
   m_TagString: Untagged
@@ -1203,7 +1203,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.4576044, y: 0.231421}
   m_EdgeRadius: 0
---- !u!251 &6719573492624896485
+--- !u!251 &7694712327294613918
 PlatformEffector2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1217,11 +1217,11 @@ PlatformEffector2D:
     m_Bits: 4294967295
   m_RotationalOffset: 0
   m_UseOneWay: 1
-  m_UseOneWayGrouping: 1
+  m_UseOneWayGrouping: 0
   m_SurfaceArc: 180
-  m_UseSideFriction: 1
+  m_UseSideFriction: 0
   m_UseSideBounce: 0
-  m_SideArc: 0
+  m_SideArc: 1
 --- !u!1 &6719573492645821982
 GameObject:
   m_ObjectHideFlags: 0

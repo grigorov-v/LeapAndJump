@@ -17,7 +17,7 @@ public class LevelBlock : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        var player = other.GetComponent<PlayerMovement>();
+        var player = other.GetComponent<PlayerControl>();
         if ( player ) {
             EventManager.Fire(new PlayerIntoBlockTriggerEnter(this, player));
         }

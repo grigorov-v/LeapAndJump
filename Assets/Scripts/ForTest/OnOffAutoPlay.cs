@@ -14,7 +14,7 @@ public class OnOffAutoPlay : MonoBehaviour
        
         _button.onClick.AddListener(() => {
             _curAutoPlay = !_curAutoPlay;
-            FindObjectOfType<PlayerMovement>().AutoPlay = _curAutoPlay;
+            FindObjectOfType<PlayerControl>().AutoPlay = _curAutoPlay;
         });
     }
 }
