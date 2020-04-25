@@ -504,11 +504,6 @@
 					{ "time": 0.3333, "angle": -13.43, "curve": "stepped" },
 					{ "time": 0.5, "angle": -13.43 }
 				],
-				"translate": [
-					{},
-					{ "time": 0.3333, "y": 150.57, "curve": "stepped" },
-					{ "time": 0.5, "y": 150.57 }
-				],
 				"scale": [
 					{ "curve": "stepped" },
 					{ "time": 0.3333, "curve": "stepped" },
@@ -1011,8 +1006,8 @@
 					{ "time": 0.3333, "angle": -34.5 }
 				],
 				"translate": [
-					{ "x": -4.4, "curve": "stepped" },
-					{ "time": 0.3333, "x": -4.4 }
+					{ "x": -55, "curve": "stepped" },
+					{ "time": 0.3333, "x": -55 }
 				],
 				"scale": [
 					{ "curve": "stepped" },

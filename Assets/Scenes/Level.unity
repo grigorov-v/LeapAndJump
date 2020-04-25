@@ -119,6 +119,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 408455586, guid: 7aff6757e964ed64ea24ae1543a69676, type: 3}
+      propertyPath: _animationName
+      value: in Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 408455588, guid: 7aff6757e964ed64ea24ae1543a69676, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5071779204071003770, guid: 7aff6757e964ed64ea24ae1543a69676,
         type: 3}
       propertyPath: m_LocalPosition.x

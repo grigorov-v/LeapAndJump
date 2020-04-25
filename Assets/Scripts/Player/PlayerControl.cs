@@ -1,25 +1,24 @@
 ﻿using UnityEngine;
 using EventsHelper;
 
-using KeyAnim = AnimationControl.KeyAnim;
+using KeyAnim = AnimatorControl.KeyAnim;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(AnimationControl))]
+[RequireComponent(typeof(BaseAnimationControl))]
 public class PlayerControl : MonoBehaviour {
     public float   Speed         = 10;
     public Vector2 JumpForce     = Vector2.one;
     public Vector2 SlideVelosity = Vector2.right;
     public Bounds  LocalBounds   = new Bounds();
 
-    Rigidbody2D      _rb               = null;
-    AnimationControl _animationControl = null;
-    Collider2D       _wallTrigger      = null;
-    Collider2D       _floorTrigger     = null;
-    Vector2          _wallNormal       = Vector2.zero;  
-   
-    bool             _jumpTrigger      = false;
-    bool             _allowSecondJump  = false;
-    bool             _jumpProcess      = false;
+    Rigidbody2D          _rb               = null;
+    BaseAnimationControl _animationControl = null;
+    Collider2D           _wallTrigger      = null;
+    Collider2D           _floorTrigger     = null;
+    Vector2              _wallNormal       = Vector2.zero;  
+    bool                 _jumpTrigger      = false;
+    bool                 _allowSecondJump  = false;
+    bool                 _jumpProcess      = false;
 
     [Header("Debug")]
     public bool AutoPlay = false;
@@ -59,7 +58,7 @@ public class PlayerControl : MonoBehaviour {
 
     void Awake() {
         _rb = GetComponent<Rigidbody2D>();
-        _animationControl = GetComponent<AnimationControl>();
+        _animationControl = GetComponent<BaseAnimationControl>();
     }
 
     void Update() {
