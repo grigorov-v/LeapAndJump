@@ -2,7 +2,30 @@
 using UnityEngine;
 
 public class LevelElement : MonoBehaviour {
-    public Vector2 TopRightPoint {
+    List<SpriteRenderer> _spritesRenderer = new List<SpriteRenderer>();
+    int                  _lastCountChilds = -1;
+
+    public Bounds CommonBounds {
+        get {
+            var size = new Vector3(TopRightPoint.x - BottomLeftPoint.x, TopRightPoint.y - BottomLeftPoint.y);
+            return new Bounds(Center, size);
+        }
+    }
+
+    List<Bounds> ListBounds {
+        get {
+            if ( (transform.childCount != _lastCountChilds) || (_spritesRenderer.Count == 0) ) {
+                GetComponentsInChildren<SpriteRenderer>(false, _spritesRenderer);
+                _lastCountChilds = transform.childCount;
+            }
+            
+            var listBounds = new List<Bounds>();
+            _spritesRenderer.ForEach(sr => listBounds.Add(sr.bounds));
+            return listBounds;
+        }
+    }
+
+    Vector2 TopRightPoint {
         get {
             var maxX = 0f;
             var maxY = 0f;
@@ -24,7 +47,7 @@ public class LevelElement : MonoBehaviour {
         }
     }
 
-    public Vector2 BottomLeftPoint {
+    Vector2 BottomLeftPoint {
         get {
             var minX = 0f;
             var minY = 0f;
@@ -46,19 +69,7 @@ public class LevelElement : MonoBehaviour {
         }
     }
 
-    public Vector2 TopLeftPoint {
-        get {
-            return new Vector2(BottomLeftPoint.x, TopRightPoint.y);
-        }
-    }
-
-    public Vector2 BottomRightPoint {
-        get {
-            return new Vector2(TopRightPoint.x, BottomLeftPoint.y);
-        }
-    }
-
-    public Vector2 Center {
+    Vector2 Center {
         get {
             var x = (BottomLeftPoint.x + TopRightPoint.x) / 2;
             var y = (BottomLeftPoint.y + TopRightPoint.y) / 2;
@@ -66,28 +77,9 @@ public class LevelElement : MonoBehaviour {
         }
     }
 
-    List<Bounds> ListBounds {
-        get {
-            var spriteRenderers = new List<SpriteRenderer>();
-            GetComponentsInChildren<SpriteRenderer>(false, spriteRenderers);
-            var listBounds = new List<Bounds>();
-            spriteRenderers.ForEach(sr => listBounds.Add(sr.bounds));
-            return listBounds;
-        }
-    }
-
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(TopLeftPoint,     TopRightPoint);
-        Gizmos.DrawLine(TopRightPoint,    BottomRightPoint);
-        Gizmos.DrawLine(BottomRightPoint, BottomLeftPoint);
-        Gizmos.DrawLine(BottomLeftPoint,  TopLeftPoint);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(TopLeftPoint,     0.05f);
-        Gizmos.DrawSphere(TopRightPoint,    0.05f);
-        Gizmos.DrawSphere(BottomRightPoint, 0.05f);
-        Gizmos.DrawSphere(BottomLeftPoint,  0.05f);
+        Gizmos.DrawWireCube(CommonBounds.center, CommonBounds.size);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(Center, 0.05f);
