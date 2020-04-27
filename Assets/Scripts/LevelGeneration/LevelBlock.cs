@@ -12,8 +12,8 @@ public class LevelBlock : MonoBehaviour {
     public Transform BeginPoint = null;
     public Transform EndPoint   = null;
 
-    LevelGrind         _levelGrind    = null;
-    List<LevelElement> _levelElements = new List<LevelElement>();
+    LevelGrind   _levelGrind          = null;
+    List<Bounds> _otherElementsBounds = new List<Bounds>();
 
     LevelGrind LevelGrind {
         get {
@@ -32,7 +32,11 @@ public class LevelBlock : MonoBehaviour {
     }
 
     public void GenerateLevelElements(List<LevelElement> levelElements) {
-        GetComponentsInChildren<LevelElement>(false, _levelElements);
+        var elements = GetComponentsInChildren<LevelElement>();
+        foreach ( var elem in elements ) {
+            _otherElementsBounds.Add(elem.Bounds);
+        }
+
         var rowCount = LevelGrind.BoundsArray.GetLength(1);
         for ( var rowIndex = 1; rowIndex < rowCount; rowIndex ++ ) {
             var gridRow = GetGridRow(rowIndex);
@@ -65,15 +69,15 @@ public class LevelBlock : MonoBehaviour {
                 var localCenter = (Vector2)element.transform.InverseTransformPoint(element.Bounds.center);
                 position -= localCenter;
                 element.transform.position = position;
-                _levelElements.Add(element);
+                _otherElementsBounds.Add(elementBounds);
                 
             } while (findPos);
         }  
     }
 
     bool IsIntersectsWithElement(Bounds bounds) {
-        foreach ( var elem in _levelElements ) {
-            if ( elem.Bounds.Intersects(bounds) ) {
+        foreach ( var elemBounds in _otherElementsBounds ) {
+            if ( elemBounds.Intersects(bounds) ) {
                 return true;
             }
         }

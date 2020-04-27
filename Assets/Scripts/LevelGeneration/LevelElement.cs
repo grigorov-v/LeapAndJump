@@ -2,10 +2,6 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-#if UNITY_EDITOR
-    using UnityEditor;
-#endif
-
 public class LevelElement : MonoBehaviour {
     [SerializeField] [ReorderableList]
     List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
@@ -87,11 +83,8 @@ public class LevelElement : MonoBehaviour {
         Gizmos.DrawSphere(Center, 0.05f);
     }
 
-#if UNITY_EDITOR
     [Button]
     void FindSpriteRenderers() {
         GetComponentsInChildren<SpriteRenderer>(false, _spritesRenderers);        
-        PrefabUtility.SavePrefabAsset(Selection.activeGameObject);
     }
-#endif
 }

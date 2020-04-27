@@ -1290,8 +1290,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3117a2a4eec94696a3c2361de09e5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoundsScale: {x: 1, y: 1}
-  Static: 1
+  _spritesRenderers:
+  - {fileID: 6719573491338414255}
+  - {fileID: 6719573492645821968}
+  - {fileID: 6719573491119422939}
+  - {fileID: 6719573492507681072}
+  - {fileID: 6719573492093532134}
+  - {fileID: 6719573491360551547}
+  - {fileID: 6719573492937368934}
+  - {fileID: 6719573491668559073}
+  - {fileID: 5103449268887709792}
+  - {fileID: 2928436070560021191}
 --- !u!1 &6719573492645821982
 GameObject:
   m_ObjectHideFlags: 0
