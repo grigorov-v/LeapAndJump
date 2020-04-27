@@ -1,26 +1,28 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
+
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 public class LevelElement : MonoBehaviour {
-    List<SpriteRenderer> _spritesRenderer = new List<SpriteRenderer>();
-    int                  _lastCountChilds = -1;
+    [SerializeField] [ReorderableList]
+    List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
 
-    public Bounds CommonBounds {
+    public Bounds Bounds {
         get {
-            var size = new Vector3(TopRightPoint.x - BottomLeftPoint.x, TopRightPoint.y - BottomLeftPoint.y);
+            var x = (TopRightPoint.x - BottomLeftPoint.x);
+            var y = (TopRightPoint.y - BottomLeftPoint.y);
+            var size = new Vector3(x, y);
             return new Bounds(Center, size);
         }
     }
 
     List<Bounds> ListBounds {
-        get {
-            if ( (transform.childCount != _lastCountChilds) || (_spritesRenderer.Count == 0) ) {
-                GetComponentsInChildren<SpriteRenderer>(false, _spritesRenderer);
-                _lastCountChilds = transform.childCount;
-            }
-            
+        get {            
             var listBounds = new List<Bounds>();
-            _spritesRenderer.ForEach(sr => listBounds.Add(sr.bounds));
+            _spritesRenderers.ForEach(sr => listBounds.Add(sr.bounds));
             return listBounds;
         }
     }
@@ -79,9 +81,17 @@ public class LevelElement : MonoBehaviour {
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(CommonBounds.center, CommonBounds.size);
+        Gizmos.DrawWireCube(Bounds.center, Bounds.size);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(Center, 0.05f);
     }
+
+#if UNITY_EDITOR
+    [Button]
+    void FindSpriteRenderers() {
+        GetComponentsInChildren<SpriteRenderer>(false, _spritesRenderers);        
+        PrefabUtility.SavePrefabAsset(Selection.activeGameObject);
+    }
+#endif
 }

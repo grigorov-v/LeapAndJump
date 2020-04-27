@@ -5,9 +5,12 @@ using EventsHelper;
 using NaughtyAttributes;
 
 public class LevelGenerator : MonoBehaviour {
+    public int                MinCountBlocks = 4;
     [ReorderableList]
-    public List<LevelBlock> Blocks      = new List<LevelBlock>();
-    public int              CountBlocks = 4;
+    public List<LevelBlock>   Blocks         = new List<LevelBlock>();
+    
+    [ReorderableList][Space]
+    public List<LevelElement> LevelElements = new List<LevelElement>();
 
     List<LevelBlock> _activeBlocks = new List<LevelBlock>();
 
@@ -22,7 +25,7 @@ public class LevelGenerator : MonoBehaviour {
     }
 
     void Awake() {
-        for ( var i = 0; i < CountBlocks; i++ ) {
+        for ( var i = 0; i < MinCountBlocks; i++ ) {
             CreateNewBlock();
         }
 
@@ -31,6 +34,13 @@ public class LevelGenerator : MonoBehaviour {
 
     void OnDestroy() {
         EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
+    }
+
+    private void Update()
+    {
+        if ( Input.GetKeyDown(KeyCode.G) ) {
+            Test();
+        }
     }
 
     void CreateNewBlock() {
@@ -45,6 +55,7 @@ public class LevelGenerator : MonoBehaviour {
         }
 
         newBlock.transform.position = position;
+        newBlock.GenerateLevelElements(LevelElements);
         _activeBlocks.Add(newBlock);
     }
 
@@ -56,5 +67,12 @@ public class LevelGenerator : MonoBehaviour {
 
             CreateNewBlock();
         }
+    }
+
+    void Test() {
+        var firstBlock = _activeBlocks[0];
+        _activeBlocks.Remove(firstBlock);
+        Destroy(firstBlock.gameObject);
+        CreateNewBlock();
     }
 }

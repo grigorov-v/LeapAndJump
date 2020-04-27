@@ -146,12 +146,6 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        var destructionObject = other.gameObject.GetComponent<DestructionObject>();
-        if ( destructionObject ) {
-            EventManager.Fire<DestructionObjectPlayerCollision>(new DestructionObjectPlayerCollision(destructionObject));
-            return;
-        }
-
         var contactPoint = other.GetContact(0).point;
         if ( Bounds.Contains(contactPoint) ) {
             return;

@@ -111,7 +111,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: Walk
+  _animationName: in Wall
   loop: 0
   timeScale: 1
 --- !u!1 &5071779204071003774
