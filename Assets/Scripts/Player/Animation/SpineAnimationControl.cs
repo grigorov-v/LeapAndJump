@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Spine.Unity;
+﻿using Spine.Unity;
 
 public class SpineAnimationControl : BaseAnimationControl {
     SkeletonAnimation _skeletonAnimation = null;
@@ -9,7 +8,7 @@ public class SpineAnimationControl : BaseAnimationControl {
     }
 
     public override void PlayAnimation(KeyAnim key) {
-        var animName = Animations.Find(anim => anim.Key == key).StateName;
+        var animName = _animations.Find(anim => anim.Key == key).StateName;
         _skeletonAnimation.AnimationName = animName;
         _skeletonAnimation.loop = (key == KeyAnim.Walk) || (key == KeyAnim.SecondJump) || (key == KeyAnim.SlideInWall);
     }

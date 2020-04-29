@@ -43,10 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05ee274284915e4fb61b89438e2fa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinCountBlocks: 4
-  Blocks:
+  _minCountBlocks: 4
+  _blocks:
   - {fileID: 6719573491447116398, guid: df0a81c20e9f04645a32edf3267e1971, type: 3}
-  LevelElements:
+  _levelElements:
   - {fileID: 7002873223997072891, guid: 5078681c37f0c044ba80ae630d4da32c, type: 3}
   - {fileID: 7002873223997072891, guid: 4b64fdf49c9cd03459198be4f92305dd, type: 3}
   - {fileID: 7002873223997072891, guid: f68f3202cc0eb434cb1da8be1a4be781, type: 3}

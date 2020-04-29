@@ -1,33 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraMovement : MonoBehaviour {
-    public float     Lerp      = 10;
-    public Vector2   offset    = Vector2.zero;
-    public Transform EdgePoint = null;
-    
-    Transform _player = null;
-    Camera    _camera = null;
+using Game.Player;
 
-    void Awake() {
-        _player = FindObjectOfType<PlayerControl>()?.transform;
-        _camera = GetComponent<Camera>();
-    }
+namespace Game.CameraManagement {
+    public class CameraMovement : MonoBehaviour {
+        [SerializeField] float     _lerp      = 3;
+        [SerializeField] Vector2   _offset    = new Vector2(0, 0.1f);
+        [SerializeField] Transform _edgePoint = null;
+        
+        Transform _player = null;
+        Camera    _camera = null;
 
-    void FixedUpdate() {
-        var curPos = transform.position;
-        curPos = Vector2.Lerp(curPos, _player.position, Lerp * Time.deltaTime);
-        curPos += (Vector3)offset;
-        curPos.z = -10;
-        curPos.x = 0;
-        curPos.y = Mathf.Clamp(curPos.y, CalculateMinYPos(), curPos.y);
-        transform.position = curPos;
-    }
+        void Awake() {
+            _player = FindObjectOfType<PlayerControl>()?.transform;
+            _camera = GetComponent<Camera>();
+        }
 
-    float CalculateMinYPos() {
-        var bottomLeft = _camera.ScreenToWorldPoint(new Vector2 (0, 0));
-        var minYPos = EdgePoint.position.y + (transform.position.y - bottomLeft.y);
-        return minYPos;
+        void FixedUpdate() {
+            var curPos = transform.position;
+            curPos = Vector2.Lerp(curPos, _player.position, _lerp * Time.deltaTime);
+            curPos += (Vector3)_offset;
+            curPos.z = -10;
+            curPos.x = 0;
+            curPos.y = Mathf.Clamp(curPos.y, CalculateMinYPos(), curPos.y);
+            transform.position = curPos;
+        }
+
+        float CalculateMinYPos() {
+            var bottomLeft = _camera.ScreenToWorldPoint(new Vector2 (0, 0));
+            var minYPos = _edgePoint.position.y + (transform.position.y - bottomLeft.y);
+            return minYPos;
+        }
     }
 }

@@ -8,7 +8,7 @@ public class AnimatorControl : BaseAnimationControl {
     }
 
     public override void PlayAnimation(KeyAnim key) {
-        var info = Animations.Find(anim => anim.Key == key);
+        var info = _animations.Find(anim => anim.Key == key);
         _animator.Play(info.StateName);
     }
 }

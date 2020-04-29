@@ -131,7 +131,7 @@ PrefabInstance:
     - target: {fileID: 5071779204071003770, guid: 7aff6757e964ed64ea24ae1543a69676,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.64
+      value: -5.99
       objectReference: {fileID: 0}
     - target: {fileID: 5071779204071003770, guid: 7aff6757e964ed64ea24ae1543a69676,
         type: 3}
@@ -325,9 +325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5c796e40dbc6949afdf9100f12d3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lerp: 3
-  offset: {x: 0, y: 0.1}
-  EdgePoint: {fileID: 1829729914}
+  _lerp: 3
+  _offset: {x: 0, y: 0.1}
+  _edgePoint: {fileID: 1829729914}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -378,7 +378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6, z: -10}
+  m_LocalPosition: {x: 0, y: -1.55, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 629817074}
@@ -397,8 +397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07b9213172b141ed91b5fbbcc74ac87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultResolution: {x: 720, y: 1280}
-  WidthOrHeight: 0
+  _defaultResolution: {x: 720, y: 1280}
+  _widthOrHeight: 0
 --- !u!1 &531950756
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,8 +601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07b9213172b141ed91b5fbbcc74ac87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultResolution: {x: 720, y: 1280}
-  WidthOrHeight: 0
+  _defaultResolution: {x: 720, y: 1280}
+  _widthOrHeight: 0
 --- !u!20 &559497555
 Camera:
   m_ObjectHideFlags: 0
@@ -1350,8 +1350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07b9213172b141ed91b5fbbcc74ac87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultResolution: {x: 720, y: 1280}
-  WidthOrHeight: 0
+  _defaultResolution: {x: 720, y: 1280}
+  _widthOrHeight: 0
 --- !u!1 &1223275611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,8 +1438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07b9213172b141ed91b5fbbcc74ac87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultResolution: {x: 720, y: 1280}
-  WidthOrHeight: 0
+  _defaultResolution: {x: 720, y: 1280}
+  _widthOrHeight: 0
 --- !u!1 &1455873796
 GameObject:
   m_ObjectHideFlags: 0

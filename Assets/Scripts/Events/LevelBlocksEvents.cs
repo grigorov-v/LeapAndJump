@@ -1,17 +1,22 @@
-﻿public struct PlayerIntoBlockTriggerEnter {
-    public LevelBlock     LevelBlock;
-    public PlayerControl Player;
+﻿using Game.Level;
+using Game.Player;
 
-    public PlayerIntoBlockTriggerEnter (LevelBlock levelBlock, PlayerControl player) {
-        LevelBlock = levelBlock;
-        Player = player;
+namespace Game.Events {
+    public struct PlayerIntoBlockTriggerEnter {
+        public LevelBlock    LevelBlock {get; private set;}
+        public PlayerControl Player     {get; private set;}
+
+        public PlayerIntoBlockTriggerEnter (LevelBlock levelBlock, PlayerControl player) {
+            LevelBlock = levelBlock;
+            Player = player;
+        }
     }
-}
 
-public struct DestructionObjectPlayerCollision {
-    public DestructionObject DestructionObject;
+    public struct DestructionObjectPlayerCollision {
+        public DestructionObject DestructionObject {get; private set;}
 
-    public DestructionObjectPlayerCollision (DestructionObject destructionObject) {
-        DestructionObject = destructionObject;
+        public DestructionObjectPlayerCollision (DestructionObject destructionObject) {
+            DestructionObject = destructionObject;
+        }
     }
 }
