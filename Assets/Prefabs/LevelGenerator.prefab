@@ -43,9 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05ee274284915e4fb61b89438e2fa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinCountBlocks: 4
   Blocks:
-  - {fileID: 6719573491447116398, guid: 20f32a79ad9c7fc44ac0b1adc8a39b9a, type: 3}
-  - {fileID: 6719573491447116398, guid: 0f3495cd31826bf478cc04a3e1223d30, type: 3}
-  - {fileID: 6719573491447116398, guid: cac6e9e98dfccf444a286a709b456094, type: 3}
-  - {fileID: 6719573491447116398, guid: 96021bcfc6a23484f951a8efc65146df, type: 3}
-  CountBlocks: 4
+  - {fileID: 6719573491447116398, guid: df0a81c20e9f04645a32edf3267e1971, type: 3}
+  LevelElements:
+  - {fileID: 7002873223997072891, guid: 5078681c37f0c044ba80ae630d4da32c, type: 3}
+  - {fileID: 7002873223997072891, guid: 4b64fdf49c9cd03459198be4f92305dd, type: 3}
+  - {fileID: 7002873223997072891, guid: f68f3202cc0eb434cb1da8be1a4be781, type: 3}
+  - {fileID: 7002873223997072891, guid: 8a3674a475afc4340b6e0839c929ffc1, type: 3}
+  - {fileID: 7002873223997072891, guid: 4042ee63db8b032499c2ff09de619083, type: 3}
+  - {fileID: 7002873223997072891, guid: 7d9482e750ca94742985455fc5663cb9, type: 3}

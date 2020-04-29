@@ -159,9 +159,15 @@ public class LevelBlock : MonoBehaviour {
         }
     }
 
-    void OnDrawGizmosSelected() {
+    void OnDrawGizmos() {
         if ( !LevelGrind ) {
             return;
+        }
+
+        _otherElementsBounds.Clear();
+        var elements = GetComponentsInChildren<LevelElement>();
+        foreach ( var elem in elements ) {
+            _otherElementsBounds.Add(elem.Bounds);
         }
         
         var boundsArray = LevelGrind.BoundsArray;
