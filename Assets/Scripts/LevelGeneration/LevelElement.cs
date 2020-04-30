@@ -9,8 +9,10 @@ using UnityEditor;
 
 namespace Game.Level {
     public class LevelElement : MonoBehaviour {
-        [SerializeField] [ReorderableList]
-        List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
+        public bool Floor = false;
+
+        [ReorderableList]
+        [SerializeField] List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
 
         public Bounds Bounds {
             get {

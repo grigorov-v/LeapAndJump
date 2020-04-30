@@ -756,9 +756,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441c25b1efa007c4ab2cf5591a9bfc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CellSize: {x: 1.29, y: 1.29}
-  StartCenter: {x: -1.93, y: -5.87}
-  CellCount: {x: 4, y: 10}
+  _cellSize: {x: 1.29, y: 1.29}
+  _startCenter: {x: -1.93, y: -5.87}
+  _cellCount: {x: 4, y: 10}
 --- !u!61 &6719573491447116385
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1290,6 +1290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3117a2a4eec94696a3c2361de09e5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Floor: 1
   _spritesRenderers:
   - {fileID: 6719573491338414255}
   - {fileID: 6719573492645821968}

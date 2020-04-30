@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Game.Level;
 
 using KeyAnim = AnimatorControl.KeyAnim;
 
@@ -7,6 +8,8 @@ namespace Game.Player {
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BaseAnimationControl))]
     public class PlayerControl : MonoBehaviour {
+        const float CheckAngle = 10f;
+
         [SerializeField] float   _speed         = 2.5f;
         [SerializeField] Vector2 _jumpForce     = new Vector2(60, 140);
         [SerializeField] Vector2 _slideVelosity = new Vector2(0.2f, -2);
@@ -14,8 +17,8 @@ namespace Game.Player {
 
         Rigidbody2D          _rb               = null;
         BaseAnimationControl _animationControl = null;
-        Collider2D           _wallTrigger      = null;
-        Collider2D           _floorTrigger     = null;
+        [SerializeField] Collider2D           _wallTrigger      = null;
+        [SerializeField] Collider2D           _floorTrigger     = null;
         Vector2              _wallNormal       = Vector2.zero;  
         bool                 _jumpTrigger      = false;
         bool                 _allowSecondJump  = false;
@@ -97,7 +100,9 @@ namespace Game.Player {
 
             if ( CanMoveLeftOrRight ) {
                 MoveLeftOrRight();
-            } else if ( CanSlideInWall ) {
+            } 
+            
+            if ( CanSlideInWall ) {
                 SlideInWall();
             }
         }
@@ -134,35 +139,47 @@ namespace Game.Player {
 
         void ChangeMirrorScale() {
             var curScale = transform.localScale;
-            curScale.x = (_wallNormal == Vector2.right) ? -Mathf.Abs(curScale.x) : Mathf.Abs(curScale.x);
+            curScale.x = (Vector2.Angle(_wallNormal, Vector2.right) <= CheckAngle) ? -Mathf.Abs(curScale.x) : Mathf.Abs(curScale.x);
             transform.localScale = curScale;
         }
 
         bool IsWall(Vector2 normal) {
-            return (normal == Vector2.left) || (normal == Vector2.right);
+            var leftAngle = Vector2.Angle(normal, Vector2.left);
+            var rightAngle = Vector2.Angle(normal, Vector2.right);
+            return (leftAngle <= CheckAngle) || (rightAngle <= CheckAngle);
         }
 
         bool IsFloor(Vector2 normal) {
-            return (normal == Vector2.up);
+            var angle = Vector2.Angle(normal, Vector2.up);
+            return angle <= CheckAngle;
         }
 
         void OnCollisionEnter2D(Collision2D other) {
-            var contactPoint = other.GetContact(0).point;
-            if ( Bounds.Contains(contactPoint) ) {
-                return;
-            }
-    
-            var normal = other.GetContact(0).normal;
-            if ( IsWall(normal) && !_wallTrigger ) {
-                _wallTrigger = other.collider;
-                _wallNormal = normal;
-                _allowSecondJump = true;
-            }
+            for ( var i = 0; i < other.contactCount; i++ ) {
+                var contactPoint = other.GetContact(i).point;
+                if ( Bounds.Contains(contactPoint) ) {
+                    return;
+                }
+        
+                var normal = other.GetContact(i).normal;
+                if ( IsWall(normal) && !_wallTrigger ) {
+                    _wallTrigger = other.collider;
+                    _wallNormal = normal;
+                    _allowSecondJump = true;
+                }
 
-            if ( IsFloor(normal) && !_floorTrigger ) {
-                var point = other.GetContact(0).point;
-                _floorTrigger = other.collider;
-                _allowSecondJump = true;
+                if ( IsFloor(normal) && !_floorTrigger ) {
+                    var levelElement = other.gameObject.GetComponent<LevelElement>();
+                    if ( levelElement && levelElement.Floor ) {
+                        if ( (Bounds.center.y - Bounds.extents.y) >= (levelElement.Bounds.center.y + levelElement.Bounds.extents.y) ) {
+                            _floorTrigger = other.collider;
+                            _allowSecondJump = true;
+                        }
+                    } else {
+                        _floorTrigger = other.collider;
+                        _allowSecondJump = true;
+                    }
+                }
             }
         }
 

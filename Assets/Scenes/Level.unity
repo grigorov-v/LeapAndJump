@@ -1608,6 +1608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1829729914}
   - component: {fileID: 1829729915}
+  - component: {fileID: 1829729916}
   m_Layer: 0
   m_Name: FLOOR
   m_TagString: Untagged
@@ -1665,6 +1666,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.593819, y: 0.56907654}
   m_EdgeRadius: 0
+--- !u!114 &1829729916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829729913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3117a2a4eec94696a3c2361de09e5e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Floor: 1
+  _spritesRenderers:
+  - {fileID: 531950758}
+  - {fileID: 1455873798}
+  - {fileID: 867119592}
+  - {fileID: 927062334}
+  - {fileID: 2099238055}
+  - {fileID: 552390087}
+  - {fileID: 734948781}
+  - {fileID: 1833204560}
+  - {fileID: 1715631187}
+  - {fileID: 671575781}
 --- !u!1 &1833204558
 GameObject:
   m_ObjectHideFlags: 0
