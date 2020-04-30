@@ -1006,8 +1006,8 @@
 					{ "time": 0.3333, "angle": -34.5 }
 				],
 				"translate": [
-					{ "x": -55, "curve": "stepped" },
-					{ "time": 0.3333, "x": -55 }
+					{ "x": -60, "curve": "stepped" },
+					{ "time": 0.3333, "x": -60 }
 				],
 				"scale": [
 					{ "curve": "stepped" },
