@@ -154,6 +154,32 @@ namespace Game.Player {
             return angle <= CheckAngle;
         }
 
+        void CheckWall(Collider2D collider, Vector2 normal) {
+            if ( IsWall(normal) && !_wallTrigger ) {
+                _wallTrigger = collider;
+                _wallNormal = normal;
+                _allowSecondJump = true;
+            }
+        }
+
+        void CheckFloor(Collider2D collider, Vector2 normal) {
+            if ( IsFloor(normal) && !_floorTrigger ) {
+                var levelElement = collider.GetComponent<LevelElement>();
+                if ( levelElement && levelElement.Floor ) {
+                    if ( (Bounds.center.y - Bounds.extents.y) < (levelElement.Bounds.center.y + levelElement.Bounds.extents.y) ) {
+                        return;
+                    }
+                }
+
+                _floorTrigger = collider;
+                _allowSecondJump = true;
+
+                // if ( _wallTrigger ) {
+                //     _wallTrigger = null;
+                // }
+            }
+        }
+
         void OnCollisionEnter2D(Collision2D other) {
             for ( var i = 0; i < other.contactCount; i++ ) {
                 var contactPoint = other.GetContact(i).point;
@@ -162,24 +188,8 @@ namespace Game.Player {
                 }
         
                 var normal = other.GetContact(i).normal;
-                if ( IsWall(normal) && !_wallTrigger ) {
-                    _wallTrigger = other.collider;
-                    _wallNormal = normal;
-                    _allowSecondJump = true;
-                }
-
-                if ( IsFloor(normal) && !_floorTrigger ) {
-                    var levelElement = other.gameObject.GetComponent<LevelElement>();
-                    if ( levelElement && levelElement.Floor ) {
-                        if ( (Bounds.center.y - Bounds.extents.y) >= (levelElement.Bounds.center.y + levelElement.Bounds.extents.y) ) {
-                            _floorTrigger = other.collider;
-                            _allowSecondJump = true;
-                        }
-                    } else {
-                        _floorTrigger = other.collider;
-                        _allowSecondJump = true;
-                    }
-                }
+                CheckWall(other.collider, normal);
+                CheckFloor(other.collider, normal);
             }
         }
 
