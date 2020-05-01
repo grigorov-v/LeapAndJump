@@ -1679,7 +1679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3117a2a4eec94696a3c2361de09e5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Floor: 1
   _spritesRenderers:
   - {fileID: 531950758}
   - {fileID: 1455873798}
@@ -2089,7 +2088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -38.34, y: 13.38}
+  m_AnchoredPosition: {x: -38.339844, y: 13.380005}
   m_SizeDelta: {x: 69.71, y: 21.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2131991717
