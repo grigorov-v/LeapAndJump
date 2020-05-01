@@ -1,0 +1,1 @@
+"C:\Program Files\Unity\Hub\Editor\2018.4.21f1\Editor\Unity.exe" -quit -projectPath "E:\Projects\LeapAndJump" -executeMethod CustomBuildPipeline.BuildPlayer.AndroidBuild
