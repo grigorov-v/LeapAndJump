@@ -173,10 +173,6 @@ namespace Game.Player {
 
                 _floorTrigger = collider;
                 _allowSecondJump = true;
-
-                // if ( _wallTrigger ) {
-                //     _wallTrigger = null;
-                // }
             }
         }
 
