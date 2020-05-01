@@ -11,7 +11,7 @@ namespace CustomBuildPipeline {
             Version.UpdateQARevision();
             
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();            
-            buildPlayerOptions.locationPathName = GetApkLocationPath("Builds", "LeapAndJump_" + Version.GetStringVersion());;
+            buildPlayerOptions.locationPathName = GetApkLocationPath("Builds", "LeapAndJump_" + Application.version);
             buildPlayerOptions.target = BuildTarget.Android;
             BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
             BuildSummary summary = report.summary;
@@ -34,6 +34,11 @@ namespace CustomBuildPipeline {
                     fi.Delete();
                 }
             }
+        }
+
+        [MenuItem("Build/Update QA Revision")]
+        static void UpdateQARevision() {
+            Version.UpdateQARevision();
         }
 
         static string GetApkLocationPath(string directory, string nameApk) {

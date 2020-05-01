@@ -1,59 +1,62 @@
 ﻿using UnityEngine;
-using System.IO;
+using System;
+using System.Collections.Generic;
 
-using SimpleJSON;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 public static class Version {
-    static JSONNode _jsonNode            = null;
+    static List<int> _listVersion = null;
 
     public static int ClientVerMajor {
         get {
-            return JSONNode["clientVerMajor"].AsInt;
+            return ListVersion[0];
         }
     }
 
     public static int ClientVerMinor{
         get {
-            return JSONNode["clientVerMinor"].AsInt;
+            return ListVersion[1];
         }
     }
 
     public static int ClientVerRevision {
         get {
-            return JSONNode["clientVerRevision"].AsInt;
+            return ListVersion[2];
         }
     }
 
     public static int ClientVerQARevision {
         get {
-            return JSONNode["clientVerQARevision"].AsInt;
+            return ListVersion[3];
+        } private set {
+            ListVersion[3] = value;
+            #if UNITY_EDITOR
+                PlayerSettings.bundleVersion = VersionConvertToString();
+                _listVersion = null;
+            #endif
         }
     }
 
-    public static string GetStringVersion() {
-        return string.Format("{0}.{1}.{2}.{3}", Version.ClientVerMajor, Version.ClientVerMinor, Version.ClientVerRevision, Version.ClientVerQARevision);
-    }
-
-    static JSONNode JSONNode {
+    static List<int> ListVersion {
         get {
-            if ( _jsonNode == null ) {
-                var versionText = Resources.Load<TextAsset>("Version").text;
-                _jsonNode = JSON.Parse(versionText);
+            if ( _listVersion == null ) {
+                var verArray = Application.version.Split('.');
+                _listVersion = new List<int>();
+                Array.ForEach(verArray, value => _listVersion.Add(int.Parse(value)));
             }
 
-            return _jsonNode;
+            return _listVersion;
         }
+    }
+
+    static string VersionConvertToString() {
+        return string.Format("{0}.{1}.{2}.{3}", ClientVerMajor, ClientVerMinor, ClientVerRevision, ClientVerQARevision);
     }
 
     public static void UpdateQARevision() {
-        var writePath = "Assets/Resources/Version.json";
-        JSONNode["clientVerQARevision"].AsInt ++;
-        using (StreamWriter sw = new StreamWriter(writePath)) {
-            sw.WriteLine(JSONNode.ToString());
-        }
-
-        #if UNITY_EDITOR
-            UnityEditor.AssetDatabase.ImportAsset(writePath);
-        #endif
+        ClientVerQARevision ++;
+        Debug.Log("New version: " + Application.version);
     }
 }
