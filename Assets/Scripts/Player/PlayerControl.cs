@@ -47,7 +47,7 @@ namespace Game.Player {
 
         bool CanSlideInWall {
             get {
-                return !_floorTrigger && _wallTrigger && !_jumpTrigger;
+                return !_floorTrigger && _wallTrigger && !_jumpTrigger && (_rb.velocity.y < 0);
             }
         }
 
@@ -79,7 +79,6 @@ namespace Game.Player {
             if ( CanJump ) {
                 if ( _wallTrigger ) {
                     SetMirrorScale();
-                    _wallTrigger = null;
                 }
                 Jump();
                 _jumpTrigger = false;
@@ -143,6 +142,7 @@ namespace Game.Player {
             if ( IsWall(normal) && !_wallTrigger ) {
                 _wallTrigger = collider;
                 _wallNormal = normal;
+                _rb.velocity = Vector2.zero;
                 _allowSecondJump = true;
             }
         }
