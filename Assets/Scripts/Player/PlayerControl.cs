@@ -79,6 +79,7 @@ namespace Game.Player {
             if ( CanJump ) {
                 if ( _wallTrigger ) {
                     SetMirrorScale();
+                    _wallTrigger = null;
                 }
                 Jump();
                 _jumpTrigger = false;
@@ -104,11 +105,9 @@ namespace Game.Player {
         }
 
         void SlideInWall() {
-            if ( _rb.velocity.y <= _slideVelosity.y ) {
-                var slideVelosity = _slideVelosity;
-                slideVelosity.x = (transform.localScale.x > 0) ? -Mathf.Abs(slideVelosity.x) : Mathf.Abs(slideVelosity.x);
-                _rb.velocity = slideVelosity;
-            }
+            var slideVelosity = _slideVelosity;
+            slideVelosity.x = (transform.localScale.x > 0) ? -Mathf.Abs(slideVelosity.x) : Mathf.Abs(slideVelosity.x);
+            _rb.velocity = slideVelosity;
             _animationControl.PlayAnimation(KeyAnim.SlideInWall);
         }
 
@@ -167,10 +166,6 @@ namespace Game.Player {
 
             if ( other.collider == _floorTrigger ) {
                 _floorTrigger = null;
-            }
-
-            if ( !_wallTrigger && !_floorTrigger ) {
-                _animationControl.PlayAnimation(KeyAnim.Jump);
             }
         }
     }
