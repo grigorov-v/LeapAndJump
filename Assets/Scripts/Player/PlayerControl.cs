@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using Game.Level;
+using Game.Animations;
 
-using KeyAnim = AnimatorControl.KeyAnim;
+using KeyAnim = Game.Animations.BaseAnimation.KeyAnim;
 
 namespace Game.Player {
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BaseAnimationControl))]
+[RequireComponent(typeof(BaseAnimation))]
     public class PlayerControl : MonoBehaviour {
         const float CheckAngle = 10f;
 
@@ -15,13 +15,13 @@ namespace Game.Player {
         [SerializeField] Vector2 _slideVelosity = new Vector2(0.2f, -2);
         [SerializeField] Bounds  _localBounds   = new Bounds();
 
-        Rigidbody2D          _rb               = null;
-        BaseAnimationControl _animationControl = null;
-        Collider2D           _wallTrigger      = null;
-        Collider2D           _floorTrigger     = null;
-        Vector2              _wallNormal       = Vector2.zero;  
-        bool                 _jumpTrigger      = false;
-        bool                 _allowSecondJump  = false;
+        Rigidbody2D   _rb               = null;
+        BaseAnimation _animationControl = null;
+        Collider2D    _wallTrigger      = null;
+        Collider2D    _floorTrigger     = null;
+        Vector2       _wallNormal       = Vector2.zero;  
+        bool          _jumpTrigger      = false;
+        bool          _allowSecondJump  = false;
 
         [Header("Debug")]
         public bool AutoPlay = false;
@@ -53,7 +53,7 @@ namespace Game.Player {
 
         void Awake() {
             _rb = GetComponent<Rigidbody2D>();
-            _animationControl = GetComponent<BaseAnimationControl>();
+            _animationControl = GetComponent<BaseAnimation>();
         }
 
         void Update() {
@@ -91,6 +91,10 @@ namespace Game.Player {
                 _jumpTrigger = false;
                 _allowSecondJump = false;
             }
+
+            if ( _floorTrigger && _wallTrigger ) {
+                SetMirrorScale();
+            }
         }
 
         void Jump(bool secondJump = false) {
@@ -112,7 +116,6 @@ namespace Game.Player {
         }
 
         void MoveLeftOrRight() {
-            SetMirrorScale();
             var dir = (transform.localScale.x > 0) ? Vector2.left : Vector2.right;
             var movePos = (Vector2)transform.position + (dir * _speed * Time.fixedDeltaTime);
             _rb.MovePosition(movePos);

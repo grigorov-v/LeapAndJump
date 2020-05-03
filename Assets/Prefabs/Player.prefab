@@ -236,3 +236,4 @@ MonoBehaviour:
     StateName: in Wall
   - Key: 4
     StateName: Roll
+  _skeletonAnimation: {fileID: 408455586}
