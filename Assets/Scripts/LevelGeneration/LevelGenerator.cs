@@ -38,8 +38,7 @@ namespace Game.Level {
             EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
         }
 
-        private void Update()
-        {
+        void Update() {
             if ( Input.GetKeyDown(KeyCode.G) ) {
                 Test();
             }

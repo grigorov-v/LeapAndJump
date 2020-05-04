@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
@@ -9,7 +8,6 @@ using UnityEditor;
 
 namespace Game.Level {
     public class LevelElement : MonoBehaviour {
-        [ReorderableList]
         [SerializeField] List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
 
         public Bounds Bounds {
@@ -82,6 +80,7 @@ namespace Game.Level {
         }
 
         void OnDrawGizmos() {
+            _spritesRenderers.RemoveAll(sr => !sr);
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(Bounds.center, Bounds.size);
 

@@ -744,6 +744,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BeginPoint: {fileID: 6719573491545316323}
   EndPoint: {fileID: 6719573493073930813}
+  LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 2.52, y: 6.32, z: 0}
+  TestElement: {fileID: 7002873223997072891, guid: 4070d01974a881648b77f43708ee3aa3,
+    type: 3}
 --- !u!114 &4815364270424852733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,7 +1295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3117a2a4eec94696a3c2361de09e5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Floor: 1
   _spritesRenderers:
   - {fileID: 6719573491338414255}
   - {fileID: 6719573492645821968}

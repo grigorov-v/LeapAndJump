@@ -70,10 +70,12 @@ namespace Game.Player {
         void FixedUpdate() {
             if ( CanMoveLeftOrRight ) {
                 MoveLeftOrRight();
-            } 
+                _animationControl.PlayAnimation(KeyAnim.Walk);
+            }
             
             if ( CanSlideInWall ) {
                 SlideInWall();
+                _animationControl.PlayAnimation(KeyAnim.SlideInWall);
             }
 
             if ( CanJump ) {
@@ -83,12 +85,14 @@ namespace Game.Player {
                 Jump();
                 _jumpTrigger = false;
                 _allowSecondJump = true;
+                _animationControl.PlayAnimation(KeyAnim.Jump);
             }
 
             if ( CanSecondJump ) {  
                 Jump(true);
                 _jumpTrigger = false;
                 _allowSecondJump = false;
+                _animationControl.PlayAnimation(KeyAnim.SecondJump);
             }
 
             if ( _floorTrigger && _wallTrigger ) {
@@ -99,26 +103,20 @@ namespace Game.Player {
         void Jump(bool secondJump = false) {
             var jumpForce = _jumpForce;
             jumpForce.x = (transform.localScale.x > 0) ? -Mathf.Abs(jumpForce.x) : Mathf.Abs(jumpForce.x);
-            
             _rb.velocity = Vector2.zero;
             _rb.AddForce(jumpForce, ForceMode2D.Impulse);
-
-            var keyAnim = !secondJump ? KeyAnim.Jump : KeyAnim.SecondJump;
-            _animationControl.PlayAnimation(keyAnim);
         }
 
         void SlideInWall() {
             var slideVelosity = _slideVelosity;
             slideVelosity.x = (transform.localScale.x > 0) ? -Mathf.Abs(slideVelosity.x) : Mathf.Abs(slideVelosity.x);
             _rb.velocity = slideVelosity;
-            _animationControl.PlayAnimation(KeyAnim.SlideInWall);
         }
 
         void MoveLeftOrRight() {
             var dir = (transform.localScale.x > 0) ? Vector2.left : Vector2.right;
             var movePos = (Vector2)transform.position + (dir * _speed * Time.fixedDeltaTime);
             _rb.MovePosition(movePos);
-            _animationControl.PlayAnimation(KeyAnim.Walk);
         }
 
         void SetMirrorScale() {
@@ -138,27 +136,33 @@ namespace Game.Player {
             return angle <= CheckAngle;
         }
 
-        void CheckWall(Collider2D collider, Vector2 normal) {
-            if ( IsWall(normal) && !_wallTrigger ) {
-                _wallTrigger = collider;
-                _wallNormal = normal;
-                _rb.velocity = Vector2.zero;
-                _allowSecondJump = true;
-            }
-        }
-
-        void CheckFloor(Collider2D collider, Vector2 normal) {
-            if ( IsFloor(normal) && !_floorTrigger ) {
-                _floorTrigger = collider;
-                _allowSecondJump = true;
-            }
-        }
-
         void OnCollisionEnter2D(Collision2D other) {
             for ( var i = 0; i < other.contactCount; i++ ) {        
                 var normal = other.GetContact(i).normal;
-                CheckWall(other.collider, normal);
-                CheckFloor(other.collider, normal);
+                if ( IsWall(normal) && !_wallTrigger ) {
+                    _wallTrigger = other.collider;
+                    _wallNormal = normal;
+                    _rb.velocity = Vector2.zero;
+                    _allowSecondJump = false;
+                }
+                
+                if ( IsFloor(normal) && !_floorTrigger ) {
+                    _floorTrigger = other.collider;
+                }
+            }
+        }
+
+        void OnCollisionStay2D(Collision2D other) {
+            if ( _jumpTrigger ) {
+                return;
+            }
+
+            for ( var i = 0; i < other.contactCount; i++ ) {        
+                var normal = other.GetContact(i).normal;
+                if ( IsWall(normal) && !_wallTrigger ) {
+                    _wallTrigger = other.collider;
+                    _wallNormal = normal;
+                }
             }
         }
 
@@ -169,10 +173,6 @@ namespace Game.Player {
 
             if ( other.collider == _floorTrigger ) {
                 _floorTrigger = null;
-            }
-
-            if ( !_wallTrigger && !_floorTrigger ) {
-                _animationControl.PlayAnimation(KeyAnim.Jump);
             }
         }
     }

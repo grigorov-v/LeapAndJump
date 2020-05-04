@@ -40,6 +40,10 @@ namespace Game.Level {
                 _otherElementsBounds.Add(elem.Bounds);
             }
 
+            if ( levelElements.Count == 0 ) {
+                return;
+            }
+
             var rowCount = LevelGrind.BoundsArray.GetLength(1);
             for ( var rowIndex = 1; rowIndex < rowCount; rowIndex ++ ) {
                 var gridRow = GetGridRow(rowIndex);
