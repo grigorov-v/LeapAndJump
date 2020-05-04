@@ -70,12 +70,10 @@ namespace Game.Player {
         void FixedUpdate() {
             if ( CanMoveLeftOrRight ) {
                 MoveLeftOrRight();
-                _animationControl.PlayAnimation(KeyAnim.Walk);
             }
             
             if ( CanSlideInWall ) {
                 SlideInWall();
-                _animationControl.PlayAnimation(KeyAnim.SlideInWall);
             }
 
             if ( CanJump ) {
@@ -85,7 +83,6 @@ namespace Game.Player {
                 Jump();
                 _jumpTrigger = false;
                 _allowSecondJump = true;
-                _animationControl.PlayAnimation(KeyAnim.Jump);
             }
 
             if ( CanSecondJump ) {  
@@ -159,9 +156,23 @@ namespace Game.Player {
 
             for ( var i = 0; i < other.contactCount; i++ ) {        
                 var normal = other.GetContact(i).normal;
-                if ( IsWall(normal) && !_wallTrigger ) {
+                var isWall = IsWall(normal);
+                if ( isWall && !_wallTrigger ) {
                     _wallTrigger = other.collider;
                     _wallNormal = normal;
+                }
+
+                var isFloor = IsFloor(normal);
+
+                var keyAnim = KeyAnim.None;
+                if ( isWall && !_floorTrigger ) {
+                    keyAnim = KeyAnim.SlideInWall;
+                } else if ( isFloor ) {
+                    keyAnim = KeyAnim.Walk;
+                }
+
+                if ( keyAnim != KeyAnim.None ) {
+                    _animationControl.PlayAnimation(keyAnim);
                 }
             }
         }
