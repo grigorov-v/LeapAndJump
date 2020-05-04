@@ -9,11 +9,9 @@ using NaughtyAttributes;
 namespace Game.Level {
     public class LevelGenerator : MonoBehaviour {
         [SerializeField] int                _minCountBlocks = 4;
-
-        [ReorderableList]
         [SerializeField] List<LevelBlock>   _blocks         = new List<LevelBlock>();
         
-        [ReorderableList][Space]
+        [Space]
         [SerializeField] List<LevelElement> _levelElements  = new List<LevelElement>();
 
         List<LevelBlock> _activeBlocks = new List<LevelBlock>();
