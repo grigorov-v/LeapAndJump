@@ -174,6 +174,10 @@ namespace Game.Player {
             if ( other.collider == _floorTrigger ) {
                 _floorTrigger = null;
             }
+
+            if ( !_wallTrigger && !_floorTrigger ) {
+                _animationControl.PlayAnimation(KeyAnim.Jump);
+            }
         }
     }
 }
