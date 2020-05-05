@@ -744,11 +744,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BeginPoint: {fileID: 6719573491545316323}
   EndPoint: {fileID: 6719573493073930813}
-  LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 2.52, y: 6.32, z: 0}
-  TestElement: {fileID: 7002873223997072891, guid: 4070d01974a881648b77f43708ee3aa3,
-    type: 3}
 --- !u!114 &4815364270424852733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,7 +1246,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0064599514, y: 0.11143327}
+  m_Offset: {x: 0, y: 0.016744137}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1262,7 +1257,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.1372895, y: 0.02}
+  m_Size: {x: 6.8626165, y: 0.21844578}
   m_EdgeRadius: 0
 --- !u!251 &7694712327294613918
 PlatformEffector2D:
