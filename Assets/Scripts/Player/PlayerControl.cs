@@ -13,7 +13,6 @@ namespace Game.Player {
         [SerializeField] float   _speed         = 2.5f;
         [SerializeField] Vector2 _jumpForce     = new Vector2(60, 140);
         [SerializeField] Vector2 _slideVelosity = new Vector2(0.2f, -2);
-        [SerializeField] Bounds  _localBounds   = new Bounds();
 
         Rigidbody2D   _rb               = null;
         BaseAnimation _animationControl = null;
