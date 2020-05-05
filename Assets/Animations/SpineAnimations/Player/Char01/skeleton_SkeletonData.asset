@@ -19,21 +19,18 @@ MonoBehaviour:
   skeletonDataModifiers: []
   fromAnimation:
   - Walk
-  - in Wall
   - Jump
   - Jump
   - Walk
   toAnimation:
-  - Jump
-  - Jump
-  - Walk
   - in Wall
   - in Wall
+  - Roll
+  - Roll
   duration:
-  - 0.1
-  - 0.1
-  - 0.1
-  - 0.1
-  - 0.1
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
   defaultMix: 0
   controller: {fileID: 0}
