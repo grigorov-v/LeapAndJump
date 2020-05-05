@@ -10,7 +10,8 @@ namespace Game.Animations {
             Walk,
             Jump,
             SlideInWall,
-            SecondJump
+            SecondJump,
+            Idle
         }
 
         [System.Serializable]

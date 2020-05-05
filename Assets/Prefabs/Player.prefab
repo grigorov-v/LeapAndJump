@@ -111,7 +111,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: Walk
+  _animationName: 
   loop: 0
   timeScale: 1
 --- !u!1 &5071779204071003774
@@ -236,4 +236,6 @@ MonoBehaviour:
     StateName: in Wall
   - Key: 4
     StateName: Roll
+  - Key: 5
+    StateName: Idle
   _skeletonAnimation: {fileID: 408455586}

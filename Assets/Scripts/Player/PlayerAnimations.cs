@@ -13,7 +13,9 @@ namespace Game.Animations.Player {
             }
 
             var animName = _animations.Find(anim => anim.Key == key).StateName;
-            _skeletonAnimation.loop = (key == KeyAnim.Walk) || (key == KeyAnim.SecondJump) || (key == KeyAnim.SlideInWall);
+            _skeletonAnimation.loop = (key == KeyAnim.Walk) || (key == KeyAnim.SecondJump) || 
+                                      (key == KeyAnim.SlideInWall) || (key == KeyAnim.Idle);
+                                      
             _skeletonAnimation.AnimationName = animName;
             
             _curAnim = key;

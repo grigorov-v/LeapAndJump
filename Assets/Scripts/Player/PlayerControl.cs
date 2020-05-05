@@ -70,10 +70,12 @@ namespace Game.Player {
         void FixedUpdate() {
             if ( CanMoveLeftOrRight ) {
                 MoveLeftOrRight();
+                _animationControl.PlayAnimation(KeyAnim.Walk);
             }
             
             if ( CanSlideInWall ) {
                 SlideInWall();
+                _animationControl.PlayAnimation(KeyAnim.SlideInWall);
             }
 
             if ( CanJump ) {
@@ -83,6 +85,7 @@ namespace Game.Player {
                 Jump();
                 _jumpTrigger = false;
                 _allowSecondJump = true;
+                _animationControl.PlayAnimation(KeyAnim.Jump);
             }
 
             if ( CanSecondJump ) {  
@@ -156,38 +159,20 @@ namespace Game.Player {
 
             for ( var i = 0; i < other.contactCount; i++ ) {        
                 var normal = other.GetContact(i).normal;
-                var isWall = IsWall(normal);
-                if ( isWall && !_wallTrigger ) {
+                if ( IsWall(normal) && !_wallTrigger ) {
                     _wallTrigger = other.collider;
                     _wallNormal = normal;
-                }
-
-                var isFloor = IsFloor(normal);
-
-                var keyAnim = KeyAnim.None;
-                if ( isWall && !_floorTrigger ) {
-                    keyAnim = KeyAnim.SlideInWall;
-                } else if ( isFloor ) {
-                    keyAnim = KeyAnim.Walk;
-                }
-
-                if ( keyAnim != KeyAnim.None ) {
-                    _animationControl.PlayAnimation(keyAnim);
                 }
             }
         }
 
-        void OnCollisionExit2D(Collision2D other) {
+        void OnCollisionExit2D(Collision2D other) {            
             if ( other.collider == _wallTrigger ) {
                 _wallTrigger = null;
             }
 
             if ( other.collider == _floorTrigger ) {
                 _floorTrigger = null;
-            }
-
-            if ( !_wallTrigger && !_floorTrigger ) {
-                _animationControl.PlayAnimation(KeyAnim.Jump);
             }
         }
     }
