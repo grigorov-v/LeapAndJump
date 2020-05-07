@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Game.Animations;
 
+using UnityEngine.UI;
+
 using KeyAnim = Game.Animations.BaseAnimation.KeyAnim;
 
 namespace Game.Player {
@@ -24,6 +26,7 @@ namespace Game.Player {
 
         [Header("Debug")]
         public bool AutoPlay = false;
+        public Text DebugText = null;
         float _jumpProbability = 30;
 
         bool CanJump {
@@ -64,6 +67,11 @@ namespace Game.Player {
                     _jumpTrigger = (rand <= _jumpProbability);
                 }
             }
+
+            var floorName = _floorTrigger ? _floorTrigger.name : "null";
+            var wallName = _wallTrigger ? _wallTrigger.name : "null";
+            DebugText.text = string.Format("floor: {0}\n\nwall: {1}\n\n", floorName, wallName);
+            DebugText.text += string.Format("velocity: {0}", _rb.velocity);
         }
 
         void FixedUpdate() {
