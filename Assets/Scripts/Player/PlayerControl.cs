@@ -31,6 +31,10 @@ namespace Game.Player {
 
         bool CanJump {
             get {
+                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jumpTrigger ) {//если застряли
+                    return true;
+                }
+
                 return (_floorTrigger || _wallTrigger) && _jumpTrigger;
             }
         }
