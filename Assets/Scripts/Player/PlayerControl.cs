@@ -121,9 +121,11 @@ namespace Game.Player {
         }
 
         void MoveLeftOrRight() {
+            if ( _rb.velocity.y > 0 ) {
+                return;
+            }
             var dir = (transform.localScale.x > 0) ? Vector2.left : Vector2.right;
-            var movePos = (Vector2)transform.position + (dir * _speed * Time.fixedDeltaTime);
-            _rb.MovePosition(movePos);
+            _rb.velocity = dir * _speed;
         }
 
         void SetMirrorScale() {
