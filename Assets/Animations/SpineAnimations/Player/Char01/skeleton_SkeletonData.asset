@@ -22,20 +22,14 @@ MonoBehaviour:
   - Jump
   - Jump
   - Walk
-  - Walk
-  - Idle
   - in Wall
   toAnimation:
   - in Wall
   - in Wall
   - Roll
   - Roll
-  - Idle
-  - Walk
-  - Idle
+  - Roll
   duration:
-  - 0.2
-  - 0.2
   - 0.2
   - 0.2
   - 0.2
