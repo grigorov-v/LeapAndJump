@@ -108,6 +108,8 @@ namespace Game.Player {
 
             if ( _floorTrigger && _wallTrigger ) {
                 SetMirrorScale();
+            } else if ( _rb.velocity == Vector2.zero ) {
+                _animationControl.PlayAnimation(KeyAnim.Idle);
             }
         }
 
