@@ -10,7 +10,10 @@ namespace CustomBuildPipeline {
         public static void AndroidBuild() {
             Version.UpdateQARevision();
             
-            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();            
+            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+            buildPlayerOptions.scenes = new[] { 
+                "Assets/Scenes/Level.unity"
+            };          
             buildPlayerOptions.locationPathName = GetApkLocationPath("Builds", "LeapAndJump_" + Application.version);
             buildPlayerOptions.target = BuildTarget.Android;
             BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
