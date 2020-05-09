@@ -47,16 +47,10 @@ namespace Grigorov.SceneManagement {
         }
 
         IEnumerator LoadingCoroutine() {
-            yield return null;
-
-            if ( (_loadingOperation == null) || (_loadingAction == null) ) {
-                ShellCoroutine.Instance.StopCoroutine(LoadingCoroutine());
-            } else {
-                var progress = _loadingOperation.progress;
-                _loadingAction.Invoke(progress);
-                if ( _loadingOperation.isDone ) {
-                    ShellCoroutine.Instance.StopCoroutine(LoadingCoroutine());   
-                }
+            while ( (_loadingOperation != null) && !_loadingOperation.isDone ) {
+                var progress = _loadingOperation.progress / 0.9f;
+                _loadingAction?.Invoke(progress);
+                yield return null;
             }
         }
 
