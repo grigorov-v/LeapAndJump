@@ -10,7 +10,7 @@ namespace Grigorov.SceneManagement {
         AsyncOperation               _loadingOperation = null;
         
         Action<Scene, LoadSceneMode> _loadedAction     = null;
-        Action<Scene>                _unloadedAction = null;
+        Action<Scene>                _unloadedAction   = null;
 
         public SceneHandler(string sceneName) {
             _sceneName = sceneName;
