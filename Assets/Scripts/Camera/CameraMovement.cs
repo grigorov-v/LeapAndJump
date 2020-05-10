@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-using Game.Player;
+using Grigorov.LeapAndJump.Player;
 
-namespace Game.CameraManagement {
+namespace Grigorov.LeapAndJump.CameraManagement {
     public class CameraMovement : MonoBehaviour {
         [SerializeField] float     _lerp      = 3;
         [SerializeField] Vector2   _offset    = new Vector2(0, 0.1f);

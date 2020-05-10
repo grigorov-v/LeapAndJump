@@ -6,7 +6,7 @@ using NaughtyAttributes;
 using UnityEditor;
 #endif
 
-namespace Game.Level {
+namespace Grigorov.LeapAndJump.Level {
     public class LevelElement : MonoBehaviour {
         [SerializeField] List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
 

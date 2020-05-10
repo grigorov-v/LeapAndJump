@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using Game.Animations;
+using Grigorov.LeapAndJump.Animations;
 
 using UnityEngine.UI;
 
-using KeyAnim = Game.Animations.BaseAnimation.KeyAnim;
+using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 
-namespace Game.Player {
+namespace Grigorov.LeapAndJump.Player {
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BaseAnimation))]

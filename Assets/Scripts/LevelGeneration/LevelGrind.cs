@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Level {
+namespace Grigorov.LeapAndJump.Level {
     public class LevelGrind : MonoBehaviour {
         [SerializeField] Vector2    _cellSize    = new Vector2(1.29f, 1.29f);
         [SerializeField] Vector2    _startCenter = new Vector2(-1.93f, -5.87f);

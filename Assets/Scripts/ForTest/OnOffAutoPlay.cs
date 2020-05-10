@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Grigorov.LeapAndJump.Player;
+
 public class OnOffAutoPlay : MonoBehaviour
 {
     Button _button;
@@ -14,7 +16,7 @@ public class OnOffAutoPlay : MonoBehaviour
        
         _button.onClick.AddListener(() => {
             _curAutoPlay = !_curAutoPlay;
-            FindObjectOfType<Game.Player.PlayerControl>().AutoPlay = _curAutoPlay;
+            FindObjectOfType<PlayerControl>().AutoPlay = _curAutoPlay;
         });
     }
 }

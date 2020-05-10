@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-using Game.Events;
+using Grigorov.LeapAndJump.Events;
 
 using EventsHelper;
 using DG.Tweening;
 
-namespace Game.Level {
+namespace Grigorov.LeapAndJump.Level {
     
     [RequireComponent(typeof(Rigidbody2D))]
     public class DestructionObject : MonoBehaviour {

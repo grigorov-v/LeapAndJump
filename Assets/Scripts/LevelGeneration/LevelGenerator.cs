@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-using Game.Events;
+using Grigorov.LeapAndJump.Events;
 
 using EventsHelper;
 using NaughtyAttributes;
 
-namespace Game.Level {
+namespace Grigorov.LeapAndJump.Level {
     public class LevelGenerator : MonoBehaviour {
         [SerializeField] int                _minCountBlocks = 4;
         [SerializeField] List<LevelBlock>   _blocks         = new List<LevelBlock>();

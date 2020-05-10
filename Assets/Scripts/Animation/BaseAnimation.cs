@@ -3,7 +3,7 @@ using UnityEngine;
 
 using NaughtyAttributes;
 
-namespace Game.Animations {
+namespace Grigorov.LeapAndJump.Animations {
     public abstract class BaseAnimation : MonoBehaviour {
         public enum KeyAnim {
             None,

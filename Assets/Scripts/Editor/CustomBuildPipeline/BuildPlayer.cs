@@ -5,7 +5,7 @@ using UnityEditor.Build.Reporting;
 using System.IO;
 using System.Linq;
 
-namespace CustomBuildPipeline {
+namespace Grigorov.CustomBuildPipeline {
     public class BuildPlayer {
         [MenuItem("Build/Android Build")]
         public static void AndroidBuild() {

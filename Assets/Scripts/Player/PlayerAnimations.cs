@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Spine.Unity;
 
-namespace Game.Animations.Player {
+namespace Grigorov.LeapAndJump.Animations.Player {
     public class PlayerAnimations : BaseAnimation {
         [SerializeField] SkeletonAnimation _skeletonAnimation = null;
 

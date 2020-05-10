@@ -1,7 +1,7 @@
-﻿using Game.Level;
-using Game.Player;
+﻿using Grigorov.LeapAndJump.Level;
+using Grigorov.LeapAndJump.Player;
 
-namespace Game.Events {
+namespace Grigorov.LeapAndJump.Events {
     public struct PlayerIntoBlockTriggerEnter {
         public LevelBlock    LevelBlock {get; private set;}
         public PlayerControl Player     {get; private set;}

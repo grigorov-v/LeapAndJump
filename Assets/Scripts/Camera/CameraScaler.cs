@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.CameraManagement {
+namespace Grigorov.LeapAndJump.CameraManagement {
     public class CameraScaler : MonoBehaviour {
         [SerializeField]
         Vector2      _defaultResolution = new Vector2(720, 1280);

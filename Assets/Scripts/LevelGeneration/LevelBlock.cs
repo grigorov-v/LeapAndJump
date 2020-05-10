@@ -2,12 +2,12 @@
 using System.Linq;
 using UnityEngine;
 
-using Game.Events;
-using Game.Player;
+using Grigorov.LeapAndJump.Events;
+using Grigorov.LeapAndJump.Player;
 
 using EventsHelper;
 
-namespace Game.Level {
+namespace Grigorov.LeapAndJump.Level {
     
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(LevelGrind))]
