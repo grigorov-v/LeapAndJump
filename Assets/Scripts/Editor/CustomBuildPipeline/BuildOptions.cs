@@ -2,18 +2,14 @@
 using UnityEngine;
 
 using System.IO;
+using System.Linq;
 
 namespace Grigorov.CustomBuildPipeline {
     public class BuildOptions {
         public static BuildPlayerOptions BuildPlayerOptions = new BuildPlayerOptions() {
             locationPathName = GetApkLocationPath("Builds", "LeapAndJump_" + Application.version),
             target = BuildTarget.Android,
-
-            scenes = new string[] {
-                "Assets/Scenes/Loading.unity",
-                "Assets/Scenes/MainMenu.unity",
-                "Assets/Scenes/World_1.unity"
-            }
+            scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray()
         };
 
         static string GetApkLocationPath(string directory, string nameApk) {
