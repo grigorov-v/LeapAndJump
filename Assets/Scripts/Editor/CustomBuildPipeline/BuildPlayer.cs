@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor.Build.Reporting;
 
 using System.IO;
+using System.Linq;
 
 namespace CustomBuildPipeline {
     public class BuildPlayer {
@@ -11,9 +12,7 @@ namespace CustomBuildPipeline {
             Version.UpdateQARevision();
             
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-            buildPlayerOptions.scenes = new[] { 
-                "Assets/Scenes/Level.unity"
-            };          
+            buildPlayerOptions.scenes = EditorBuildSettings.scenes.Select(settingsScene => settingsScene.path).ToArray();
             buildPlayerOptions.locationPathName = GetApkLocationPath("Builds", "LeapAndJump_" + Application.version);
             buildPlayerOptions.target = BuildTarget.Android;
             BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
