@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEditor.Build.Reporting;
 
 using System.IO;
-using System.Linq;
 
 namespace Grigorov.CustomBuildPipeline {
     public class BuildPlayer {
@@ -11,17 +10,11 @@ namespace Grigorov.CustomBuildPipeline {
         public static void AndroidBuild() {
             Version.UpdateQARevision();
             
-            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-            buildPlayerOptions.scenes = EditorBuildSettings.scenes.Select(settingsScene => settingsScene.path).ToArray();
-            buildPlayerOptions.locationPathName = GetApkLocationPath("Builds", "LeapAndJump_" + Application.version);
-            buildPlayerOptions.target = BuildTarget.Android;
-            BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
-            BuildSummary summary = report.summary;
-
+            var report = BuildPipeline.BuildPlayer(BuildOptions.BuildPlayerOptions);
+            var summary = report.summary;
             if ( summary.result == BuildResult.Succeeded ) {
                 Debug.Log("Build succeeded: " + summary.totalSize + " bytes");
             }
-
             if ( summary.result == BuildResult.Failed ) {
                 Debug.Log("Build failed");
             }
@@ -41,14 +34,6 @@ namespace Grigorov.CustomBuildPipeline {
         [MenuItem("Build/Update QA Revision")]
         static void UpdateQARevision() {
             Version.UpdateQARevision();
-        }
-
-        static string GetApkLocationPath(string directory, string nameApk) {
-            if ( !nameApk.EndsWith(".apk") ) {
-                nameApk += ".apk";
-            }
-
-            return Path.Combine(directory, nameApk);
         }
     }
 }
