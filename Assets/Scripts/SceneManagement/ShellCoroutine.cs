@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Grigorov.SceneManagement {
+namespace Grigorov.LoadingManagement {
     public class ShellCoroutine : MonoBehaviour {
         static ShellCoroutine _instance = null;
 

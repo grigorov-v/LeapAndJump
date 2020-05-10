@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
-using Grigorov.SceneManagement;
+using Grigorov.LoadingManagement;
 
 public class TestLoadingBar : MonoBehaviour
 {

@@ -3,20 +3,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 using Grigorov.Singleton;
-using Grigorov.SceneManagement;
+using Grigorov.LoadingManagement;
 
 using DG.Tweening;
 
 namespace Grigorov.LeapAndJump.UI {
     public class LoadingUI : SingleBehaviour<LoadingUI> {
-        [SerializeField] Image       _bar         = null;
-        [SerializeField] CanvasGroup _canvasGroup = null;
-
-        Tween _tween = null;
+        [SerializeField] Image _bar = null;
 
         void Start() {
             if ( SceneManager.GetActiveScene().name == "Loading" ) {
-                LoadSceneHelper.StartLoadingScene("MainMenu");
+                LoadingHelper.StartLoadingScene("MainMenu");
             }
         }
 
@@ -24,34 +21,19 @@ namespace Grigorov.LeapAndJump.UI {
             _bar.fillAmount = progress;
         }
 
-        public void Show(float duration) {
-            KillTween();
-            _canvasGroup.alpha = 0;
+        public void Show() {
             gameObject.SetActive(true);
-            _tween = _canvasGroup.DOFade(1, duration);
         }
 
-        public void Hide(float duration) {
-            KillTween();
-            _tween = _canvasGroup.DOFade(0, duration);
-            _tween.onKill += () => {
-                gameObject.SetActive(false);
-            };
-        }
-
-        void KillTween() {
-            if ( _tween == null ) {
-                return;
-            }
-
-            _tween.Kill();
-            _tween = null;
+        public void Hide() {
+            gameObject.SetActive(false);
         }
 
         public static void CreateNewObject() {
-            var obj = Resources.Load<LoadingUI>("Prefabs/Loading");
+            var obj = Resources.Load<LoadingUI>("Prefabs/LoadingUI");
             MonoBehaviour.Instantiate(obj);
             LoadingUI.UpdateInstance();
+            LoadingUI.Instance.Hide();
         }
     } 
 }

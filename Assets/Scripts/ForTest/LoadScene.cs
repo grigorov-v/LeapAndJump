@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-using Grigorov.SceneManagement;
+using Grigorov.LoadingManagement;
 
 public class LoadScene : MonoBehaviour {
     public void Load(string name) {
-        LoadSceneHelper.StartLoadingScene(name);
+        LoadingHelper.StartLoadingScene(name);
     }
 }
