@@ -5,28 +5,36 @@ using UnityEngine.SceneManagement;
 
 namespace Grigorov.SceneManagement {
     public class SceneHandler {
-        string                       _sceneName        = null;
-        Action<float>                _loadingAction    = null;
-        AsyncOperation               _loadingOperation = null;
-        
-        Action<Scene, LoadSceneMode> _loadedAction     = null;
-        Action<Scene>                _unloadedAction   = null;
+        string         _sceneName      = null;
+        Action<float>  _loadingAction  = null;
+        AsyncOperation _asyncOperation = null;
+        Action<Scene>  _loadedAction   = null;
+        Action<Scene>  _unloadedAction = null;
 
-        public SceneHandler(string sceneName) {
+        public SceneHandler LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single) {
             _sceneName = sceneName;
-        }
-
-        public SceneHandler LoadSceneAsync() {
-            _loadingOperation = SceneManager.LoadSceneAsync(_sceneName);
+            _asyncOperation = SceneManager.LoadSceneAsync(_sceneName, loadSceneMode);
             return this;
         }
 
-        public SceneHandler LoadScene() {
-            SceneManager.LoadScene(_sceneName);
+        public SceneHandler LoadScene(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single) {
+            _sceneName = sceneName;
+            SceneManager.LoadScene(_sceneName, loadSceneMode);
             return this;
         }
 
-        public SceneHandler SetLoadedAction(Action<UnityEngine.SceneManagement.Scene, LoadSceneMode> action) {
+        public SceneHandler UnloadScene(string sceneName) {
+            _sceneName = sceneName;
+            SceneManager.UnloadSceneAsync(_sceneName);
+            Debug.Log("UnloadScene " + _sceneName);
+            return this;
+        }
+
+        public SceneHandler UnloadScene() {
+            return UnloadScene(_sceneName);
+        }
+
+        public SceneHandler SetLoadedAction(Action<Scene> action) {
             _loadedAction = action;
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -47,8 +55,8 @@ namespace Grigorov.SceneManagement {
         }
 
         IEnumerator LoadingCoroutine() {
-            while ( (_loadingOperation != null) && !_loadingOperation.isDone ) {
-                var progress = _loadingOperation.progress / 0.9f;
+            while ( (_asyncOperation != null) && !_asyncOperation.isDone ) {
+                var progress = _asyncOperation.progress / 0.9f;
                 _loadingAction?.Invoke(progress);
                 yield return null;
             }
@@ -59,7 +67,7 @@ namespace Grigorov.SceneManagement {
                 return;
             }
 
-            _loadedAction?.Invoke(scene, sceneMode);
+            _loadedAction?.Invoke(scene);
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 

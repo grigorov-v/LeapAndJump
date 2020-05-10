@@ -12,7 +12,5 @@ public class TestLoadingBar : MonoBehaviour
 
     void Start()
     {
-        SceneHelper.LoadSceneAsync("MainMenu")
-            .SetLoadingAction((progress) => _fill.fillAmount = progress);
     }
 }
