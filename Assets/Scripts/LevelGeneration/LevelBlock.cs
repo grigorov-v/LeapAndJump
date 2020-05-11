@@ -34,13 +34,13 @@ namespace Grigorov.LeapAndJump.Level {
             }
         }
 
-        public void GenerateLevelElements(List<LevelElement> levelElements) {
+        public void GenerateLevelElements(List<ElementsGroup> elementsGroups, int countBlocks) {
             var elements = GetComponentsInChildren<LevelElement>();
             foreach ( var elem in elements ) {
                 _otherElementsBounds.Add(elem.Bounds);
             }
 
-            if ( levelElements.Count == 0 ) {
+            if ( elementsGroups.Count == 0 ) {
                 return;
             }
 
@@ -59,8 +59,7 @@ namespace Grigorov.LeapAndJump.Level {
                 var findPos = false;
                 do {
                     var position = Vector2.zero;
-                    var randIndex = Random.Range(0, levelElements.Count);
-                    var randElement = levelElements[randIndex];
+                    var randElement = GetRandomElementsGroup(elementsGroups, countBlocks).GetRandomLevelElement();
                     findPos = FindRandomPosition(randElement.Bounds, gridRow, out position);
                     if ( !findPos ) {
                         continue;
@@ -80,6 +79,21 @@ namespace Grigorov.LeapAndJump.Level {
                     
                 } while (findPos);
             }  
+        }
+
+        ElementsGroup GetRandomElementsGroup(List<ElementsGroup> elementsGroups, int countBlocks) {
+            var chanchesSum = elementsGroups.Select(group => group.GetChance(countBlocks)).Sum();
+            var randValue = Random.Range(0, chanchesSum);
+            var sum = 0f;
+
+            foreach ( var group in elementsGroups ) {
+                sum += group.GetChance(countBlocks);
+                if ( randValue < sum ) {
+                    return group;
+                }
+            }
+
+            return elementsGroups.First();
         }
 
         bool IsIntersectsWithElement(Bounds bounds) {
