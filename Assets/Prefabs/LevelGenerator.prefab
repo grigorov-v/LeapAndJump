@@ -44,16 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minCountBlocks: 4
-  _blocks:
-  - {fileID: 6719573491447116398, guid: df0a81c20e9f04645a32edf3267e1971, type: 3}
-  _levelElements:
-  - {fileID: 7002873223997072891, guid: 5078681c37f0c044ba80ae630d4da32c, type: 3}
-  - {fileID: 7002873223997072891, guid: 4b64fdf49c9cd03459198be4f92305dd, type: 3}
-  - {fileID: 7002873223997072891, guid: f68f3202cc0eb434cb1da8be1a4be781, type: 3}
-  - {fileID: 7002873223997072891, guid: 8a3674a475afc4340b6e0839c929ffc1, type: 3}
-  - {fileID: 7002873223997072891, guid: 4042ee63db8b032499c2ff09de619083, type: 3}
-  - {fileID: 7002873223997072891, guid: 7d9482e750ca94742985455fc5663cb9, type: 3}
-  - {fileID: 7002873223997072891, guid: 4070d01974a881648b77f43708ee3aa3, type: 3}
-  - {fileID: 7002873223997072891, guid: a01e54cb9b832414983e909f9b52b4e3, type: 3}
-  - {fileID: 7002873223997072891, guid: 30d1de511cbe11340940408ed5fd4927, type: 3}
-  - {fileID: 7002873223997072891, guid: acbb8f05a4ff77d4996ae48a3492a547, type: 3}
+  _blocks: []
+  _levelsBalance: {fileID: 0}
+  _testLevel: 0

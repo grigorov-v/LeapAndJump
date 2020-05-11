@@ -34,13 +34,13 @@ namespace Grigorov.LeapAndJump.Level {
             }
         }
 
-        public void GenerateLevelElements(List<ElementsGroup> elementsGroups, int countBlocks) {
+        public void GenerateLevelElements(LevelsBalance levelsBalance, int levelIndex) {
             var elements = GetComponentsInChildren<LevelElement>();
             foreach ( var elem in elements ) {
                 _otherElementsBounds.Add(elem.Bounds);
             }
 
-            if ( elementsGroups.Count == 0 ) {
+            if ( !levelsBalance ) {
                 return;
             }
 
@@ -59,7 +59,12 @@ namespace Grigorov.LeapAndJump.Level {
                 var findPos = false;
                 do {
                     var position = Vector2.zero;
-                    var randElement = GetRandomElementsGroup(elementsGroups, countBlocks).GetRandomLevelElement();
+                    var group = levelsBalance.GetRandomElementsGroup(levelIndex);
+                    var randElement = group ? group.GetRandomLevelElement() : null;
+                    if ( !randElement ) {
+                        return;
+                    }
+
                     findPos = FindRandomPosition(randElement.Bounds, gridRow, out position);
                     if ( !findPos ) {
                         continue;
@@ -79,21 +84,6 @@ namespace Grigorov.LeapAndJump.Level {
                     
                 } while (findPos);
             }  
-        }
-
-        ElementsGroup GetRandomElementsGroup(List<ElementsGroup> elementsGroups, int countBlocks) {
-            var chanchesSum = elementsGroups.Select(group => group.GetChance(countBlocks)).Sum();
-            var randValue = Random.Range(0, chanchesSum);
-            var sum = 0f;
-
-            foreach ( var group in elementsGroups ) {
-                sum += group.GetChance(countBlocks);
-                if ( randValue < sum ) {
-                    return group;
-                }
-            }
-
-            return elementsGroups.First();
         }
 
         bool IsIntersectsWithElement(Bounds bounds) {

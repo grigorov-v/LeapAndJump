@@ -13,11 +13,11 @@ namespace Grigorov.LeapAndJump.Level {
     public class LevelGenerator : MonoBehaviour {
         [SerializeField] int                _minCountBlocks = 4;
         [SerializeField] List<LevelBlock>   _blocks         = new List<LevelBlock>();
-        [SerializeField] string             _worldName      = string.Empty;
+        [SerializeField] LevelsBalance      _levelsBalance  = null;
+
+        [SerializeField] int                _testLevel      = 0;
 
         List<LevelBlock>    _activeBlocks  = new List<LevelBlock>();
-        List<ElementsGroup> _elementsGroups = new List<ElementsGroup>();
-        int                 _countBlocks   = 0;
 
         LevelBlock LastBlock {
             get {
@@ -29,9 +29,6 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         void Awake() {
-            var path = Path.Combine("ElementsGroups", _worldName);
-            _elementsGroups = Resources.LoadAll<ElementsGroup>(path).ToList();
-
             for ( var i = 0; i < _minCountBlocks; i++ ) {
                 CreateNewBlock();
             }
@@ -54,9 +51,8 @@ namespace Grigorov.LeapAndJump.Level {
             }
 
             newBlock.transform.position = position;
-            newBlock.GenerateLevelElements(_elementsGroups, _countBlocks);
+            newBlock.GenerateLevelElements(_levelsBalance, _testLevel);
             _activeBlocks.Add(newBlock);
-            _countBlocks ++;
         }
 
         void OnPlayerIntoBlockTriggerEnter(PlayerIntoBlockTriggerEnter e) {
