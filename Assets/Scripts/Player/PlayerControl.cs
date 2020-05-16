@@ -2,6 +2,7 @@
 using Grigorov.LeapAndJump.Animations;
 
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 
@@ -21,7 +22,7 @@ namespace Grigorov.LeapAndJump.Player {
         Collider2D    _wallTrigger      = null;
         Collider2D    _floorTrigger     = null;
         Vector2       _wallNormal       = Vector2.zero;  
-        bool          _jumpTrigger      = false;
+        bool          _jumpInput      = false;
         bool          _allowSecondJump  = false;
 
         [Header("Debug")]
@@ -31,29 +32,29 @@ namespace Grigorov.LeapAndJump.Player {
 
         bool CanJump {
             get {
-                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jumpTrigger ) {//если застряли
+                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jumpInput ) {//если застряли
                     return true;
                 }
 
-                return (_floorTrigger || _wallTrigger) && _jumpTrigger;
+                return (_floorTrigger || _wallTrigger) && _jumpInput;
             }
         }
 
         bool CanSecondJump {
             get {
-                return !_floorTrigger && !_wallTrigger && _allowSecondJump && _jumpTrigger;
+                return !_floorTrigger && !_wallTrigger && _allowSecondJump && _jumpInput;
             }
         }
 
         bool CanMoveLeftOrRight {
             get {
-                return _floorTrigger && !_jumpTrigger;
+                return _floorTrigger && !_jumpInput;
             }
         }
 
         bool CanSlideInWall {
             get {
-                return !_floorTrigger && _wallTrigger && !_jumpTrigger && (_rb.velocity.y < 0);
+                return !_floorTrigger && _wallTrigger && !_jumpInput && (_rb.velocity.y < 0);
             }
         }
 
@@ -63,19 +64,21 @@ namespace Grigorov.LeapAndJump.Player {
         }
 
         void Update() {
-            if ( !_jumpTrigger ) {
-                _jumpTrigger = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
-
+            if ( !_jumpInput ) {
+                _jumpInput = Input.GetKeyDown(KeyCode.Space);
                 if ( AutoPlay ) {
                     var rand = Random.Range(0, 100);
-                    _jumpTrigger = (rand <= _jumpProbability);
+                    _jumpInput = (rand <= _jumpProbability);
                 }
             }
 
-            var floorName = _floorTrigger ? _floorTrigger.name : "null";
-            var wallName = _wallTrigger ? _wallTrigger.name : "null";
-            DebugText.text = string.Format("floor: {0}\n\nwall: {1}\n\n", floorName, wallName);
-            DebugText.text += string.Format("velocity: {0}", _rb.velocity);
+            if ( DebugText.gameObject.activeSelf && DebugText.gameObject.activeInHierarchy ) {
+                var floorName = _floorTrigger ? _floorTrigger.name : "null";
+                var wallName = _wallTrigger ? _wallTrigger.name : "null";
+                DebugText.text = string.Format("floor: {0}\n\nwall: {1}\n\n", floorName, wallName);
+                DebugText.text += string.Format("velocity: {0}\n", _rb.velocity);
+                DebugText.text += string.Format("jump: {0}", _jumpInput);
+            }
         }
 
         void FixedUpdate() {
@@ -94,14 +97,14 @@ namespace Grigorov.LeapAndJump.Player {
                     SetMirrorScale();
                 }
                 Jump();
-                _jumpTrigger = false;
+                _jumpInput = false;
                 _allowSecondJump = true;
                 _animationControl.PlayAnimation(KeyAnim.Jump);
             }
 
             if ( CanSecondJump ) {  
                 Jump(true);
-                _jumpTrigger = false;
+                _jumpInput = false;
                 _allowSecondJump = false;
                 _animationControl.PlayAnimation(KeyAnim.SecondJump);
             }
@@ -109,6 +112,10 @@ namespace Grigorov.LeapAndJump.Player {
             if ( _floorTrigger && _wallTrigger ) {
                 SetMirrorScale();
             }
+        }
+
+        public void JumpInput() {
+            _jumpInput = true;
         }
 
         void Jump(bool secondJump = false) {
@@ -166,7 +173,7 @@ namespace Grigorov.LeapAndJump.Player {
         }
 
         void OnCollisionStay2D(Collision2D other) {
-            if ( _jumpTrigger ) {
+            if ( _jumpInput ) {
                 return;
             }
 
