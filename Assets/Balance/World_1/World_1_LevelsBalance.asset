@@ -20,3 +20,6 @@ MonoBehaviour:
   - ElementsGroups:
     - {fileID: 11400000, guid: 4c1ac6f45fd242b45badb0da27fef3f9, type: 2}
     - {fileID: 11400000, guid: e221acc6f2bd8c44ea5962bf15c9b4c6, type: 2}
+    - {fileID: 11400000, guid: 1f989864fdd1c124ebd5ffa9a396266b, type: 2}
+  - ElementsGroups:
+    - {fileID: 11400000, guid: 1f989864fdd1c124ebd5ffa9a396266b, type: 2}

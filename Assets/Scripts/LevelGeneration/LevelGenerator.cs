@@ -1,23 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Collections;
 using UnityEngine;
 
 using Grigorov.LeapAndJump.Events;
 
 using EventsHelper;
-using NaughtyAttributes;
 
 namespace Grigorov.LeapAndJump.Level {
     public class LevelGenerator : MonoBehaviour {
-        [SerializeField] int                _minCountBlocks = 4;
-        [SerializeField] List<LevelBlock>   _blocks         = new List<LevelBlock>();
-        [SerializeField] LevelsBalance      _levelsBalance  = null;
+        [SerializeField] int              _minCountBlocks = 4;
+        [SerializeField] List<LevelBlock> _blocks         = new List<LevelBlock>();
+        [SerializeField] LevelsBalance    _levelsBalance  = null;
+        [SerializeField] int              _testLevel      = 0;
 
-        [SerializeField] int                _testLevel      = 0;
-
-        List<LevelBlock>    _activeBlocks  = new List<LevelBlock>();
+        List<LevelBlock> _activeBlocks  = new List<LevelBlock>();
 
         LevelBlock LastBlock {
             get {
