@@ -1,5 +1,4 @@
 ﻿using UnityEditor;
-using UnityEngine;
 
 using System.IO;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Linq;
 namespace Grigorov.CustomBuildPipeline {
     public class BuildOptions {
         public static BuildPlayerOptions BuildPlayerOptions = new BuildPlayerOptions() {
-            locationPathName = GetApkLocationPath("Builds", "LeapAndJump_" + Application.version),
+            locationPathName = GetApkLocationPath("Builds", "LeapAndJump_QA"),
             target = BuildTarget.Android,
             scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray()
         };
