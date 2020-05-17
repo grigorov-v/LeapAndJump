@@ -17,5 +17,18 @@ namespace Grigorov.LoadingManagement {
                 .SetLoadingAction(progress => LoadingUI.Instance.UpdateBar(progress))
                 .SetLoadedAction(scene => LoadingUI.Instance.Hide());
         }
+
+        public static void LoadMainMenu() {
+            StartLoadingScene("MainMenu");
+        }
+
+        public static void RestartCurrentScene() {
+            var sceneName = SceneManager.GetActiveScene().name;
+            StartLoadingScene(sceneName);
+        }
+
+        public static void LoadLevel() {
+            StartLoadingScene("World_1");
+        }
     }
 }

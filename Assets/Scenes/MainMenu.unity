@@ -112,6 +112,26 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &47795004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2343453637735146972, guid: bcdd10921229ff641a62bbb48e4d1efb,
+    type: 3}
+  m_PrefabInstance: {fileID: 9205474292137068195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &47795005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47795004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3c7375fea554349bde79564acffcb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isPopup: 0
+  _startGameButton: {fileID: 1173873728}
 --- !u!1 &454245140
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +295,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultResolution: {x: 720, y: 1280}
   _widthOrHeight: 0
+--- !u!114 &1173873728 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7822259146430315050, guid: bcdd10921229ff641a62bbb48e4d1efb,
+    type: 3}
+  m_PrefabInstance: {fileID: 9205474292137068195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9205474292137068195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -392,5 +424,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7822259146430315050, guid: bcdd10921229ff641a62bbb48e4d1efb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9205474292137068197, guid: bcdd10921229ff641a62bbb48e4d1efb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bcdd10921229ff641a62bbb48e4d1efb, type: 3}
