@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Grigorov.Extensions;
+
 using NaughtyAttributes;
 
 namespace Grigorov.LeapAndJump.Level {
@@ -13,6 +15,8 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         [SerializeField][ReorderableList] List<Level> _levels = new List<Level>();
+
+        List<ElementsGroup> _randomizeElementsGroups = new List<ElementsGroup>();
 
         public ElementsGroup GetRandomElementsGroup(int levelIndex) {
             if ( levelIndex > _levels.Count - 1 ) {
@@ -27,8 +31,14 @@ namespace Grigorov.LeapAndJump.Level {
             if ( elementsGroups.Count == 0 ) {
                 return null;
             }
-            var randIndex = Random.Range(0, elementsGroups.Count);
-            return elementsGroups[randIndex];
+            
+            if ( _randomizeElementsGroups.Count == 0 ) {
+                _randomizeElementsGroups = elementsGroups.Randomize();
+            }
+
+            var group = _randomizeElementsGroups.GetRandomElement();
+            _randomizeElementsGroups.Remove(group);
+            return group;
         }
     }
 }

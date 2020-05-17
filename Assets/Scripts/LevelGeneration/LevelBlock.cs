@@ -45,6 +45,7 @@ namespace Grigorov.LeapAndJump.Level {
             }
 
             var rowCount = LevelGrind.BoundsArray.GetLength(1);
+            var group = levelsBalance.GetRandomElementsGroup(levelIndex);
             for ( var rowIndex = 1; rowIndex < rowCount; rowIndex ++ ) {
                 var gridRow = GetGridRow(rowIndex);
                 if ( gridRow.Exists(cell => IsIntersectsWithElement(cell)) ) {
@@ -59,7 +60,6 @@ namespace Grigorov.LeapAndJump.Level {
                 var findPos = false;
                 do {
                     var position = Vector2.zero;
-                    var group = levelsBalance.GetRandomElementsGroup(levelIndex);
                     var randElement = group ? group.GetRandomLevelElement() : null;
                     if ( !randElement ) {
                         return;
