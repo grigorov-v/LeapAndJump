@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Grigorov.LoadingManagement {
+namespace Grigorov.SceneManagement {
     public class SceneHandler {
         string         _sceneName      = null;
         Action<float>  _loadingAction  = null;

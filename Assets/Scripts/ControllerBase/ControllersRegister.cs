@@ -13,7 +13,7 @@ namespace Grigorov.Controller {
         }
 
         public void CreateAllControllers() {
-            AddController(new TEstController());
+            AddController(ScenesController.Create());
         }
 
         ControllersRegister AddController<T>(T controller) where T: IController {

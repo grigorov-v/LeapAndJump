@@ -1,15 +1,16 @@
 ﻿namespace Grigorov.Controller {
-    public class BaseController<T>: IController where T: class, IController {
+    public abstract class BaseController<T>: IController where T: class, IController, new() {
         public static T Instance { get; private set; }
 
-        public virtual void Init() {
-            Instance = (Instance == null) ? this as T : Instance;
+        public static T Create() {
+            Instance = (Instance == null) ? new T() : Instance;
+            return Instance;
         }
 
-        public virtual void PostInit() { 
-        }
+        public abstract void Init();
 
-        public virtual void Reinit() { 
-        }
+        public abstract void PostInit();
+
+        public abstract void Reinit();
     }
 }

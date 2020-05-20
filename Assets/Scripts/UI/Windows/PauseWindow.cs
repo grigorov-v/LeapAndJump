@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.LoadingManagement;
+using Grigorov.SceneManagement;
+using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI {
     public class PauseWindow : BaseWindow {
@@ -24,12 +25,12 @@ namespace Grigorov.LeapAndJump.UI {
 
         void OnMainMenuClick() {
             UnPause();
-            LoadingHelper.LoadMainMenu();
+            ScenesController.Instance.OpenMainMenu();
         }
 
         void OnRestartClick() {
             UnPause();
-            LoadingHelper.RestartCurrentScene();
+            ScenesController.Instance.RestartCurrentScene();
         }
 
         void UnPause() {

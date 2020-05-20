@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.LoadingManagement;
+using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI {
     public class MainMenuWindow : BaseWindow {
@@ -14,7 +14,7 @@ namespace Grigorov.LeapAndJump.UI {
         }
 
         void OnStartClick() {
-            LoadingHelper.LoadLevel();
+            ScenesController.Instance.OpenLevel();
         }
     }
 }
