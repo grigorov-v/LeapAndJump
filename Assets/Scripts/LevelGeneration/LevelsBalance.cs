@@ -1,44 +1,25 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-using Grigorov.Extensions;
-
-using NaughtyAttributes;
+using SimpleJSON;
 
 namespace Grigorov.LeapAndJump.Level {
-    [CreateAssetMenu(menuName = "Create LevelsBalance", fileName = "World_{0}_LevelsBalance")]
-    public class LevelsBalance : ScriptableObject {
-        [System.Serializable]
-        struct Level {
-            public List<ElementsGroup> ElementsGroups;
+    public class LevelsBalance {
+        JSONNode _jsonNode = null;
+
+        public LevelsBalance(string world) {
+            var jsonFromResources = Resources.Load($"Balance/{world}") as TextAsset;
+            _jsonNode = JSON.Parse(jsonFromResources.text);
         }
 
-        [SerializeField][ReorderableList] List<Level> _levels = new List<Level>();
-
-        List<ElementsGroup> _randomizeElementsGroups = new List<ElementsGroup>();
-
-        public ElementsGroup GetRandomElementsGroup(int levelIndex) {
-            if ( levelIndex > _levels.Count - 1 ) {
-                return null;
-            }
-            var level = _levels[levelIndex];
-            return GetRandomElementsGroup(level);
-        }
-
-        ElementsGroup GetRandomElementsGroup(Level level) {
-            var elementsGroups = level.ElementsGroups;
-            if ( elementsGroups.Count == 0 ) {
-                return null;
-            }
-            
-            if ( _randomizeElementsGroups.Count == 0 ) {
-                _randomizeElementsGroups = elementsGroups.Randomize();
+        public List<string> GetElementsGroups(int level) {
+            var arrayFromJson = _jsonNode["levels"][level.ToString()]["elements_groups"].AsArray;
+            var result = new List<string>(arrayFromJson.Count);
+            foreach ( var pair in arrayFromJson ) {
+                result.Add(pair.Value);
             }
 
-            var group = _randomizeElementsGroups.GetRandomElement();
-            _randomizeElementsGroups.Remove(group);
-            return group;
+            return result;
         }
     }
 }

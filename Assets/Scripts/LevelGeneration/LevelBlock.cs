@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Player;
+using Grigorov.Extensions;
 
 using EventsHelper;
 
@@ -17,6 +18,8 @@ namespace Grigorov.LeapAndJump.Level {
 
         LevelGrind   _levelGrind          = null;
         List<Bounds> _otherElementsBounds = new List<Bounds>();
+
+        Stack<ElementsGroup> _tempElementsGroupsStack = new Stack<ElementsGroup>();
 
         LevelGrind LevelGrind {
             get {
@@ -34,18 +37,13 @@ namespace Grigorov.LeapAndJump.Level {
             }
         }
 
-        public void GenerateLevelElements(LevelsBalance levelsBalance, int levelIndex) {
+        public void GenerateLevelElements(ElementsGroup elementsGroup) {
             var elements = GetComponentsInChildren<LevelElement>();
             foreach ( var elem in elements ) {
                 _otherElementsBounds.Add(elem.Bounds);
             }
 
-            if ( !levelsBalance ) {
-                return;
-            }
-
             var rowCount = LevelGrind.BoundsArray.GetLength(1);
-            var group = levelsBalance.GetRandomElementsGroup(levelIndex);
             for ( var rowIndex = 1; rowIndex < rowCount; rowIndex ++ ) {
                 var gridRow = GetGridRow(rowIndex);
                 if ( gridRow.Exists(cell => IsIntersectsWithElement(cell)) ) {
@@ -60,7 +58,7 @@ namespace Grigorov.LeapAndJump.Level {
                 var findPos = false;
                 do {
                     var position = Vector2.zero;
-                    var randElement = group ? group.GetRandomLevelElement() : null;
+                    var randElement = elementsGroup ? elementsGroup.GetRandomLevelElement() : null;
                     if ( !randElement ) {
                         return;
                     }
@@ -84,6 +82,14 @@ namespace Grigorov.LeapAndJump.Level {
                     
                 } while (findPos);
             }  
+        }
+
+        Stack<ElementsGroup> TryReinitStack(List<ElementsGroup> elementsGroups) {
+            if ( _tempElementsGroupsStack.Count > 0 ) {
+                return _tempElementsGroupsStack;
+            }
+            _tempElementsGroupsStack = new Stack<ElementsGroup>(elementsGroups.Randomize());
+            return _tempElementsGroupsStack;
         }
 
         bool IsIntersectsWithElement(Bounds bounds) {

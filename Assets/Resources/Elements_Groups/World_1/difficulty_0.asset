@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8de182d5ef153648b007a994b25b7b9, type: 3}
-  m_Name: ElementsGroup_Difficulty_0
+  m_Name: difficulty_0
   m_EditorClassIdentifier: 
   _levelElements:
   - {fileID: 7002873223997072891, guid: 5078681c37f0c044ba80ae630d4da32c, type: 3}
@@ -18,36 +18,3 @@ MonoBehaviour:
   - {fileID: 7002873223997072891, guid: f68f3202cc0eb434cb1da8be1a4be781, type: 3}
   - {fileID: 7002873223997072891, guid: 8a3674a475afc4340b6e0839c929ffc1, type: 3}
   - {fileID: 7002873223997072891, guid: 7d9482e750ca94742985455fc5663cb9, type: 3}
-  _instanceChance:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 100
-      inSlope: -0.9899999
-      outSlope: -0.9899999
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 8.430574
-      value: 91.65373
-      inSlope: -0.98999995
-      outSlope: -0.98999995
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 100
-      value: 1
-      inSlope: -0.99
-      outSlope: -0.99
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4

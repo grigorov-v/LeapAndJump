@@ -1,0 +1,12 @@
+{
+    "common" : {
+    },
+
+    "levels" : {
+        "0" : {
+            "elements_groups" : [
+                "difficulty_0"
+            ]
+        }
+    }
+}

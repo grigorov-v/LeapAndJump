@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using Grigorov.LeapAndJump.Events;
+using Grigorov.Extensions;
 
 using EventsHelper;
 
@@ -9,10 +11,10 @@ namespace Grigorov.LeapAndJump.Level {
     public class LevelGenerator : MonoBehaviour {
         [SerializeField] int              _minCountBlocks = 4;
         [SerializeField] List<LevelBlock> _blocks         = new List<LevelBlock>();
-        [SerializeField] LevelsBalance    _levelsBalance  = null;
-        [SerializeField] int              _testLevel      = 0;
-
-        List<LevelBlock> _activeBlocks  = new List<LevelBlock>();
+        List<LevelBlock>                  _activeBlocks   = new List<LevelBlock>();
+        
+        List<ElementsGroup>  _elementsGroups     = new List<ElementsGroup>();
+        Stack<ElementsGroup> _stackElementsGroups = new Stack<ElementsGroup>();
 
         LevelBlock LastBlock {
             get {
@@ -24,6 +26,14 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         void Awake() {
+            var world = SceneManager.GetActiveScene().name;
+            var balance = new LevelsBalance(world);
+            var allGroupsNames = balance.GetElementsGroups(0);
+            foreach ( var groupName in allGroupsNames ) {
+                var element = Resources.Load<ElementsGroup>($"Elements_Groups/{world}/{groupName}");
+                _elementsGroups.Add(element);
+            }
+
             for ( var i = 0; i < _minCountBlocks; i++ ) {
                 CreateNewBlock();
             }
@@ -46,7 +56,12 @@ namespace Grigorov.LeapAndJump.Level {
             }
 
             newBlock.transform.position = position;
-            newBlock.GenerateLevelElements(_levelsBalance, _testLevel);
+
+            if ( _stackElementsGroups.Count == 0 ) {
+                _stackElementsGroups = new Stack<ElementsGroup>(_elementsGroups.Randomize());
+            }
+            newBlock.GenerateLevelElements(_stackElementsGroups.Pop());
+
             _activeBlocks.Add(newBlock);
         }
 
