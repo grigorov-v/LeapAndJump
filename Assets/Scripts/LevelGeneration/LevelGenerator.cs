@@ -11,10 +11,10 @@ namespace Grigorov.LeapAndJump.Level {
     public class LevelGenerator : MonoBehaviour {
         [SerializeField] int              _minCountBlocks = 4;
         [SerializeField] List<LevelBlock> _blocks         = new List<LevelBlock>();
-        List<LevelBlock>                  _activeBlocks   = new List<LevelBlock>();
         
-        List<ElementsGroup>  _elementsGroups     = new List<ElementsGroup>();
+        List<ElementsGroup>  _elementsGroups      = new List<ElementsGroup>();
         Stack<ElementsGroup> _stackElementsGroups = new Stack<ElementsGroup>();
+        List<LevelBlock>     _activeBlocks        = new List<LevelBlock>();
 
         LevelBlock LastBlock {
             get {
