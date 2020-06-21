@@ -22,5 +22,12 @@ namespace Grigorov.Extensions {
             var rand = Random.Range(0, list.Count);
             return list[rand];
         }
+
+        public static void AddIfNotExists<T>(this List<T> list, T value) {
+            if ( list.IndexOf(value) != -1 ) {
+                return;
+            }
+            list.Add(value);
+        }
     }
 }

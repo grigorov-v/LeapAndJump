@@ -6,7 +6,7 @@ using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Player;
 using Grigorov.Extensions;
 
-using EventsHelper;
+using Grigorov.EventsHelper;
 
 namespace Grigorov.LeapAndJump.Level {
     

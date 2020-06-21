@@ -1,15 +1,16 @@
-﻿using UnityEngine.SceneManagement;
-using Grigorov.SceneManagement.UI;
+﻿using Grigorov.SceneManagement.UI;
 
 namespace Grigorov.SceneManagement {
     public static class SceneLoadingHelper {
-        static SceneHandler _targetSceneHandler = new SceneHandler();
+        static SceneWrapper _targetSceneHandler = new SceneWrapper();
 
-        public static void StartLoadingScene(string sceneName, LoadingUI loadingUI) {
+        public static SceneWrapper StartLoadingScene(string sceneName, LoadingUI loadingUI) {
             loadingUI.Show();
             _targetSceneHandler.LoadSceneAsync(sceneName)
-                .SetLoadingAction(progress => loadingUI.UpdateBar(progress))
-                .SetLoadedAction(scene => loadingUI.Hide());
+                .AddLoadingAction(progress => loadingUI.UpdateBar(progress))
+                .AddLoadedAction(scene => loadingUI.Hide());
+
+            return _targetSceneHandler;
         }
     }
 }

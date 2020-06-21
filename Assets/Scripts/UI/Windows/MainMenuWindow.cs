@@ -14,7 +14,7 @@ namespace Grigorov.LeapAndJump.UI {
         }
 
         void OnStartClick() {
-            ScenesController.Instance.OpenLevel();
+            ScenesController.Instance.OpenScene(Scene.World_1);
         }
     }
 }

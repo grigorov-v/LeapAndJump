@@ -8,6 +8,12 @@ using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;
 
 namespace Grigorov.LeapAndJump.Controllers {
+    public enum Scene {
+        Loading,
+        MainMenu,
+        World_1
+    }
+
     public class ScenesController : BaseController<ScenesController> {
         LoadingUI _loadingUI = null;
 
@@ -26,7 +32,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public override void Init() {
             if ( SceneManager.GetActiveScene().name == "Loading" ) {
-                OpenMainMenu();
+                OpenScene(Scene.MainMenu);
             }
             Debug.LogFormat("{0} Init", typeof(ScenesController).ToString());
         }
@@ -39,24 +45,27 @@ namespace Grigorov.LeapAndJump.Controllers {
             Debug.LogFormat("{0} Reinit", typeof(ScenesController).ToString());
         }
 
-        public void OpenMainMenu() {
-            var sceneName = "MainMenu";
-            SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI);
+        public void OpenScene(Scene scene) {
+            var sceneName = scene.ToString();
+            OpenScene(sceneName);
         }
 
-        public void OpenLevel() {
-            var sceneName = "World_1";
-            SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI);
+        public void OpenScene(string sceneName) {
+            SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI).AddLoadedAction(OnSceneLoaded);
         }
 
         public void RestartCurrentScene() {
             var curScene = SceneManager.GetActiveScene().name;
-            SceneLoadingHelper.StartLoadingScene(curScene, LoadingUI);
+            SceneLoadingHelper.StartLoadingScene(curScene, LoadingUI).AddLoadedAction(OnSceneLoaded);
         }
 
         LoadingUI CreateNewLoadingUIFromResources() {
             var obj = Resources.Load<LoadingUI>("Prefabs/LoadingUI");
             return MonoBehaviour.Instantiate(obj);
+        }
+
+        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene) {
+            Debug.LogFormat("Scene loaded {0}", scene.name);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using Grigorov.LeapAndJump.Events;
 using Grigorov.Extensions;
 
-using EventsHelper;
+using Grigorov.EventsHelper;
 
 namespace Grigorov.LeapAndJump.Level {
     public class LevelGenerator : MonoBehaviour {
