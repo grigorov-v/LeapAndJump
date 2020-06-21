@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 using Grigorov.Controller;
+using Grigorov.EventsHelper;
 using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;
+using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public enum Scene {
+    public enum Scenes {
         Loading,
         MainMenu,
         World_1
     }
 
     public class ScenesController : BaseController<ScenesController> {
+        const string LoadingUIResource = "Prefabs/LoadingUI";
+
         LoadingUI _loadingUI = null;
 
         LoadingUI LoadingUI {
@@ -30,7 +35,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public override void Init() {
             if ( SceneManager.GetActiveScene().name == "Loading" ) {
-                OpenScene(Scene.MainMenu);
+                OpenScene(Scenes.MainMenu);
             }
             Debug.LogFormat("{0} Init", typeof(ScenesController).ToString());
         }
@@ -43,23 +48,25 @@ namespace Grigorov.LeapAndJump.Controllers {
             Debug.LogFormat("{0} Reinit", typeof(ScenesController).ToString());
         }
 
-        public void OpenScene(Scene scene) {
+        public void OpenScene(Scenes scene) {
             var sceneName = scene.ToString();
-            SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI).AddLoadedAction(OnSceneLoaded);
+            SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI)
+                .AddLoadedAction(_ => EventManager.Fire(new LoadedScene(scene)));
         }
 
         public void RestartCurrentScene() {
             var curScene = SceneManager.GetActiveScene().name;
-            SceneLoadingHelper.StartLoadingScene(curScene, LoadingUI).AddLoadedAction(OnSceneLoaded);
+            var scene = SceneEnumFromString(curScene);
+            OpenScene(scene);
         }
 
         LoadingUI CreateNewLoadingUIFromResources() {
-            var obj = Resources.Load<LoadingUI>("Prefabs/LoadingUI");
+            var obj = Resources.Load<LoadingUI>(LoadingUIResource);
             return MonoBehaviour.Instantiate(obj);
         }
 
-        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene) {
-            Debug.LogFormat("Scene loaded {0}", scene.name);
+        Scenes SceneEnumFromString(string sceneName) {
+            return (Scenes)Enum.Parse(typeof(Scenes), sceneName);
         }
     }
 }
