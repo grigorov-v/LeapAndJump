@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using Grigorov.Controller;
@@ -47,10 +45,6 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public void OpenScene(Scene scene) {
             var sceneName = scene.ToString();
-            OpenScene(sceneName);
-        }
-
-        public void OpenScene(string sceneName) {
             SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI).AddLoadedAction(OnSceneLoaded);
         }
 
