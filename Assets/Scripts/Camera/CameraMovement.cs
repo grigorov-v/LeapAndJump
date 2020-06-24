@@ -17,19 +17,31 @@ namespace Grigorov.LeapAndJump.CameraManagement {
         }
 
         void FixedUpdate() {
+            transform.position = CalculateCameraPosition();
+        }
+
+        Vector3 CalculateCameraPosition() {
             var curPos = transform.position;
             curPos = Vector2.Lerp(curPos, _player.position, _lerp * Time.deltaTime);
             curPos += (Vector3)_offset;
             curPos.z = -10;
             curPos.x = 0;
-            curPos.y = Mathf.Clamp(curPos.y, CalculateMinYPos(), curPos.y);
-            transform.position = curPos;
+            curPos.y = Mathf.Clamp(curPos.y, CalculateMinYPos(), CalculateMaxYPos());
+            return curPos;
         }
 
         float CalculateMinYPos() {
-            var bottomLeft = _camera.ScreenToWorldPoint(new Vector2 (0, 0));
+            var bottomLeft = _camera.ViewportToWorldPoint(new Vector2 (0, 0));
             var minYPos = _edgePoint.position.y + (transform.position.y - bottomLeft.y);
             return minYPos;
+        }
+
+        float CalculateMaxYPos() {
+            var bottomLeft = _camera.ViewportToWorldPoint(new Vector2 (0, 0));
+            var topLeft = _camera.ViewportToWorldPoint(new Vector2 (0, 1));
+            var cameraYScale = topLeft.y - bottomLeft.y;
+            var maxYPos = _player.position.y + (cameraYScale / 2);
+            return maxYPos;
         }
     }
 }
