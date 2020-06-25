@@ -64,17 +64,25 @@
 "animations": {
 	"FX03": {
 		"slots": {
+			"Images/8": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff01" }
+				]
+			},
 			"Images/7": {
 				"color": [
-					{ "color": "ffffff7c" }
+					{ "color": "ffffff7c" },
+					{ "time": 0.3333, "color": "ffffff01" }
 				]
 			},
 			"Images/6": {
 				"color": [
-					{ "color": "ffffffac" }
+					{ "color": "ffffffac" },
+					{ "time": 0.3333, "color": "ffffff01" }
 				]
 			},
-			"Images/1": {
+			"Images/5": {
 				"color": [
 					{ "color": "ffffffff" },
 					{ "time": 0.3333, "color": "ffffff01" }
@@ -82,7 +90,26 @@
 			},
 			"Images/4": {
 				"color": [
-					{ "color": "ffffff9b" }
+					{ "color": "ffffff9b" },
+					{ "time": 0.3333, "color": "ffffff01" }
+				]
+			},
+			"Images/3": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff01" }
+				]
+			},
+			"Images/2": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff01" }
+				]
+			},
+			"Images/1": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff01" }
 				]
 			}
 		},
