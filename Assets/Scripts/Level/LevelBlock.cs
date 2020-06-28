@@ -2,11 +2,12 @@
 using System.Linq;
 using UnityEngine;
 
+using Grigorov.Extensions;
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Player;
 using Grigorov.Extensions;
-
 using Grigorov.EventsHelper;
+using Grigorov.LeapAndJump.Level.Gameplay;
 
 namespace Grigorov.LeapAndJump.Level {
     
@@ -37,7 +38,7 @@ namespace Grigorov.LeapAndJump.Level {
             }
         }
 
-        public void GenerateLevelElements(ElementsGroup elementsGroup) {
+        public void GenerateLevelElements(ElementsGroup elementsGroup, List<Food> foodPrefabs) {
             var elements = GetComponentsInChildren<LevelElement>();
             foreach ( var elem in elements ) {
                 _otherElementsBounds.Add(elem.Bounds);
@@ -78,6 +79,7 @@ namespace Grigorov.LeapAndJump.Level {
                     var localCenter = (Vector2)element.transform.InverseTransformPoint(element.Bounds.center);
                     position -= localCenter;
                     element.transform.position = position;
+                    element.SpawnFood(foodPrefabs.GetRandomElement());
                     _otherElementsBounds.Add(elementBounds);
                     
                 } while (findPos);

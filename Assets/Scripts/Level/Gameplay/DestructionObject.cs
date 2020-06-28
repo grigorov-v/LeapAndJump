@@ -7,7 +7,7 @@ using Grigorov.LeapAndJump.Events;
 using Grigorov.EventsHelper;
 using DG.Tweening;
 
-namespace Grigorov.LeapAndJump.Level {
+namespace Grigorov.LeapAndJump.Level.Gameplay {
     
     [RequireComponent(typeof(Rigidbody2D))]
     public class DestructionObject : MonoBehaviour {

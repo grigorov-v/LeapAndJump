@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minCountBlocks: 4
-  _blocks: []
-  _levelsBalance: {fileID: 0}
-  _testLevel: 0
+  _blocks:
+  - {fileID: 6719573491447116398, guid: df0a81c20e9f04645a32edf3267e1971, type: 3}
+  _foodPrefabs:
+  - {fileID: 4789946700157314394, guid: d8bdb1a1136c78d4593ddfa43a6616e7, type: 3}

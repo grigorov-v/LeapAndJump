@@ -1,5 +1,6 @@
-﻿using Grigorov.LeapAndJump.Level;
-using Grigorov.LeapAndJump.Player;
+﻿using Grigorov.LeapAndJump.Player;
+using Grigorov.LeapAndJump.Level;
+using Grigorov.LeapAndJump.Level.Gameplay;
 
 namespace Grigorov.LeapAndJump.Events {
     public struct PlayerIntoBlockTriggerEnter {

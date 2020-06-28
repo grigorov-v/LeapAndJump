@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using Grigorov.LeapAndJump.Events;
 using Grigorov.Extensions;
-
 using Grigorov.EventsHelper;
+using Grigorov.LeapAndJump.Events;
+using Grigorov.LeapAndJump.Level.Gameplay;
 
 namespace Grigorov.LeapAndJump.Level {
     public class LevelGenerator : MonoBehaviour {
         [SerializeField] int              _minCountBlocks = 4;
         [SerializeField] List<LevelBlock> _blocks         = new List<LevelBlock>();
+        [SerializeField] List<Food>       _foodPrefabs    = new List<Food>();
         
         List<ElementsGroup>  _elementsGroups      = new List<ElementsGroup>();
         Stack<ElementsGroup> _stackElementsGroups = new Stack<ElementsGroup>();
@@ -21,7 +23,7 @@ namespace Grigorov.LeapAndJump.Level {
                 if ( _activeBlocks.Count == 0 ) {
                     return null;
                 }
-                return _activeBlocks[_activeBlocks.Count - 1];
+                return _activeBlocks.Last();
             }
         }
 
@@ -60,14 +62,14 @@ namespace Grigorov.LeapAndJump.Level {
             if ( _stackElementsGroups.Count == 0 ) {
                 _stackElementsGroups = new Stack<ElementsGroup>(_elementsGroups.Randomize());
             }
-            newBlock.GenerateLevelElements(_stackElementsGroups.Pop());
+            newBlock.GenerateLevelElements(_stackElementsGroups.Pop(), _foodPrefabs);
 
             _activeBlocks.Add(newBlock);
         }
 
         void OnPlayerIntoBlockTriggerEnter(PlayerIntoBlockTriggerEnter e) {
             if ( LastBlock && (LastBlock == e.LevelBlock) ) {
-                var firstBlock = _activeBlocks[0];
+                var firstBlock = _activeBlocks.First();
                 _activeBlocks.Remove(firstBlock);
                 Destroy(firstBlock.gameObject);
                 CreateNewBlock();

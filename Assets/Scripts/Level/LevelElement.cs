@@ -2,6 +2,9 @@
 using UnityEngine;
 using NaughtyAttributes;
 
+using Grigorov.Extensions;
+using Grigorov.LeapAndJump.Level.Gameplay;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,6 +12,7 @@ using UnityEditor;
 namespace Grigorov.LeapAndJump.Level {
     public class LevelElement : MonoBehaviour {
         [SerializeField] List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
+        [SerializeField] List<Transform>      _foodPoints       = new List<Transform>();
 
         public Bounds Bounds {
             get {
@@ -76,6 +80,17 @@ namespace Grigorov.LeapAndJump.Level {
                 var x = (BottomLeftPoint.x + TopRightPoint.x) / 2;
                 var y = (BottomLeftPoint.y + TopRightPoint.y) / 2;
                 return new Vector2(x, y);
+            }
+        }
+
+        public void SpawnFood(Food food) {
+            var randomizePoints = _foodPoints.Randomize();
+            foreach ( var point in randomizePoints ) {
+                var canSpawn = Random.Range(0, 2) > 0;
+                if ( !canSpawn ) {
+                    continue;
+                }
+                Instantiate(food, point.position, food.transform.rotation);
             }
         }
 
