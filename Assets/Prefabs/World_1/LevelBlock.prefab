@@ -702,6 +702,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6719573491447116399}
   - component: {fileID: 6719573491447116398}
+  - component: {fileID: 114695795021861774}
   - component: {fileID: 4815364270424852733}
   - component: {fileID: 6719573491447116385}
   m_Layer: 0
@@ -742,8 +743,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7430e7e176c994eb8b42e2f3896c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BeginPoint: {fileID: 6719573491545316323}
-  EndPoint: {fileID: 6719573493073930813}
+  _beginPoint: {fileID: 6719573491545316323}
+  _endPoint: {fileID: 6719573493073930813}
+--- !u!114 &114695795021861774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719573491447116396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc218332a12fbe46ad121c6035d01e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4815364270424852733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,6 +1314,7 @@ MonoBehaviour:
   - {fileID: 6719573491668559073}
   - {fileID: 5103449268887709792}
   - {fileID: 2928436070560021191}
+  _foodPoints: []
 --- !u!1 &6719573492645821982
 GameObject:
   m_ObjectHideFlags: 0

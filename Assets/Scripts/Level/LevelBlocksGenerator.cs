@@ -9,7 +9,7 @@ using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Level.Gameplay;
 
 namespace Grigorov.LeapAndJump.Level {
-    public class LevelGenerator : MonoBehaviour {
+    public class LevelBlocksGenerator : MonoBehaviour {
         [SerializeField] int              _minCountBlocks = 4;
         [SerializeField] List<LevelBlock> _blocks         = new List<LevelBlock>();
         [SerializeField] List<Food>       _foodPrefabs    = new List<Food>();
@@ -24,6 +24,15 @@ namespace Grigorov.LeapAndJump.Level {
                     return null;
                 }
                 return _activeBlocks.Last();
+            }
+        }
+
+        Stack<ElementsGroup> StackElementsGroups {
+            get {
+                if ( _stackElementsGroups.Count == 0 ) {
+                    _stackElementsGroups = new Stack<ElementsGroup>(_elementsGroups.Randomize());
+                }
+                return _stackElementsGroups;
             }
         }
 
@@ -51,19 +60,8 @@ namespace Grigorov.LeapAndJump.Level {
             var rand = Random.Range(0, _blocks.Count);
             var newBlock = _blocks[rand];
             newBlock = Instantiate(newBlock);
-        
-            var position = Vector2.zero;
-            if ( LastBlock ) {
-                position = LastBlock.EndPoint.position - newBlock.BeginPoint.localPosition;
-            }
-
-            newBlock.transform.position = position;
-
-            if ( _stackElementsGroups.Count == 0 ) {
-                _stackElementsGroups = new Stack<ElementsGroup>(_elementsGroups.Randomize());
-            }
-            newBlock.GenerateLevelElements(_stackElementsGroups.Pop(), _foodPrefabs);
-
+            newBlock.SetPosition(LastBlock);
+            newBlock.GenerateLevelElements(StackElementsGroups.Pop(), _foodPrefabs);
             _activeBlocks.Add(newBlock);
         }
 
