@@ -8,8 +8,8 @@ using Grigorov.LeapAndJump.Level.Gameplay;
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(LevelGrind))]
     public class LevelElementsGenerator : MonoBehaviour {
-        LevelGrind           _levelGrind              = null;
-        List<Bounds>         _otherElementsBounds     = new List<Bounds>();
+        LevelGrind   _levelGrind        = null;
+        List<Bounds> _allElementsBounds = new List<Bounds>();
 
         LevelGrind LevelGrind {
             get {
@@ -23,10 +23,10 @@ namespace Grigorov.LeapAndJump.Level {
         public void Generate(ElementsGroup elementsGroup, List<Food> foodPrefabs) {
             var elements = GetComponentsInChildren<LevelElement>();
             foreach ( var elem in elements ) {
-                _otherElementsBounds.Add(elem.Bounds);
+                _allElementsBounds.Add(elem.Bounds);
             }
 
-            var rowCount = LevelGrind.BoundsArray.GetLength(1);
+            var rowCount = LevelGrind.Cells.GetLength(1);
             for ( var rowIndex = 1; rowIndex < rowCount; rowIndex ++ ) {
                 var gridRow = GetGridRow(rowIndex);
                 if ( gridRow.Exists(cell => IsIntersectsWithElement(cell)) ) {
@@ -62,14 +62,14 @@ namespace Grigorov.LeapAndJump.Level {
                     position -= localCenter;
                     element.transform.position = position;
                     element.SpawnFood(foodPrefabs.GetRandomElement());
-                    _otherElementsBounds.Add(elementBounds);
+                    _allElementsBounds.Add(elementBounds);
                     
                 } while (findPos);
             }  
         }
 
         bool IsIntersectsWithElement(Bounds bounds) {
-            foreach ( var elemBounds in _otherElementsBounds ) {
+            foreach ( var elemBounds in _allElementsBounds ) {
                 if ( elemBounds.Intersects(bounds) ) {
                     return true;
                 }
@@ -80,7 +80,7 @@ namespace Grigorov.LeapAndJump.Level {
 
         List<Bounds> GetGridRow(int rowIndex) {
             var boundsList = new List<Bounds>();
-            var boundsArray = LevelGrind.BoundsArray;
+            var boundsArray = LevelGrind.Cells;
             for ( var i = 0; i < boundsArray.GetLength(0); i++ ) {
                 var bounds = boundsArray[i, rowIndex];
                 boundsList.Add(bounds);
@@ -150,13 +150,13 @@ namespace Grigorov.LeapAndJump.Level {
                 return;
             }
 
-            _otherElementsBounds.Clear();
+            _allElementsBounds.Clear();
             var elements = GetComponentsInChildren<LevelElement>();
             foreach ( var elem in elements ) {
-                _otherElementsBounds.Add(elem.Bounds);
+                _allElementsBounds.Add(elem.Bounds);
             }
             
-            var boundsArray = LevelGrind.BoundsArray;
+            var boundsArray = LevelGrind.Cells;
             for ( var y = 0; y < boundsArray.GetLength(1); y++ ) {
                 for ( var x = 0; x < boundsArray.GetLength(0); x++ ) {
                     var cellBounds = boundsArray[x, y];

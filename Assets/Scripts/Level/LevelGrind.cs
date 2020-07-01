@@ -10,25 +10,25 @@ namespace Grigorov.LeapAndJump.Level {
         Vector2    _lastStartCenter = Vector2.zero;
         Vector2Int _lastCellCount   = Vector2Int.zero;
 
-        Bounds[,] _boundsArray = null;
+        Bounds[,] _cells = null;
 
-        public Bounds[,] BoundsArray {
+        public Bounds[,] Cells {
             get {
-                if ( (_boundsArray == null) || CheckChanged() ) {
+                if ( (_cells == null) || CheckChanged() ) {
                     GrindGenerate();
                 }
-                return _boundsArray;
+                return _cells;
             }
         }
 
         void GrindGenerate() {
-            _boundsArray = new Bounds[_cellCount.x, _cellCount.y];
+            _cells = new Bounds[_cellCount.x, _cellCount.y];
             for ( var y = 0; y < _cellCount.y; y++ ) {
                 for ( var x = 0; x < _cellCount.x; x++ ) {
                     var center = transform.TransformPoint(_startCenter);
                     center.x += _cellSize.x * x;
                     center.y += _cellSize.y * y;
-                    _boundsArray[x,y] = new Bounds(center, _cellSize);
+                    _cells[x,y] = new Bounds(center, _cellSize);
                 }
             }
 
