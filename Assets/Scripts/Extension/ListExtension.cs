@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Grigorov.Extensions {
@@ -19,6 +18,10 @@ namespace Grigorov.Extensions {
         }
 
         public static T GetRandomElement<T>(this List<T> list) {
+            if ( (list == null) || (list.Count == 0) ) {
+                return default(T);
+            }
+
             var rand = Random.Range(0, list.Count);
             return list[rand];
         }

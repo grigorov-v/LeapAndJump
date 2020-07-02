@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 408455588}
   - component: {fileID: 408455587}
   - component: {fileID: 408455586}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SkeletonAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 249496763}
   - component: {fileID: 96096150501621009}
   - component: {fileID: 3308466354060759633}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -211,10 +211,8 @@ MonoBehaviour:
   _speed: 2.5
   _jumpForce: {x: 60, y: 140}
   _slideVelosity: {x: 0.2, y: -2}
-  _localBounds:
-    m_Center: {x: 0.015, y: 0.14, z: 0}
-    m_Extent: {x: 0.22, y: 0.32, z: 0}
   AutoPlay: 0
+  DebugText: {fileID: 0}
 --- !u!114 &3308466354060759633
 MonoBehaviour:
   m_ObjectHideFlags: 0

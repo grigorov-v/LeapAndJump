@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 9011041089546871357}
   - component: {fileID: 4789946700157314394}
   - component: {fileID: 5999629924782118398}
-  m_Layer: 0
-  m_Name: Food
+  - component: {fileID: 5482740957934033098}
+  m_Layer: 13
+  m_Name: Food_Apple
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -45,10 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d895a9909bf1740bc18a0e78e10518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 2245455099210710109}
-  _sprites:
-  - {fileID: 21300000, guid: 236813b3d4bff064c82b291fc7e6054d, type: 3}
-  - {fileID: 21300000, guid: b78ac97680dd6e5439668630591fabe9, type: 3}
 --- !u!58 &5999629924782118398
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -65,6 +62,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.28
+--- !u!50 &5482740957934033098
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784449154780140676}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 5
 --- !u!1 &7812895091044921171
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4163108942361553022}
   - component: {fileID: 2245455099210710109}
-  m_Layer: 0
+  - component: {fileID: 3475494666475047705}
+  m_Layer: 13
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,3 +163,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &3475494666475047705
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7812895091044921171}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.0827885}
+  serializedVersion: 2
+  m_Radius: 0.2272115

@@ -21,10 +21,7 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         public void Generate(ElementsGroup elementsGroup, List<Food> foodPrefabs) {
-            var elements = GetComponentsInChildren<LevelElement>();
-            foreach ( var elem in elements ) {
-                _allElementsBounds.Add(elem.Bounds);
-            }
+            _allElementsBounds = GetComponentsInChildren<LevelElement>().Select(elem => elem.Bounds).ToList();
 
             var rowCount = LevelGrind.Cells.GetLength(1);
             for ( var rowIndex = 1; rowIndex < rowCount; rowIndex ++ ) {

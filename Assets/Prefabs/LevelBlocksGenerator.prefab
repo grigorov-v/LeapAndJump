@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 911491640854652773}
   - component: {fileID: 911491640854652774}
   m_Layer: 0
-  m_Name: LevelGenerator
+  m_Name: LevelBlocksGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,3 +48,4 @@ MonoBehaviour:
   - {fileID: 6719573491447116398, guid: df0a81c20e9f04645a32edf3267e1971, type: 3}
   _foodPrefabs:
   - {fileID: 4789946700157314394, guid: d8bdb1a1136c78d4593ddfa43a6616e7, type: 3}
+  - {fileID: 4789946700157314394, guid: 4ae47ab669cbf1349a71f3db6db60eab, type: 3}
