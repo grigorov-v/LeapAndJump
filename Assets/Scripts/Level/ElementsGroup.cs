@@ -10,6 +10,10 @@ namespace Grigorov.LeapAndJump.Level {
 
         List<LevelElement> _randomizeElements = new List<LevelElement>();
 
+        public List<LevelElement> RandomizeElements {
+            get => _levelElements.Randomize();
+        }
+
         public LevelElement GetRandomLevelElement() {
             if ( _levelElements.Count == 0 ) {
                 Debug.LogError("_levelElements.Count == 0");
@@ -17,7 +21,7 @@ namespace Grigorov.LeapAndJump.Level {
             }
             
             if ( _randomizeElements.Count == 0 ) {
-                _randomizeElements = _levelElements.Randomize();
+                _randomizeElements = RandomizeElements;
             }
 
             var element = _randomizeElements.GetRandomElement();

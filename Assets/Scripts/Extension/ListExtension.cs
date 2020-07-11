@@ -6,14 +6,12 @@ namespace Grigorov.Extensions {
         public static List<T> Randomize<T>(this List<T> list) {
             var result = new List<T>(list);
             var n = result.Count;
-            
             while ( n > 1 ) {
                 var rand = Random.Range(0, n--);
                 var temp = result[n];
                 result[n] = result[rand];
                 result[rand] = temp;
             }
-
             return result;
         }
 
@@ -21,7 +19,6 @@ namespace Grigorov.Extensions {
             if ( (list == null) || (list.Count == 0) ) {
                 return default(T);
             }
-
             var rand = Random.Range(0, list.Count);
             return list[rand];
         }

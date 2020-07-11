@@ -35,34 +35,39 @@ namespace Grigorov.LeapAndJump.Level {
                     continue;
                 }
 
-                var findPos = false;
+                var trySpawnElement = false;
                 do {
-                    var position = Vector2.zero;
-                    var randElement = elementsGroup ? elementsGroup.GetRandomLevelElement() : null;
-                    if ( !randElement ) {
-                        return;
-                    }
+                    trySpawnElement = TrySpawnElement(elementsGroup.GetRandomLevelElement(), gridRow, foodPrefabs);
+                } while (trySpawnElement);
 
-                    findPos = FindRandomPosition(randElement.Bounds, gridRow, out position);
-                    if ( !findPos ) {
-                        continue;
-                    }
+                elementsGroup.RandomizeElements.ForEach(element => TrySpawnElement(element, gridRow, foodPrefabs));
+            }
+        }
 
-                    var elementBounds = randElement.Bounds;
-                    elementBounds.center = position;
-                    if ( IsIntersectsWithElement(elementBounds) ) {
-                        continue;
-                    }
+        bool TrySpawnElement(LevelElement prefabElement, List<Bounds> gridRow, List<Food> foodPrefabs) {
+            if ( !prefabElement ) {
+                return false;
+            }
 
-                    var element = Instantiate(randElement, transform);
-                    var localCenter = (Vector2)element.transform.InverseTransformPoint(element.Bounds.center);
-                    position -= localCenter;
-                    element.transform.position = position;
-                    element.SpawnFood(foodPrefabs.GetRandomElement());
-                    _allElementsBounds.Add(elementBounds);
-                    
-                } while (findPos);
-            }  
+            var position = Vector2.zero;
+            var findPos = FindRandomPosition(prefabElement.Bounds, gridRow, out position);
+            if ( !findPos ) {
+                return false;
+            }
+
+            var elementBounds = prefabElement.Bounds;
+            elementBounds.center = position;
+            if ( IsIntersectsWithElement(elementBounds) ) {
+                return false;
+            }
+            
+            var element = Instantiate(prefabElement, transform);
+            var localCenter = (Vector2)element.transform.InverseTransformPoint(element.Bounds.center);
+            position -= localCenter;
+            element.transform.position = position;
+            element.SpawnFood(foodPrefabs.GetRandomElement());
+            _allElementsBounds.Add(elementBounds);
+            return true;
         }
 
         bool IsIntersectsWithElement(Bounds bounds) {
