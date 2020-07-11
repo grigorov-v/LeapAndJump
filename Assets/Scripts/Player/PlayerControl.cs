@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
-using Grigorov.LeapAndJump.Animations;
-
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using Grigorov.LeapAndJump.Animations;
 
 using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 
 namespace Grigorov.LeapAndJump.Player {
-
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BaseAnimation))]
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(BaseAnimation))]
     public class PlayerControl : MonoBehaviour {
         const float CheckAngle = 10f;
 
@@ -22,7 +19,7 @@ namespace Grigorov.LeapAndJump.Player {
         Collider2D    _wallTrigger      = null;
         Collider2D    _floorTrigger     = null;
         Vector2       _wallNormal       = Vector2.zero;  
-        bool          _jumpInput      = false;
+        bool          _jumpInput        = false;
         bool          _allowSecondJump  = false;
 
         [Header("Debug")]
@@ -41,21 +38,15 @@ namespace Grigorov.LeapAndJump.Player {
         }
 
         bool CanSecondJump {
-            get {
-                return !_floorTrigger && !_wallTrigger && _allowSecondJump && _jumpInput;
-            }
+            get => !_floorTrigger && !_wallTrigger && _allowSecondJump && _jumpInput && (_rb.velocity.y <= 0);
         }
 
         bool CanMoveLeftOrRight {
-            get {
-                return _floorTrigger && !_jumpInput;
-            }
+            get => _floorTrigger && !_jumpInput;
         }
 
         bool CanSlideInWall {
-            get {
-                return !_floorTrigger && _wallTrigger && !_jumpInput && (_rb.velocity.y < 0);
-            }
+            get => !_floorTrigger && _wallTrigger && !_jumpInput && (_rb.velocity.y < 0);
         }
 
         void Awake() {
@@ -98,7 +89,6 @@ namespace Grigorov.LeapAndJump.Player {
                 }
                 Jump();
                 _jumpInput = false;
-                _allowSecondJump = true;
                 _animationControl.PlayAnimation(KeyAnim.Jump);
             }
 
@@ -168,6 +158,7 @@ namespace Grigorov.LeapAndJump.Player {
                 
                 if ( IsFloor(normal) && !_floorTrigger ) {
                     _floorTrigger = other.collider;
+                    _allowSecondJump = false;
                 }
             }
         }
@@ -193,6 +184,10 @@ namespace Grigorov.LeapAndJump.Player {
 
             if ( other.collider == _floorTrigger ) {
                 _floorTrigger = null;
+            }
+
+            if ( !_wallTrigger && !_floorTrigger ) {
+                _allowSecondJump = true;
             }
         }
     }
