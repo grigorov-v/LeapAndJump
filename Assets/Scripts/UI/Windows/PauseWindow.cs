@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.SceneManagement;
+using Grigorov.Controller;
 using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI {
@@ -12,10 +12,13 @@ namespace Grigorov.LeapAndJump.UI {
         [SerializeField] Button _mainMenuButton = null;
         [SerializeField] Button _restartButton  = null;
 
+        ScenesController _sceneController = null;
+
         void Awake() {
             _closeButton.onClick.AddListener(OnCloseClick);
             _mainMenuButton.onClick.AddListener(OnMainMenuClick);
             _restartButton.onClick.AddListener(OnRestartClick);
+            _sceneController = ControllersRegister.FindController<ScenesController>();
         }
 
         void OnCloseClick() {
@@ -25,12 +28,12 @@ namespace Grigorov.LeapAndJump.UI {
 
         void OnMainMenuClick() {
             UnPause();
-            ScenesController.Instance.OpenScene(Scenes.MainMenu);
+            _sceneController?.OpenScene(Scenes.MainMenu);
         }
 
         void OnRestartClick() {
             UnPause();
-            ScenesController.Instance.RestartCurrentScene();
+            _sceneController?.RestartCurrentScene();
         }
 
         void UnPause() {

@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
+using Grigorov.Controller;
 using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI {
@@ -9,12 +10,15 @@ namespace Grigorov.LeapAndJump.UI {
         [Space]
         [SerializeField] Button _startGameButton = null;
 
+        ScenesController _sceneController = null;
+
         void Awake() {
             _startGameButton.onClick.AddListener(OnStartClick);
+            _sceneController = ControllersRegister.FindController<ScenesController>();
         }
 
         void OnStartClick() {
-            ScenesController.Instance.OpenScene(Scenes.World_1);
+            _sceneController?.OpenScene(Scenes.World_1);
         }
     }
 }

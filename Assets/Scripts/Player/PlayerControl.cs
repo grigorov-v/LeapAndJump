@@ -28,13 +28,7 @@ namespace Grigorov.LeapAndJump.Player {
         float _jumpProbability = 30;
 
         bool CanJump {
-            get {
-                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jumpInput ) {//если застряли
-                    return true;
-                }
-
-                return (_floorTrigger || _wallTrigger) && _jumpInput;
-            }
+            get => (_floorTrigger || _wallTrigger) && _jumpInput;
         }
 
         bool CanSecondJump {
@@ -42,7 +36,12 @@ namespace Grigorov.LeapAndJump.Player {
         }
 
         bool CanMoveLeftOrRight {
-            get => _floorTrigger && !_jumpInput;
+            get {
+                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jumpInput ) {//если застряли
+                    return true;
+                }
+                return _floorTrigger && !_jumpInput;
+            }
         }
 
         bool CanSlideInWall {

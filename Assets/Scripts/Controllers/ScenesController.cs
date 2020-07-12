@@ -15,7 +15,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         World_1
     }
 
-    public class ScenesController : BaseController<ScenesController> {
+    public class ScenesController : IController {
         const string LoadingUIResource = "Prefabs/LoadingUI";
 
         LoadingUI _loadingUI = null;
@@ -33,18 +33,18 @@ namespace Grigorov.LeapAndJump.Controllers {
             }
         }
 
-        public override void Init() {
+        public void Init() {
             if ( SceneManager.GetActiveScene().name == "Loading" ) {
                 OpenScene(Scenes.MainMenu);
             }
             Debug.LogFormat("{0} Init", typeof(ScenesController).ToString());
         }
 
-        public override void PostInit() {
+        public void PostInit() {
             Debug.LogFormat("{0} PostInit", typeof(ScenesController).ToString());
         }
 
-        public override void Reinit() {
+        public void Reinit() {
             Debug.LogFormat("{0} Reinit", typeof(ScenesController).ToString());
         }
 
