@@ -104,7 +104,8 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         void OnDrawGizmos() {
-            SpritesRenderers.RemoveAll(sr => !sr);
+            _bounds = new Bounds();
+            SpritesRenderers.Clear();
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(Bounds.center, Bounds.size);
             Gizmos.color = Color.blue;

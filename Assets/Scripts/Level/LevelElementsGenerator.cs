@@ -8,8 +8,8 @@ using Grigorov.LeapAndJump.Level.Gameplay;
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(LevelGrind))]
     public class LevelElementsGenerator : MonoBehaviour {
-        LevelGrind   _levelGrind        = null;
-        List<Bounds> _allElementsBounds = new List<Bounds>();
+        LevelGrind         _levelGrind  = null;
+        List<LevelElement> _allElements = new List<LevelElement>();
 
         LevelGrind LevelGrind {
             get {
@@ -21,7 +21,7 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         public void Generate(ElementsGroup elementsGroup, List<Food> foodPrefabs) {
-            _allElementsBounds = GetComponentsInChildren<LevelElement>().Select(elem => elem.Bounds).ToList();
+            GetComponentsInChildren<LevelElement>(false, _allElements);
 
             var rowCount = LevelGrind.Cells.GetLength(1);
             for ( var rowIndex = 1; rowIndex < rowCount; rowIndex ++ ) {
@@ -65,18 +65,18 @@ namespace Grigorov.LeapAndJump.Level {
             var localCenter = (Vector2)element.transform.InverseTransformPoint(element.Bounds.center);
             position -= localCenter;
             element.transform.position = position;
+            element.TryMirror();
             element.SpawnFood(foodPrefabs.GetRandomElement());
-            _allElementsBounds.Add(elementBounds);
+            _allElements.Add(element);
             return true;
         }
 
         bool IsIntersectsWithElement(Bounds bounds) {
-            foreach ( var elemBounds in _allElementsBounds ) {
-                if ( elemBounds.Intersects(bounds) ) {
+            foreach ( var elem in _allElements ) {
+                if ( elem.Bounds.Intersects(bounds) ) {
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -152,12 +152,7 @@ namespace Grigorov.LeapAndJump.Level {
                 return;
             }
 
-            _allElementsBounds.Clear();
-            var elements = GetComponentsInChildren<LevelElement>();
-            foreach ( var elem in elements ) {
-                _allElementsBounds.Add(elem.Bounds);
-            }
-            
+            GetComponentsInChildren<LevelElement>(false, _allElements);            
             var boundsArray = LevelGrind.Cells;
             for ( var y = 0; y < boundsArray.GetLength(1); y++ ) {
                 for ( var x = 0; x < boundsArray.GetLength(0); x++ ) {
