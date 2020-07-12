@@ -6,16 +6,27 @@ namespace Grigorov.LeapAndJump.Level {
     public abstract class BaseLevelElement : MonoBehaviour {
         List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
 
+        Bounds _bounds = new Bounds();
+        
+        Vector3 _lastPosition = Vector3.zero;
+
         public Bounds Bounds {
             get {
-                if ( SpritesRenderers.Count == 1 ) {
-                    return SpritesRenderers.First().bounds;
+                if ( !IsRecalculateBounds ) {
+                    return _bounds;
                 }
-                
-                var x = (TopRightPoint.x - BottomLeftPoint.x);
-                var y = (TopRightPoint.y - BottomLeftPoint.y);
-                var size = new Vector3(x, y);
-                return new Bounds(Center, size);
+
+                if ( SpritesRenderers.Count == 1 ) {
+                    _bounds = SpritesRenderers.First().bounds;
+                } else {
+                    var size = Vector2.zero;
+                    size.x = (TopRightPoint.x - BottomLeftPoint.x);
+                    size.y = (TopRightPoint.y - BottomLeftPoint.y);
+                    _bounds = new Bounds(Center, size);
+                }
+
+                _lastPosition = transform.position;
+                return _bounds;
             }
         }
 
@@ -86,6 +97,10 @@ namespace Grigorov.LeapAndJump.Level {
                 }
                 return _spritesRenderers;
             }
+        }
+
+        bool IsRecalculateBounds {
+            get => (_bounds.size == Vector3.zero) || (transform.position != _lastPosition);
         }
 
         void OnDrawGizmos() {

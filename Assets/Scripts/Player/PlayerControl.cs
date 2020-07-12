@@ -153,14 +153,13 @@ namespace Grigorov.LeapAndJump.Player {
                     _wallTrigger = other.collider;
                     _wallNormal = normal;
                     _rb.velocity = Vector2.zero;
-                    _allowSecondJump = false;
                 }
                 
                 if ( IsFloor(normal) && !_floorTrigger ) {
                     _floorTrigger = other.collider;
-                    _allowSecondJump = false;
                 }
             }
+            _allowSecondJump = false;
         }
 
         void OnCollisionStay2D(Collision2D other) {
