@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -87,12 +87,10 @@ namespace Grigorov.UI {
             SceneManager.sceneUnloaded -= ClearWindowsList;
             SceneManager.sceneUnloaded += ClearWindowsList;
 
-            var rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
-            foreach ( var rootObject in rootObjects ) {
-                var windows = rootObject.GetComponentsInChildren<BaseWindow>(true);
-                foreach ( var win in windows ) {
-                    _allWindows.Add(win);
-                }
+            var canvases = GameObject.FindObjectsOfType<Canvas>();
+            foreach ( var canvas in canvases ) {
+                var windows = canvas.GetComponentsInChildren<BaseWindow>(true);
+                Array.ForEach(windows, win => _allWindows.Add(win));
             }
         }
 

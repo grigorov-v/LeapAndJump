@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 using Grigorov.LeapAndJump.Animations;
+using Grigorov.LeapAndJump.Effects;
 
 using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 
@@ -13,6 +16,9 @@ namespace Grigorov.LeapAndJump.Player {
         [SerializeField] float   _speed         = 2.5f;
         [SerializeField] Vector2 _jumpForce     = new Vector2(60, 140);
         [SerializeField] Vector2 _slideVelosity = new Vector2(0.2f, -2);
+
+        [Space]
+        [SerializeField] List<Trail> _jumpTrails = new List<Trail>();
 
         Rigidbody2D   _rb               = null;
         BaseAnimation _animationControl = null;
@@ -107,17 +113,29 @@ namespace Grigorov.LeapAndJump.Player {
             _jumpInput = true;
         }
 
+        void PlayJumpTrails() {
+            _jumpTrails.ForEach(trail => trail.Play());
+        }
+
+        void StopJumpTrails() {
+            _jumpTrails.ForEach(trail => trail.Stop());
+        }
+
         void Jump(bool secondJump = false) {
             var jumpForce = _jumpForce;
             jumpForce.x = (transform.localScale.x > 0) ? -Mathf.Abs(jumpForce.x) : Mathf.Abs(jumpForce.x);
             _rb.velocity = Vector2.zero;
             _rb.AddForce(jumpForce, ForceMode2D.Impulse);
+            
+            PlayJumpTrails();
         }
 
         void SlideInWall() {
             var slideVelosity = _slideVelosity;
             slideVelosity.x = (transform.localScale.x > 0) ? -Mathf.Abs(slideVelosity.x) : Mathf.Abs(slideVelosity.x);
             _rb.velocity = slideVelosity;
+
+            StopJumpTrails();
         }
 
         void MoveLeftOrRight() {
@@ -126,6 +144,8 @@ namespace Grigorov.LeapAndJump.Player {
             }
             var dir = (transform.localScale.x > 0) ? Vector2.left : Vector2.right;
             _rb.velocity = dir * _speed;
+
+            StopJumpTrails();
         }
 
         void SetMirrorScale() {
