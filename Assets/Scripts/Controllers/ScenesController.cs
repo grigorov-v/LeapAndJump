@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System;
 
 using Grigorov.Controller;
-using Grigorov.EventsHelper;
+using Grigorov.Events;
 using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;
 using Grigorov.LeapAndJump.Events;

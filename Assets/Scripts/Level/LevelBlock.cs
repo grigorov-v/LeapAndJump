@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-using Grigorov.EventsHelper;
+using Grigorov.Events;
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Player;
 using Grigorov.LeapAndJump.Level.Gameplay;

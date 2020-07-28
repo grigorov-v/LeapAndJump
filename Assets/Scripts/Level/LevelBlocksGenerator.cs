@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using Grigorov.Extensions;
-using Grigorov.EventsHelper;
+using Grigorov.Events;
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Level.Gameplay;
 

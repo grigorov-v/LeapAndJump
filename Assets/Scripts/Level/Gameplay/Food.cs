@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-using Grigorov.EventsHelper;
+using Grigorov.Events;
 using Grigorov.LeapAndJump.Player;
 
 using DG.Tweening;
