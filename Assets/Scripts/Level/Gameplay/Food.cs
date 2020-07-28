@@ -17,16 +17,21 @@ namespace Grigorov.LeapAndJump.Level.Gameplay {
         Tween _tweenCollect = null;
         Rigidbody2D _rb     = null;
 
-        void Awake() {
-            _rb = GetComponent<Rigidbody2D>();
+        Rigidbody2D Rigidbody {
+            get {
+                if ( !_rb ) {
+                   _rb = GetComponent<Rigidbody2D>(); 
+                }
+                return _rb;
+            }
         }
         
         void StartCollect() {
             ResetTween();
             
-            _rb.isKinematic = true;
-            var colliders = new Collider2D[_rb.attachedColliderCount];
-            _rb.GetAttachedColliders(colliders);
+            Rigidbody.isKinematic = true;
+            var colliders = new Collider2D[Rigidbody.attachedColliderCount];
+            Rigidbody.GetAttachedColliders(colliders);
             Array.ForEach(colliders, coll => coll.enabled = false);
 
             _tweenCollect = transform.DOScale(Vector2.zero, _tweenDuration);
