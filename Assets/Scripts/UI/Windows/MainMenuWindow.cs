@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.Controller;
 using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI {
@@ -14,7 +13,7 @@ namespace Grigorov.LeapAndJump.UI {
 
         void Awake() {
             _startGameButton.onClick.AddListener(OnStartClick);
-            _sceneController = ControllersRegister.FindController<ScenesController>();
+            _sceneController = Controller.ControllersRegister.FindController<ScenesController>();
         }
 
         void OnStartClick() {
