@@ -32,6 +32,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         void OnFoodCollect(FoodCollectEvent e) {
             _foodCount.Value ++;
+            _foodCount.Save();
             EventManager.Fire(new FoodCalculateEvent(_foodCount.Value));
         }
     }
