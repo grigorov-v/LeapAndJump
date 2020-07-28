@@ -1,10 +1,14 @@
 ﻿using System;
 using UnityEngine;
+
+using Grigorov.EventsHelper;
 using Grigorov.LeapAndJump.Player;
 
 using DG.Tweening;
 
 namespace Grigorov.LeapAndJump.Level.Gameplay {
+    public struct FoodCollectEvent {}
+
     [RequireComponent(typeof(Rigidbody2D))]
     public class Food : BaseLevelElement {
         [SerializeField] float _tweenDuration = 0.5f;
@@ -40,6 +44,7 @@ namespace Grigorov.LeapAndJump.Level.Gameplay {
                 return;
             }
             print("Collect");
+            EventManager.Fire(new FoodCollectEvent());
         }
 
         void ResetTween() {

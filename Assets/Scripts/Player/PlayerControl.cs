@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Grigorov.LeapAndJump.Animations;
 using Grigorov.LeapAndJump.Effects;
+using Grigorov.LeapAndJump.Level.Gameplay;
 
 using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 
@@ -24,7 +25,7 @@ namespace Grigorov.LeapAndJump.Player {
         BaseAnimation _animationControl = null;
         Collider2D    _wallTrigger      = null;
         Collider2D    _floorTrigger     = null;
-        Vector2       _wallNormal       = Vector2.zero;  
+        Vector2       _wallNormal       = Vector2.zero;
         bool          _jumpInput        = false;
         bool          _allowSecondJump  = false;
 
@@ -165,7 +166,15 @@ namespace Grigorov.LeapAndJump.Player {
             return angle <= CheckAngle;
         }
 
+        bool IsFood(GameObject go) {
+            return go.GetComponent<Food>();
+        }
+
         void OnCollisionEnter2D(Collision2D other) {
+            if ( IsFood(other.gameObject) ) {
+                return;
+            }
+
             for ( var i = 0; i < other.contactCount; i++ ) {        
                 var normal = other.GetContact(i).normal;
                 if ( IsWall(normal) && !_wallTrigger ) {
