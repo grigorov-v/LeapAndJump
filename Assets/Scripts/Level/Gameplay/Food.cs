@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using Grigorov.Events;
+using Grigorov.Components;
 using Grigorov.LeapAndJump.Player;
 
 using DG.Tweening;
@@ -15,18 +16,19 @@ namespace Grigorov.LeapAndJump.Level.Gameplay {
 
         bool  _isCollecting = false;
         Tween _tweenCollect = null;
-        Rigidbody2D _rb     = null;
+
+        CachedComponent<Rigidbody2D> _rb = null;
 
         void Awake() {
-            _rb = GetComponent<Rigidbody2D>();
+            _rb = new CachedComponent<Rigidbody2D>(gameObject);
         }
         
         void StartCollect() {
             ResetTween();
             
-            _rb.isKinematic = true;
-            var colliders = new Collider2D[_rb.attachedColliderCount];
-            _rb.GetAttachedColliders(colliders);
+            _rb.Component.isKinematic = true;
+            var colliders = new Collider2D[_rb.Component.attachedColliderCount];
+            _rb.Component.GetAttachedColliders(colliders);
             Array.ForEach(colliders, coll => coll.enabled = false);
 
             _tweenCollect = transform.DOScale(Vector2.zero, _tweenDuration);
