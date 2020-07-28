@@ -2,8 +2,9 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.EventsHelper;
-using Grigorov.LeapAndJump.Level.Gameplay;
+using Grigorov.Events;
+using Grigorov.Controller;
+using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI {
     public class GameWindow : BaseWindow {
@@ -14,18 +15,18 @@ namespace Grigorov.LeapAndJump.UI {
         [Space]
         [SerializeField] Text _foodCountText = null;
 
-        int _tempFoodCount = 0;
-
         void Awake() {
             _cheatButton.onClick.AddListener(OnClickDebug);
             _pauseButton.onClick.AddListener(OnClickPause);
-            _foodCountText.text = _tempFoodCount.ToString();
-            
-            EventManager.Subscribe<FoodCollectEvent>(this, OnFoodCollect);
+            EventManager.Subscribe<FoodCalculateEvent>(this, OnFoodCalculate);
+        }
+
+        void Start() {
+            _foodCountText.text = ControllersRegister.FindController<FoodCollectController>()?.FoodCount.ToString();
         }
 
         void OnDestroy() {
-            EventManager.Unsubscribe<FoodCollectEvent>(OnFoodCollect);
+            EventManager.Unsubscribe<FoodCalculateEvent>(OnFoodCalculate);
         }
 
         void OnClickDebug() {
@@ -37,9 +38,8 @@ namespace Grigorov.LeapAndJump.UI {
             Time.timeScale = 0;
         }
 
-        void OnFoodCollect(FoodCollectEvent e) {
-            _tempFoodCount ++;
-            _foodCountText.text = _tempFoodCount.ToString();
+        void OnFoodCalculate(FoodCalculateEvent e) {
+            _foodCountText.text = e.Count.ToString();
         }
     }
 }
