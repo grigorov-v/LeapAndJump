@@ -11,7 +11,6 @@ namespace Grigorov.Controller {
             }
 
             ControllersRegister.AllControllers.ForEach(controller => controller.Init());
-            ControllersRegister.AllControllers.ForEach(controller => controller.PostInit());
             _controllersInitializer = this;
 
             gameObject.name = "[ControllersInitializer]";
@@ -22,6 +21,7 @@ namespace Grigorov.Controller {
             if ( _controllersInitializer != this ) {
                 return;
             }
+            
             ControllersRegister.AllControllers.ForEach(controller => controller.Reinit());
             ControllersRegister.AllControllers.Clear();
         }

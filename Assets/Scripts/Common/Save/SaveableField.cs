@@ -15,8 +15,9 @@ namespace Grigorov.Save {
             set => _valueContainer.Value = value;
         }
 
-        public SaveableField(string key) {
+        public SaveableField<T> SetKey(string key) {
             _key = key;
+            return this;
         }
 
         public void Load(T defaultValue = default) {

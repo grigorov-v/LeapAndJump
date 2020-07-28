@@ -40,10 +40,6 @@ namespace Grigorov.LeapAndJump.Controllers {
             Debug.LogFormat("{0} Init", typeof(ScenesController).ToString());
         }
 
-        public void PostInit() {
-            Debug.LogFormat("{0} PostInit", typeof(ScenesController).ToString());
-        }
-
         public void Reinit() {
             Debug.LogFormat("{0} Reinit", typeof(ScenesController).ToString());
         }

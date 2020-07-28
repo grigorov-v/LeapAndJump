@@ -4,7 +4,8 @@ using Grigorov.LeapAndJump.Controllers;
 namespace Grigorov.Controller {
     public static class ControllersRegister {
         internal static List<IController> AllControllers { get; private set; } = new List<IController>() {
-            new ScenesController()
+            new ScenesController(),
+            new FoodCollectController()
         };
 
         public static T FindController<T>() where T: class, IController {
