@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 using Grigorov.Extensions;
 using Grigorov.Events;
+using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Level.Gameplay;
+using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.Level {
     public class LevelBlocksGenerator : MonoBehaviour {
@@ -36,10 +38,11 @@ namespace Grigorov.LeapAndJump.Level {
             }
         }
 
-        void Awake() {
+        void Start() {
             var world = SceneManager.GetActiveScene().name;
-            var balance = new LevelsBalance(world);
-            var allGroupsNames = balance.GetElementsGroups(0);
+            var balanceController = ControllersRegister.FindController<BalanceController>();
+            var level = new LevelId(world, 0);
+            var allGroupsNames = balanceController.GetElementsGroups(level);
             foreach ( var groupName in allGroupsNames ) {
                 var element = Resources.Load<ElementsGroup>($"Elements_Groups/{world}/{groupName}");
                 _elementsGroups.Add(element);

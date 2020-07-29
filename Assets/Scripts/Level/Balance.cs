@@ -4,12 +4,15 @@ using UnityEngine;
 using SimpleJSON;
 
 namespace Grigorov.LeapAndJump.Level {
-    public class LevelsBalance {
+    public class Balance {
+        public string World { get; private set; }
+
         JSONNode _jsonNode = null;
 
-        public LevelsBalance(string world) {
+        public Balance(string world) {
             var jsonFromResources = Resources.Load($"Balance/{world}") as TextAsset;
             _jsonNode = JSON.Parse(jsonFromResources.text);
+            World = world;
         }
 
         public List<string> GetElementsGroups(int level) {
