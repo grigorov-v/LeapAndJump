@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 using Grigorov.UI;
 using Grigorov.Events;
-using Grigorov.Controller;
+using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI {

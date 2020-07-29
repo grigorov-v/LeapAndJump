@@ -17,7 +17,7 @@ namespace Grigorov.LeapAndJump.UI {
             _closeButton.onClick.AddListener(OnCloseClick);
             _mainMenuButton.onClick.AddListener(OnMainMenuClick);
             _restartButton.onClick.AddListener(OnRestartClick);
-            _sceneController = Controller.ControllersRegister.FindController<ScenesController>();
+            _sceneController = Grigorov.Controllers.ControllersRegister.FindController<ScenesController>();
         }
 
         void OnCloseClick() {

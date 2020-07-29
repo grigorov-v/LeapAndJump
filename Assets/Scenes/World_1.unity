@@ -209,7 +209,7 @@ PrefabInstance:
     - target: {fileID: 6117822800939443954, guid: 7bd8c672686b8e7488fd02a1c83828eb,
         type: 3}
       propertyPath: m_Name
-      value: ControllersInitializer
+      value: ControllersManager
       objectReference: {fileID: 0}
     - target: {fileID: 6117822800939443956, guid: 7bd8c672686b8e7488fd02a1c83828eb,
         type: 3}

@@ -1,4 +1,4 @@
-﻿using Grigorov.Controller;
+﻿using Grigorov.Controllers;
 using Grigorov.Save;
 using Grigorov.Events;
 
@@ -13,19 +13,19 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
     }
 
-    public class FoodCollectController : IController {
+    public class FoodCollectController : IAwake, IDestroy {
         SaveableField<int> _foodCount = new SaveableField<int>().SetKey("FoodCount");
 
         public int FoodCount {
             get => _foodCount.Value;
         }
 
-        public void Init() {
+        public void OnAwake() {
             _foodCount.Load(0);
             EventManager.Subscribe<FoodCollectEvent>(this, OnFoodCollect);
         }
 
-        public void Reinit() {
+        public void OnDestroy() {
             _foodCount.Save();
             EventManager.Unsubscribe<FoodCollectEvent>(OnFoodCollect);
         }

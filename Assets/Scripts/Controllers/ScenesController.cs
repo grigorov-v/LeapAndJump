@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using System;
 
-using Grigorov.Controller;
+using Grigorov.Controllers;
 using Grigorov.Events;
 using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;
@@ -15,7 +15,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         World_1
     }
 
-    public class ScenesController : IController {
+    public class ScenesController : IAwake, IDestroy {
         const string LoadingUIResource = "Prefabs/LoadingUI";
 
         LoadingUI _loadingUI = null;
@@ -33,15 +33,15 @@ namespace Grigorov.LeapAndJump.Controllers {
             }
         }
 
-        public void Init() {
+        public void OnAwake() {
             if ( SceneManager.GetActiveScene().name == "Loading" ) {
                 OpenScene(Scenes.MainMenu);
             }
-            Debug.LogFormat("{0} Init", typeof(ScenesController).ToString());
+            Debug.LogFormat("{0} OnAwake", typeof(ScenesController).ToString());
         }
 
-        public void Reinit() {
-            Debug.LogFormat("{0} Reinit", typeof(ScenesController).ToString());
+        public void OnDestroy() {
+            Debug.LogFormat("{0} OnDestroy", typeof(ScenesController).ToString());
         }
 
         public void OpenScene(Scenes scene) {

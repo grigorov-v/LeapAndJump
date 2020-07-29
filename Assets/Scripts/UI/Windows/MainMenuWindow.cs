@@ -13,7 +13,7 @@ namespace Grigorov.LeapAndJump.UI {
 
         void Awake() {
             _startGameButton.onClick.AddListener(OnStartClick);
-            _sceneController = Controller.ControllersRegister.FindController<ScenesController>();
+            _sceneController = Grigorov.Controllers.ControllersRegister.FindController<ScenesController>();
         }
 
         void OnStartClick() {
