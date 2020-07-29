@@ -15,7 +15,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         World_1
     }
 
-    public class ScenesController : IAwake, IDestroy {
+    public class ScenesController : IInit {
         const string LoadingUIResource = "Prefabs/LoadingUI";
 
         LoadingUI _loadingUI = null;
@@ -33,15 +33,10 @@ namespace Grigorov.LeapAndJump.Controllers {
             }
         }
 
-        public void OnAwake() {
+        void IInit.OnInit() {
             if ( SceneManager.GetActiveScene().name == "Loading" ) {
                 OpenScene(Scenes.MainMenu);
             }
-            Debug.LogFormat("{0} OnAwake", typeof(ScenesController).ToString());
-        }
-
-        public void OnDestroy() {
-            Debug.LogFormat("{0} OnDestroy", typeof(ScenesController).ToString());
         }
 
         public void OpenScene(Scenes scene) {

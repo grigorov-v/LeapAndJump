@@ -1,68 +1,71 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace Grigorov.Controllers {
     public class ControllersManager : MonoBehaviour {
-        static ControllersManager _controllersManager = null;
+        static ControllersManager _firstControllersManager = null;
 
-        List<IAwake>   _iAwakes  = new List<IAwake>();
-        List<IStart>   _iStarts  = new List<IStart>();
-        List<IUpdate>  _iUpdates = new List<IUpdate>();
-        List<IDestroy> _iDestroy = new List<IDestroy>();
-
-        void Awake() {
-            if ( _controllersManager ) {
-                Destroy(gameObject);
-                return;
-            }
-
-            Init();
-            _iAwakes.ForEach(iAwake => iAwake.OnAwake());
-            
-            gameObject.name = "[ControllersInitializer]";
-            DontDestroyOnLoad(gameObject);
-            _controllersManager = this;
+        bool IsCommonManager {
+            get => (_firstControllersManager == this);
         }
 
-        void Start() {
-            if ( _controllersManager != this ) {
-                return;
+        void Awake() {
+            if ( !_firstControllersManager ) {
+                InitControllers();
+                DontDestroyOnLoad(gameObject);
+                _firstControllersManager = this;
             }
 
-            _iStarts.ForEach(iStart => iStart.OnStart());
+            AwakeControllers();
+            
+            var sceneName = SceneManager.GetActiveScene().name;
+            gameObject.name = IsCommonManager ? "[Common_Controllers_Manager]" : $"[{sceneName}_Controllers_Manager]";
         }
 
         void Update() {
-            if ( _controllersManager != this ) {
-                return;
+            if ( IsCommonManager ) {
+                UpdateControllers();
             }
-
-            _iUpdates.ForEach(iUpdate => iUpdate.OnUpdate());
         }
 
         void OnDestroy() {
-            if ( _controllersManager != this ) {
-                return;
+            if ( IsCommonManager ) {
+                ReinitControllers();
             }
-
-            _iDestroy.ForEach(iDestroy => iDestroy.OnDestroy());
-            ControllersRegister.AllControllers.Clear();
         }
 
-        void Init() {
+        void InitControllers() {
+            foreach ( var pair in ControllersRegister.AllControllers ) {
+                var controller = pair.Value;
+                if ( controller is IInit ) {
+                    (controller as IInit).OnInit();
+                }
+            }
+        }
+
+        void AwakeControllers() {
             foreach ( var pair in ControllersRegister.AllControllers ) {
                 var controller = pair.Value;
                 if ( controller is IAwake ) {
-                    _iAwakes.Add(controller as IAwake);
+                    (controller as IAwake).OnAwake();
                 }
-                if ( controller is IStart ) {
-                    _iStarts.Add(controller as IStart);
-                }
+            }
+        }
+
+        void UpdateControllers() {
+            foreach ( var pair in ControllersRegister.AllControllers ) {
+                var controller = pair.Value;
                 if ( controller is IUpdate ) {
-                    _iUpdates.Add(controller as IUpdate);
+                    (controller as IUpdate).OnUpdate();
                 }
-                if ( controller is IDestroy ) {
-                    _iDestroy.Add(controller as IDestroy);
+            }
+        }
+
+        void ReinitControllers() {
+            foreach ( var pair in ControllersRegister.AllControllers ) {
+                var controller = pair.Value;
+                if ( controller is IReinit ) {
+                    (controller as IReinit).OnReinit();
                 }
             }
         }

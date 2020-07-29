@@ -7,7 +7,9 @@ namespace Grigorov.Controllers {
         internal static Dictionary<Type, object> AllControllers = new Dictionary<Type, object>() {
             { typeof(ScenesController),      new ScenesController()      },
             { typeof(FoodCollectController), new FoodCollectController() },
-            { typeof(BalanceController),     new BalanceController() }
+            { typeof(BalanceController),     new BalanceController() },
+            
+            { typeof(TEstController), new TEstController() }
         };
 
         public static T FindController<T>() where T: class {
