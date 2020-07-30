@@ -15,7 +15,7 @@ namespace Grigorov.Extensions {
             return result;
         }
 
-        public static T GetRandomElement<T>(this List<T> list) {
+        public static T GetRandomValue<T>(this List<T> list) {
             if ( (list == null) || (list.Count == 0) ) {
                 return default(T);
             }

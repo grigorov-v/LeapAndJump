@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8de182d5ef153648b007a994b25b7b9, type: 3}
   m_Name: difficulty_1
   m_EditorClassIdentifier: 
-  _levelElements:
+  _objects:
   - {fileID: 7002873223997072891, guid: 4042ee63db8b032499c2ff09de619083, type: 3}
   - {fileID: 7002873223997072891, guid: 4070d01974a881648b77f43708ee3aa3, type: 3}
   - {fileID: 7002873223997072891, guid: a01e54cb9b832414983e909f9b52b4e3, type: 3}

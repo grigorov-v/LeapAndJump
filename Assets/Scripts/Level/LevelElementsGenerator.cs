@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Grigorov.Extensions;
-using Grigorov.LeapAndJump.Level.Gameplay;
+using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(LevelGrind))]
@@ -20,7 +19,7 @@ namespace Grigorov.LeapAndJump.Level {
             }
         }
 
-        public void Generate(ElementsGroup elementsGroup, List<Food> foodPrefabs) {
+        public void Generate(LevelElementsGroup elementsGroup, Foods foods) {
             GetComponentsInChildren<LevelElement>(false, _allElements);
 
             var rowCount = LevelGrind.Cells.GetLength(1);
@@ -37,14 +36,14 @@ namespace Grigorov.LeapAndJump.Level {
 
                 var trySpawnElement = false;
                 do {
-                    trySpawnElement = TrySpawnElement(elementsGroup.GetRandomLevelElement(), gridRow, foodPrefabs);
+                    trySpawnElement = TrySpawnElement(elementsGroup.GetRandomObject(), gridRow, foods);
                 } while (trySpawnElement);
 
-                elementsGroup.RandomizeElements.ForEach(element => TrySpawnElement(element, gridRow, foodPrefabs));
+                elementsGroup.RandomizeObjects.ForEach(element => TrySpawnElement(element, gridRow, foods));
             }
         }
 
-        bool TrySpawnElement(LevelElement prefabElement, List<Bounds> gridRow, List<Food> foodPrefabs) {
+        bool TrySpawnElement(LevelElement prefabElement, List<Bounds> gridRow, Foods foods) {
             if ( !prefabElement ) {
                 return false;
             }
@@ -66,7 +65,11 @@ namespace Grigorov.LeapAndJump.Level {
             position -= localCenter;
             element.transform.position = position;
             element.TryMirror();
-            element.SpawnFood(foodPrefabs.GetRandomElement());
+
+            if ( foods ) {
+                element.SpawnFood(foods.GetRandomObject());
+            }
+
             _allElements.Add(element);
             return true;
         }

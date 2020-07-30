@@ -5,9 +5,10 @@ using Grigorov.LeapAndJump.Controllers;
 namespace Grigorov.Controllers {
     public static class ControllersRegister {
         internal static Dictionary<Type, object> AllControllers = new Dictionary<Type, object>() {
-            { typeof(ScenesController),      new ScenesController()      },
-            { typeof(FoodCollectController), new FoodCollectController() },
-            { typeof(BalanceController),     new BalanceController() },
+            { typeof(ScenesController),        new ScenesController()        },
+            { typeof(BalanceController),       new BalanceController()       },
+            { typeof(LevelGenerateController), new LevelGenerateController() },
+            { typeof(FoodCollectController),   new FoodCollectController()   },
             
             { typeof(TEstController), new TEstController() }
         };

@@ -5,6 +5,7 @@ using Grigorov.Events;
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Player;
 using Grigorov.LeapAndJump.Level.Gameplay;
+using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(BoxCollider2D))]
@@ -25,9 +26,9 @@ namespace Grigorov.LeapAndJump.Level {
             _elementsGenerator = GetComponent<LevelElementsGenerator>();
         }
 
-        public void GenerateLevelElements(ElementsGroup elementsGroup, List<Food> foodPrefabs) {
+        public void GenerateLevelElements(LevelElementsGroup elementsGroup, Foods foods) {
             if ( _elementsGenerator ) {
-                _elementsGenerator.Generate(elementsGroup, foodPrefabs);
+                _elementsGenerator.Generate(elementsGroup, foods);
             }
         }
 

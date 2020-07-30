@@ -17,8 +17,17 @@ namespace Grigorov.LeapAndJump.Controllers {
 
     public class ScenesController : IInit {
         const string LoadingUIResource = "Prefabs/LoadingUI";
+        const string WorldScenePrefix  = "World_";
 
         LoadingUI _loadingUI = null;
+
+        public bool IsActiveWorldScene {
+            get => CurrentSceneName.StartsWith(WorldScenePrefix);
+        }
+
+        public string CurrentSceneName {
+            get => SceneManager.GetActiveScene().name;
+        }
 
         LoadingUI LoadingUI {
             get {
