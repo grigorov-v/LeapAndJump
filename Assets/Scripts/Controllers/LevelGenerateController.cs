@@ -80,6 +80,11 @@ namespace Grigorov.LeapAndJump.Controllers {
             newBlock.SetPosition(LastBlock);
             newBlock.GenerateLevelElements(StackElementsGroups.Pop(), _foods);
             _activeBlocks.Add(newBlock);
+
+            for ( var i = 0; i < _activeBlocks.Count; i++ ) {
+                var factor = i + 1;
+                _activeBlocks[i].SetBackOrderLayer(factor);
+            }
         }
 
         void OnPlayerIntoBlockTriggerEnter(PlayerIntoBlockTriggerEnter e) {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 using Grigorov.Events;
@@ -13,7 +14,10 @@ namespace Grigorov.LeapAndJump.Level {
         [SerializeField] Transform _beginPoint = null;
         [SerializeField] Transform _endPoint   = null;
 
+        [SerializeField] List<SpriteRenderer> _backLayers = new List<SpriteRenderer>();
+
         LevelElementsGenerator _elementsGenerator = null;
+        List<int>              _layers            = new List<int>();
 
         void OnValidate() {
             var boxTrigger = GetComponent<BoxCollider2D>();
@@ -38,6 +42,16 @@ namespace Grigorov.LeapAndJump.Level {
                 position = lastBlock._endPoint.position - _beginPoint.localPosition;
             }
             transform.position = position;
+        }
+
+        public void SetBackOrderLayer(int factor) {
+            if ( _layers.Count == 0 ) {
+                _layers = _backLayers.Select(bl => bl.sortingOrder).ToList();
+            }
+            
+            for ( var i = 0; i < _backLayers.Count; i++ ) {
+                _backLayers[i].sortingOrder = _layers[i] * factor;
+            }
         }
 
         void OnTriggerEnter2D(Collider2D other) {
