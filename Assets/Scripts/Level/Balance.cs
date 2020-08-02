@@ -24,5 +24,9 @@ namespace Grigorov.LeapAndJump.Level {
 
             return result;
         }
+
+        public int GetFoodsCount(int level) {
+            return _jsonNode["levels"][level.ToString()]["foods_count"].AsInt;
+        }
     }
 }

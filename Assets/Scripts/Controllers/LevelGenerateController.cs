@@ -5,9 +5,7 @@ using UnityEngine;
 using Grigorov.Extensions;
 using Grigorov.Events;
 using Grigorov.Controllers;
-using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Level;
-using Grigorov.LeapAndJump.Level.Gameplay;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers {
@@ -53,15 +51,15 @@ namespace Grigorov.LeapAndJump.Controllers {
             _stackElementsGroups.Clear();
             _activeBlocks.Clear();
 
-            var world = sc.CurrentSceneName;
-            var balanceController = ControllersRegister.FindController<BalanceController>();
-            var level = new LevelId(world, 0);
-            var allGroupsNames = balanceController.GetElementsGroups(level);
+            var bc = ControllersRegister.FindController<BalanceController>();
+            var lc = ControllersRegister.FindController<LevelController>();
+            var level = lc.CurrentLevel;
+            var allGroupsNames = bc.GetElementsGroups(level);
            
-            _levelBlocks = LevelBlocks.Load("LevelBlocks", $"{world}_LevelBlocks");
-            _foods = Foods.Load("Foods", $"{world}_Foods");
+            _levelBlocks = LevelBlocks.Load("LevelBlocks", $"{level.World}_LevelBlocks");
+            _foods = Foods.Load("Foods", $"{level.World}_Foods");
             foreach ( var groupName in allGroupsNames ) {
-                var element = Resources.Load<LevelElementsGroup>($"Elements_Groups/{world}/{groupName}");
+                var element = Resources.Load<LevelElementsGroup>($"Elements_Groups/{level.World}/{groupName}");
                 _elementsGroups.Add(element);
             }
 

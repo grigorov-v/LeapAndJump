@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Grigorov.LeapAndJump.Animations;
 using Grigorov.LeapAndJump.Effects;
-using Grigorov.LeapAndJump.Level.Gameplay;
+using Grigorov.LeapAndJump.Level;
 
 using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 

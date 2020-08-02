@@ -22,11 +22,16 @@ namespace Grigorov.LeapAndJump.UI {
         }
 
         void Start() {
-            _foodCountText.text = ControllersRegister.FindController<FoodCollectController>()?.FoodCount.ToString();
+            var fcc = ControllersRegister.FindController<FoodCollectController>();
+            _foodCountText.text = GetFoodCountText(fcc.CurrentFoodCount, fcc.TargetFoodCount);
         }
 
         void OnDestroy() {
             EventManager.Unsubscribe<FoodCalculateEvent>(OnFoodCalculate);
+        }
+
+        string GetFoodCountText(int currentCount, int targetCount) {
+            return $"{currentCount}/{targetCount}";
         }
 
         void OnClickDebug() {
@@ -39,7 +44,7 @@ namespace Grigorov.LeapAndJump.UI {
         }
 
         void OnFoodCalculate(FoodCalculateEvent e) {
-            _foodCountText.text = e.Count.ToString();
+            _foodCountText.text = GetFoodCountText(e.CurCount, e.TargetCount);
         }
     }
 }

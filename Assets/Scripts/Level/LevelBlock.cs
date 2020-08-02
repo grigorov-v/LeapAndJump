@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Grigorov.Events;
-using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.Player;
-using Grigorov.LeapAndJump.Level.Gameplay;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
+    public struct PlayerIntoBlockTriggerEnter {
+        public LevelBlock    LevelBlock {get; private set;}
+        public PlayerControl Player     {get; private set;}
+
+        public PlayerIntoBlockTriggerEnter (LevelBlock levelBlock, PlayerControl player) {
+            LevelBlock = levelBlock;
+            Player = player;
+        }
+    }
+
     [RequireComponent(typeof(BoxCollider2D))]
     public class LevelBlock : MonoBehaviour {
         [SerializeField] Transform _beginPoint = null;

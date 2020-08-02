@@ -6,7 +6,7 @@ using Grigorov.LeapAndJump.Player;
 
 using DG.Tweening;
 
-namespace Grigorov.LeapAndJump.Level.Gameplay {
+namespace Grigorov.LeapAndJump.Level {
     public struct FoodCollectEvent {}
 
     [RequireComponent(typeof(Rigidbody2D))]

@@ -6,9 +6,18 @@ using Grigorov.Controllers;
 using Grigorov.Events;
 using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;
-using Grigorov.LeapAndJump.Events;
+
+using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
+    public struct LoadedSceneEvent {
+        public Scenes Scene;
+        
+        public LoadedSceneEvent(Scenes scene) {
+            Scene = scene;
+        }
+    }
+
     public enum Scenes {
         Loading,
         MainMenu,
@@ -51,7 +60,13 @@ namespace Grigorov.LeapAndJump.Controllers {
         public void OpenScene(Scenes scene) {
             var sceneName = scene.ToString();
             SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI)
-                .AddLoadedAction(_ => EventManager.Fire(new LoadedScene(scene)));
+                .AddLoadedAction(_ => EventManager.Fire(new LoadedSceneEvent(scene)));
+        }
+
+        public void OpenScene(LevelId level) {
+            var world = level.World;
+            var scene = SceneEnumFromString(world);
+            OpenScene(scene);
         }
 
         public void RestartCurrentScene() {

@@ -1,39 +1,51 @@
 ﻿using Grigorov.Controllers;
 using Grigorov.Save;
 using Grigorov.Events;
-
-using Grigorov.LeapAndJump.Level.Gameplay;
+using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public struct FoodCalculateEvent {
-        public int Count;
+        public int CurCount;
+        public int TargetCount;
+        public int TotalCount;
 
-        public FoodCalculateEvent(int count) {
-            Count = count;
+        public FoodCalculateEvent(int curCount, int targetCount, int totalCount) {
+            CurCount = curCount;
+            TargetCount = targetCount;
+            TotalCount = totalCount;
         }
     }
 
-    public class FoodCollectController : IInit, IReinit {
-        SaveableField<int> _foodCount = new SaveableField<int>().SetKey("FoodCount");
+    public class FoodCollectController : IInit, IReinit, IAwake {
+        SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
 
-        public int FoodCount {
-            get => _foodCount.Value;
+        public int CurrentFoodCount { get; private set; }
+        public int TargetFoodCount  { get; private set; }
+        public int TotalFoodCount {
+            get => _totalFoodCount.Value;
         }
 
         void IInit.OnInit() {
-            _foodCount.Load(0);
+            _totalFoodCount.Load();
             EventManager.Subscribe<FoodCollectEvent>(this, OnFoodCollect);
         }
 
+        void IAwake.OnAwake() {
+            CurrentFoodCount = 0;
+            var bc = ControllersRegister.FindController<BalanceController>();
+            var lc = ControllersRegister.FindController<LevelController>(); 
+            TargetFoodCount = bc.GetFoodsCount(lc.CurrentLevel);
+        }
+
         void IReinit.OnReinit() {
-            _foodCount.Save();
+            _totalFoodCount.Save();
             EventManager.Unsubscribe<FoodCollectEvent>(OnFoodCollect);
         }
 
         void OnFoodCollect(FoodCollectEvent e) {
-            _foodCount.Value ++;
-            _foodCount.Save();
-            EventManager.Fire(new FoodCalculateEvent(_foodCount.Value));
+            _totalFoodCount.Value ++;
+            CurrentFoodCount ++;
+            EventManager.Fire(new FoodCalculateEvent(CurrentFoodCount, TargetFoodCount, TotalFoodCount));
         }
     }
 }

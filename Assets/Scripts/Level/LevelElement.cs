@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using Grigorov.Extensions;
-using Grigorov.LeapAndJump.Level.Gameplay;
+using Grigorov.LeapAndJump.Level;
 
 using NaughtyAttributes;
 
