@@ -26,33 +26,28 @@ namespace Grigorov.LeapAndJump.Player {
         Collider2D    _wallTrigger      = null;
         Collider2D    _floorTrigger     = null;
         Vector2       _wallNormal       = Vector2.zero;
-        bool          _jumpInput        = false;
+        bool          _jump             = false;
         bool          _allowSecondJump  = false;
 
-        [Header("Debug")]
-        public bool AutoPlay = false;
-        public Text DebugText = null;
-        float _jumpProbability = 30;
-
         bool CanJump {
-            get => (_floorTrigger || _wallTrigger) && _jumpInput;
+            get => (_floorTrigger || _wallTrigger) && _jump;
         }
 
         bool CanSecondJump {
-            get => !_floorTrigger && !_wallTrigger && _allowSecondJump && _jumpInput && (_rb.velocity.y <= 0);
+            get => !_floorTrigger && !_wallTrigger && _allowSecondJump && _jump && (_rb.velocity.y <= 0);
         }
 
         bool CanMoveLeftOrRight {
             get {
-                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jumpInput ) {//если застряли
+                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jump ) {//если застряли
                     return true;
                 }
-                return _floorTrigger && !_jumpInput;
+                return _floorTrigger && !_jump;
             }
         }
 
         bool CanSlideInWall {
-            get => !_floorTrigger && _wallTrigger && !_jumpInput && (_rb.velocity.y < 0);
+            get => !_floorTrigger && _wallTrigger && !_jump && (_rb.velocity.y < 0);
         }
 
         void Awake() {
@@ -60,25 +55,11 @@ namespace Grigorov.LeapAndJump.Player {
             _animationControl = GetComponent<BaseAnimation>();
         }
 
-        void Update() {
-            if ( !_jumpInput ) {
-                _jumpInput = Input.GetKeyDown(KeyCode.Space);
-                if ( AutoPlay ) {
-                    var rand = Random.Range(0, 100);
-                    _jumpInput = (rand <= _jumpProbability);
-                }
-            }
-
-            if ( DebugText.gameObject.activeSelf && DebugText.gameObject.activeInHierarchy ) {
-                var floorName = _floorTrigger ? _floorTrigger.name : "null";
-                var wallName = _wallTrigger ? _wallTrigger.name : "null";
-                DebugText.text = string.Format("floor: {0}\n\nwall: {1}\n\n", floorName, wallName);
-                DebugText.text += string.Format("velocity: {0}\n", _rb.velocity);
-                DebugText.text += string.Format("jump: {0}", _jumpInput);
-            }
+        public void JumpInput() {
+            _jump = true;
         }
 
-        void FixedUpdate() {
+        public void OnUpdate() {
             if ( CanMoveLeftOrRight ) {
                 MoveLeftOrRight();
                 _animationControl.PlayAnimation(KeyAnim.Walk);
@@ -94,13 +75,13 @@ namespace Grigorov.LeapAndJump.Player {
                     SetMirrorScale();
                 }
                 Jump();
-                _jumpInput = false;
+                _jump = false;
                 _animationControl.PlayAnimation(KeyAnim.Jump);
             }
 
             if ( CanSecondJump ) {  
                 Jump(true);
-                _jumpInput = false;
+                _jump = false;
                 _allowSecondJump = false;
                 _animationControl.PlayAnimation(KeyAnim.SecondJump);
             }
@@ -108,10 +89,6 @@ namespace Grigorov.LeapAndJump.Player {
             if ( _floorTrigger && _wallTrigger ) {
                 SetMirrorScale();
             }
-        }
-
-        public void JumpInput() {
-            _jumpInput = true;
         }
 
         void PlayJumpTrails() {
@@ -166,12 +143,8 @@ namespace Grigorov.LeapAndJump.Player {
             return angle <= CheckAngle;
         }
 
-        bool IsFood(GameObject go) {
-            return go.GetComponent<Food>();
-        }
-
         void OnCollisionEnter2D(Collision2D other) {
-            if ( IsFood(other.gameObject) ) {
+            if ( other.gameObject.TryGetComponent<Food>(out Food food) ) {
                 return;
             }
 
@@ -191,7 +164,7 @@ namespace Grigorov.LeapAndJump.Player {
         }
 
         void OnCollisionStay2D(Collision2D other) {
-            if ( _jumpInput ) {
+            if ( _jump ) {
                 return;
             }
 

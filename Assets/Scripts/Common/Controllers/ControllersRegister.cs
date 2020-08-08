@@ -31,7 +31,9 @@ namespace Grigorov.Controllers {
                 typeof(ScenesController),
                 typeof(BalanceController),
                 typeof(LevelController),
-            })
+            }),
+            
+            new ControllersContainer(typeof(PlayerController), new PlayerController())
         };
 
         static Dictionary<Type, object> _allControllers = new Dictionary<Type, object>();

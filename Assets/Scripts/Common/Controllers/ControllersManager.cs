@@ -28,6 +28,12 @@ namespace Grigorov.Controllers {
             }
         }
 
+        void FixedUpdate() {
+            if ( IsCommonManager ) {
+                FixedUpdateControllers();
+            }
+        }
+
         void OnDestroy() {
             if ( IsCommonManager ) {
                 ReinitControllers();
@@ -57,6 +63,15 @@ namespace Grigorov.Controllers {
                 var controller = pair.Value;
                 if ( controller is IUpdate ) {
                     (controller as IUpdate).OnUpdate();
+                }
+            }
+        }
+
+        void FixedUpdateControllers() {
+            foreach ( var pair in ControllersRegister.AllControllers ) {
+                var controller = pair.Value;
+                if ( controller is IFixedUpdate ) {
+                    (controller as IFixedUpdate).OnFixedUpdate();
                 }
             }
         }
