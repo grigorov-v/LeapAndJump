@@ -16,7 +16,6 @@ namespace Grigorov.LeapAndJump.UI {
         [SerializeField] Text _foodCountText = null;
 
         void Awake() {
-            _cheatButton.onClick.AddListener(OnClickDebug);
             _pauseButton.onClick.AddListener(OnClickPause);
             EventManager.Subscribe<FoodCalculateEvent>(this, OnFoodCalculate);
         }
@@ -32,10 +31,6 @@ namespace Grigorov.LeapAndJump.UI {
 
         string GetFoodCountText(int currentCount, int targetCount) {
             return $"{currentCount}/{targetCount}";
-        }
-
-        void OnClickDebug() {
-            Windows.TakeWindow<DebugWindow>();
         }
 
         void OnClickPause() {
