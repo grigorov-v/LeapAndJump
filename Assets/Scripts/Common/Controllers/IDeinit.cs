@@ -1,6 +1,6 @@
 ﻿namespace Grigorov.Controllers {
-    public interface IReinit {
+    public interface IDeinit {
         ///<summary>Called when the "ControllerManager" is removed (when the game is closed)</summary>
-        void OnReinit();
+        void OnDeinit();
     }
 }

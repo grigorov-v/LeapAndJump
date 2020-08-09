@@ -5,7 +5,7 @@ using Grigorov.Events;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class LevelController : IInit, IReinit, IAwake {
+    public class LevelController : IInit, IDeinit, IAwake {
         SaveableField<LevelId> _currentLevel = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_1", 0));
 
         bool _levelFinish = false;
@@ -24,7 +24,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             _levelFinish = false; 
         }
 
-        void IReinit.OnReinit() {
+        void IDeinit.OnDeinit() {
             EventManager.Unsubscribe<FoodCalculateEvent>(OnFoodCalculate);
             EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
         }

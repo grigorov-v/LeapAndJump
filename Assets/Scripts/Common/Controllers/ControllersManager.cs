@@ -79,8 +79,8 @@ namespace Grigorov.Controllers {
         void ReinitControllers() {
             foreach ( var pair in ControllersRegister.AllControllers ) {
                 var controller = pair.Value;
-                if ( controller is IReinit ) {
-                    (controller as IReinit).OnReinit();
+                if ( controller is IDeinit ) {
+                    (controller as IDeinit).OnDeinit();
                 }
             }
         }

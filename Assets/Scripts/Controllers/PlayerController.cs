@@ -7,7 +7,7 @@ using Grigorov.LeapAndJump.UI;
 using Grigorov.LeapAndJump.Player;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class PlayerController : IInit, IReinit, IUpdate, IFixedUpdate {
+    public class PlayerController : IInit, IDeinit, IUpdate, IFixedUpdate {
         PlayerControl _player    = null;
 
         PlayerControl Player {
@@ -23,7 +23,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             EventManager.Subscribe<TapZone_PointerDown>(this, OnPointerDown);
         }
 
-        void IReinit.OnReinit() {
+        void IDeinit.OnDeinit() {
             EventManager.Unsubscribe<TapZone_PointerDown>(OnPointerDown);
         }
 
