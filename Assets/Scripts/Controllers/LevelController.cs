@@ -8,7 +8,7 @@ namespace Grigorov.LeapAndJump.Controllers {
     public class LevelController : IInit, IDeinit, IAwake {
         SaveableField<LevelId> _currentLevel = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_1", 0));
 
-        bool _levelFinish = false;
+        public bool IsLevelFinish { get; private set; }
         
         public LevelId CurrentLevel {
             get => _currentLevel.Value;
@@ -21,7 +21,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         void IAwake.OnAwake() {
-            _levelFinish = false; 
+            IsLevelFinish = false; 
         }
 
         void IDeinit.OnDeinit() {
@@ -34,13 +34,13 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         void OnFoodCalculate(FoodCalculateEvent e) {
-            if ( !_levelFinish ) {
-                _levelFinish = e.CurCount >= e.TargetCount;
+            if ( !IsLevelFinish ) {
+                IsLevelFinish = e.CurCount >= e.TargetCount;
             }
         }
 
         void OnPlayerIntoBlockTriggerEnter(PlayerIntoBlockTriggerEnter e) {
-            if ( _levelFinish ) {
+            if ( IsLevelFinish ) {
                 OnWinLevel();
             }
         }

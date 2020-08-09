@@ -20,11 +20,16 @@ namespace Grigorov.LeapAndJump.Level {
     public class LevelBlock : MonoBehaviour {
         [SerializeField] Transform _beginPoint = null;
         [SerializeField] Transform _endPoint   = null;
+        [SerializeField] bool      _winBlock   = false;
 
         [SerializeField] List<SpriteRenderer> _backLayers = new List<SpriteRenderer>();
 
         LevelElementsGenerator _elementsGenerator = null;
         List<int>              _layers            = new List<int>();
+
+        public bool IsWinBlock {
+            get => _winBlock;
+        }
 
         void OnValidate() {
             var boxTrigger = GetComponent<BoxCollider2D>();

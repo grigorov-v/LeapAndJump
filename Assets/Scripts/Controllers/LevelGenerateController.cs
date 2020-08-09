@@ -18,6 +18,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         Stack<LevelElementsGroup> _stackElementsGroups = new Stack<LevelElementsGroup>();
         List<LevelBlock>          _activeBlocks        = new List<LevelBlock>();
+        LevelController           _levelController     = null;
 
         LevelBlock LastBlock {
             get {
@@ -38,6 +39,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         void IInit.OnInit() {
+            _levelController = ControllersRegister.FindController<LevelController>();
             EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
         }
 
@@ -52,8 +54,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             _activeBlocks.Clear();
 
             var bc = ControllersRegister.FindController<BalanceController>();
-            var lc = ControllersRegister.FindController<LevelController>();
-            var level = lc.CurrentLevel;
+            var level = _levelController.CurrentLevel;
             var allGroupsNames = bc.GetElementsGroups(level);
            
             _levelBlocks = LevelBlocks.Load("LevelBlocks", $"{level.World}_LevelBlocks");
@@ -64,7 +65,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             }
 
             for ( var i = 0; i < MinCountBlocks; i++ ) {
-                CreateNewBlock();
+                CreateNewBlock(false);
             }
         }
 
@@ -72,8 +73,8 @@ namespace Grigorov.LeapAndJump.Controllers {
             EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
         }
 
-        void CreateNewBlock() {
-            var newBlock = _levelBlocks.GetRandomObject(notRepetitive: false);
+        void CreateNewBlock(bool isWinBlock) {
+            var newBlock = _levelBlocks.GetRandomObject(notRepetitive: false, filter: block => block.IsWinBlock == isWinBlock);
             newBlock = GameObject.Instantiate(newBlock);
             newBlock.SetPosition(LastBlock);
             newBlock.GenerateLevelElements(StackElementsGroups.Pop(), _foods);
@@ -86,11 +87,11 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         void OnPlayerIntoBlockTriggerEnter(PlayerIntoBlockTriggerEnter e) {
-            if ( LastBlock && (LastBlock == e.LevelBlock) ) {
+            if ( LastBlock && (LastBlock == e.LevelBlock) && !e.LevelBlock.IsWinBlock ) {
                 var firstBlock = _activeBlocks.First();
                 _activeBlocks.Remove(firstBlock);
                 GameObject.Destroy(firstBlock.gameObject);
-                CreateNewBlock();
+                CreateNewBlock(_levelController.IsLevelFinish);
             }
         }
     }
