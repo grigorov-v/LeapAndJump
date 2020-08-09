@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
+
+using Grigorov.Controllers;
 
 using Grigorov.LeapAndJump.Animations;
 using Grigorov.LeapAndJump.Effects;
-using Grigorov.LeapAndJump.Level;
+using Grigorov.LeapAndJump.Controllers;
 
 using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 
-namespace Grigorov.LeapAndJump.Player {
+namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BaseAnimation))]
-    public class PlayerControl : MonoBehaviour {
+    public class Player : MonoBehaviour {
         const float CheckAngle = 10f;
 
         [SerializeField] float   _speed         = 2.5f;
@@ -53,6 +54,8 @@ namespace Grigorov.LeapAndJump.Player {
         void Awake() {
             _rb = GetComponent<Rigidbody2D>();
             _animationControl = GetComponent<BaseAnimation>();
+            var pc = ControllersRegister.FindController<PlayerController>();
+            pc?.SetPlayer(this);
         }
 
         public void JumpInput() {

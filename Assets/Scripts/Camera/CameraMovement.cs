@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using Grigorov.LeapAndJump.Player;
+using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.CameraManagement {
     public class CameraMovement : MonoBehaviour {
@@ -12,7 +12,7 @@ namespace Grigorov.LeapAndJump.CameraManagement {
         Camera    _camera = null;
 
         void Awake() {
-            _player = FindObjectOfType<PlayerControl>()?.transform;
+            _player = FindObjectOfType<Player>()?.transform;
             _camera = GetComponent<Camera>();
         }
 

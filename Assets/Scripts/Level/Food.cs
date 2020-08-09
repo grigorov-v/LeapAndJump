@@ -2,7 +2,7 @@
 using UnityEngine;
 
 using Grigorov.Events;
-using Grigorov.LeapAndJump.Player;
+using Grigorov.LeapAndJump.Level;
 
 using DG.Tweening;
 
@@ -61,7 +61,7 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         void OnTriggerEnter2D(Collider2D other) {
-            var player = other.GetComponent<PlayerControl>();
+            var player = other.GetComponent<Player>();
             if ( player ) {
                 StartCollect();
             }

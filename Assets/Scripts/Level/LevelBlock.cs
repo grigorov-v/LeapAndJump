@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Grigorov.Events;
-using Grigorov.LeapAndJump.Player;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
     public struct PlayerIntoBlockTriggerEnter {
-        public LevelBlock    LevelBlock {get; private set;}
-        public PlayerControl Player     {get; private set;}
+        public LevelBlock LevelBlock { get; private set; }
+        public Player     Player     { get; private set; }
 
-        public PlayerIntoBlockTriggerEnter (LevelBlock levelBlock, PlayerControl player) {
+        public PlayerIntoBlockTriggerEnter (LevelBlock levelBlock, Player player) {
             LevelBlock = levelBlock;
             Player = player;
         }
@@ -63,7 +62,7 @@ namespace Grigorov.LeapAndJump.Level {
         }
 
         void OnTriggerEnter2D(Collider2D other) {
-            var player = other.GetComponent<PlayerControl>();
+            var player = other.GetComponent<Player>();
             if ( player ) {
                 EventManager.Fire(new PlayerIntoBlockTriggerEnter(this, player));
             }
