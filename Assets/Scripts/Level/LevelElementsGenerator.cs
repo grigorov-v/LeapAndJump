@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Grigorov.Extensions;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
@@ -11,12 +12,7 @@ namespace Grigorov.LeapAndJump.Level {
         List<LevelElement> _allElements = new List<LevelElement>();
 
         LevelGrind LevelGrind {
-            get {
-                if ( !_levelGrind ) {
-                    _levelGrind = GetComponent<LevelGrind>();
-                }
-                return _levelGrind;
-            }
+            get => gameObject.GetOrFindComponent(ref _levelGrind);
         }
 
         public void Generate(LevelElementsGroup elementsGroup, Foods foods) {

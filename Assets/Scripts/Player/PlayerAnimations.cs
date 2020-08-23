@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using Spine.Unity;
 
-namespace Grigorov.LeapAndJump.Animations.Player {
+using Grigorov.Extensions;
+using Grigorov.LeapAndJump.Level;
+
+namespace Grigorov.LeapAndJump.Animations {
     public class PlayerAnimations : BaseAnimation {
         [SerializeField] SkeletonAnimation _skeletonAnimation = null;
 
         KeyAnim _curAnim = KeyAnim.None;
+        Player  _player  = null;
 
         public override void PlayAnimation(KeyAnim key) {
             if ( _curAnim == key ) {
@@ -17,7 +21,6 @@ namespace Grigorov.LeapAndJump.Animations.Player {
                                       (key == KeyAnim.SlideInWall) || (key == KeyAnim.Idle);
                                       
             _skeletonAnimation.AnimationName = animName;
-            
             _curAnim = key;
         }
     }
