@@ -9,7 +9,7 @@ using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class LevelGenerateController : IInit, IDeinit, IAwake {
+    public class LevelGenerateController : AbstractController, IInit, IDeinit, IAwake {
         const int MinCountBlocks = 4;
 
         LevelBlocks              _levelBlocks    = null;

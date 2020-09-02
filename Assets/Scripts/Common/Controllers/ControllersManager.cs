@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using System.Reflection;
+using System.Linq;
+
 namespace Grigorov.Controllers {
     public class ControllersManager : MonoBehaviour {
         static ControllersManager _firstControllersManager = null;
@@ -20,6 +23,10 @@ namespace Grigorov.Controllers {
             
             var sceneName = SceneManager.GetActiveScene().name;
             gameObject.name = IsCommonManager ? "[Common_Controllers_Manager]" : $"[{sceneName}_Controllers_Manager]";
+
+            var ourtype = typeof(AbstractController); 
+            var list = Assembly.GetAssembly(ourtype).GetTypes().Where(type => type.IsSubclassOf(ourtype)).ToList();
+            Debug.Log(list.Count);
         }
 
         void Update() {
@@ -41,8 +48,7 @@ namespace Grigorov.Controllers {
         }
 
         void InitControllers() {
-            foreach ( var pair in ControllersRegister.AllControllers ) {
-                var controller = pair.Value;
+            foreach ( var controller in ControllersRegister.AllControllers ) {
                 if ( controller is IInit ) {
                     (controller as IInit).OnInit();
                 }
@@ -50,8 +56,7 @@ namespace Grigorov.Controllers {
         }
 
         void AwakeControllers() {
-            foreach ( var pair in ControllersRegister.AllControllers ) {
-                var controller = pair.Value;
+            foreach ( var controller in ControllersRegister.AllControllers ) {
                 if ( controller is IAwake ) {
                     (controller as IAwake).OnAwake();
                 }
@@ -59,8 +64,7 @@ namespace Grigorov.Controllers {
         }
 
         void UpdateControllers() {
-            foreach ( var pair in ControllersRegister.AllControllers ) {
-                var controller = pair.Value;
+            foreach ( var controller in ControllersRegister.AllControllers ) {
                 if ( controller is IUpdate ) {
                     (controller as IUpdate).OnUpdate();
                 }
@@ -68,8 +72,7 @@ namespace Grigorov.Controllers {
         }
 
         void FixedUpdateControllers() {
-            foreach ( var pair in ControllersRegister.AllControllers ) {
-                var controller = pair.Value;
+            foreach ( var controller in ControllersRegister.AllControllers ) {
                 if ( controller is IFixedUpdate ) {
                     (controller as IFixedUpdate).OnFixedUpdate();
                 }
@@ -77,8 +80,7 @@ namespace Grigorov.Controllers {
         }
 
         void ReinitControllers() {
-            foreach ( var pair in ControllersRegister.AllControllers ) {
-                var controller = pair.Value;
+            foreach ( var controller in ControllersRegister.AllControllers ) {
                 if ( controller is IDeinit ) {
                     (controller as IDeinit).OnDeinit();
                 }

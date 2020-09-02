@@ -5,7 +5,7 @@ using Grigorov.Events;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class LevelController : IInit, IDeinit, IAwake {
+    public class LevelController : AbstractController, IInit, IDeinit, IAwake {
         SaveableField<LevelId> _currentLevel = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_1", 0));
 
         public bool IsLevelFinish { get; private set; }

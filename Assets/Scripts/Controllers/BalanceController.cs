@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Grigorov.LeapAndJump.Level;
 
+using Grigorov.Controllers;
+
 namespace Grigorov.LeapAndJump.Controllers {
-    public class BalanceController {
+    public class BalanceController : AbstractController {
         Balance _lastLoadedBalance = null;
 
         public List<string> GetElementsGroups(LevelId levelId) {

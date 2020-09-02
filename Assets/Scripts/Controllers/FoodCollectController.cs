@@ -16,7 +16,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
     }
 
-    public class FoodCollectController : IInit, IDeinit, IAwake {
+    public class FoodCollectController : AbstractController, IInit, IDeinit, IAwake {
         SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
 
         public int CurrentFoodCount { get; private set; }

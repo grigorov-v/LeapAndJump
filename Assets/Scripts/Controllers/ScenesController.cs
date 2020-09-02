@@ -24,7 +24,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         World_1
     }
 
-    public class ScenesController : IInit {
+    public class ScenesController : AbstractController, IInit {
         const string LoadingUIResource = "Prefabs/LoadingUI";
         const string WorldScenePrefix  = "World_";
 

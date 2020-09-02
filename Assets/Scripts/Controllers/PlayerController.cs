@@ -2,16 +2,17 @@
 
 using Grigorov.Events;
 using Grigorov.Controllers;
+using Grigorov.Helpers;
 
 using Grigorov.LeapAndJump.UI;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class PlayerController : IInit, IDeinit, IUpdate, IFixedUpdate {
+    public class PlayerController : AbstractController, IInit, IDeinit, IUpdate, IFixedUpdate {
         Player _player = null;
 
-        public void SetPlayer(Player player) {
-            _player = player;
+        public Player Player {
+            get => ComponentHelper.GetOrFindComponent(ref _player, () => ControlledBehaviours.Find(c => c is Player) as Player);
         }
 
         void IInit.OnInit() {
@@ -23,26 +24,26 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         void IUpdate.OnUpdate() {
-            if ( !_player ) {
+            if ( !Player ) {
                 return;
             }
             if ( Input.GetKeyDown(KeyCode.Space) ) {
-                _player.JumpInput();
+                Player.JumpInput();
             }
         }
 
         void IFixedUpdate.OnFixedUpdate() {
-            if ( !_player ) {
+            if ( !Player ) {
                 return;
             }
-            _player.OnUpdate();
+            Player.OnUpdate();
         }
 
         void OnPointerDown(TapZone_PointerDown e) {
-            if ( !_player ) {
+            if ( !Player ) {
                 return;
             }
-            _player.JumpInput();
+            Player.JumpInput();
         }
     }
 }
