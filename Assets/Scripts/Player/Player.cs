@@ -12,7 +12,7 @@ using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BaseAnimation))]
-    public class Player : ControlledBehaviour<PlayerController> {
+    public class Player : MonoBehaviour {
         const float CheckAngle = 10f;
 
         [SerializeField] float   _speed         = 2.5f;
@@ -51,9 +51,7 @@ namespace Grigorov.LeapAndJump.Level {
             get => !_floorTrigger && _wallTrigger && !_jump && (_rb.velocity.y < 0);
         }
 
-        protected override void Awake() {
-            base.Awake();
-
+        void Awake() {
             _rb = GetComponent<Rigidbody2D>();
             _animationControl = GetComponent<BaseAnimation>();
             var pc = ControllersRegister.FindController<PlayerController>();

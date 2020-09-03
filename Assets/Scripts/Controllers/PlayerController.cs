@@ -12,7 +12,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         Player _player = null;
 
         public Player Player {
-            get => ComponentHelper.GetOrFindComponent(ref _player, () => ControlledBehaviours.Find(c => c is Player) as Player);
+            get => ComponentHelper.GetOrFindComponent(ref _player, () => GameObject.FindObjectOfType<Player>());
         }
 
         void IInit.OnInit() {
