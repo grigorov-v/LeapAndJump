@@ -42,9 +42,9 @@ namespace Grigorov.LeapAndJump.Level {
             _elementsGenerator = GetComponent<LevelElementsGenerator>();
         }
 
-        public void GenerateLevelElements(LevelElementsGroup elementsGroup, Foods foods) {
+        public void GenerateLevelElements(LevelElementsGroup elementsGroup) {
             if ( _elementsGenerator ) {
-                _elementsGenerator.Generate(elementsGroup, foods);
+                _elementsGenerator.Generate(elementsGroup);
             }
         }
 

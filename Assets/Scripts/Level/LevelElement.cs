@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using Grigorov.Extensions;
+using Grigorov.LeapAndJump.ResourcesContainers;
 
 using NaughtyAttributes;
 
@@ -20,16 +21,22 @@ namespace Grigorov.LeapAndJump.Level {
             transform.localScale = scale;
         }
 
-        public void SpawnFood(Food foodPrefab) {
-            if ( !foodPrefab ) {
-                return;
+        public int SpawnFoods(Foods foods) {
+            if ( !foods ) {
+                return 0;
             }
             
             var randomizePoints = _foodPoints.Randomize();
             var elemBounds = Bounds;
+            var count = 0;
             foreach ( var point in randomizePoints ) {
                 var canSpawn = Random.Range(0, 2) > 0;
                 if ( !canSpawn ) {
+                    continue;
+                }
+
+                var foodPrefab = foods.GetRandomObject(notRepetitive: false);
+                if ( !foodPrefab ) {
                     continue;
                 }
 
@@ -38,7 +45,10 @@ namespace Grigorov.LeapAndJump.Level {
                 var pos = point.position;
                 pos.y = elemBounds.center.y + elemBounds.extents.y + food.Bounds.extents.y;
                 food.transform.position = pos;
+                count ++;
             }
+
+            return count;
         }
 
 

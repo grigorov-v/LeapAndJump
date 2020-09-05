@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Grigorov.Helpers;
+using Grigorov.Events;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
+    public struct SpawnLevelElementEvent {
+        public LevelElement LevelElement { get; private set; }
+
+        public SpawnLevelElementEvent(LevelElement levelElement) {
+            LevelElement = levelElement;
+        }
+    }
+
     [RequireComponent(typeof(LevelGrind))]
     public class LevelElementsGenerator : MonoBehaviour {
         LevelGrind         _levelGrind  = null;
@@ -15,7 +24,7 @@ namespace Grigorov.LeapAndJump.Level {
             get => ComponentHelper.GetOrFindComponent(ref _levelGrind, () => GetComponent<LevelGrind>());
         }
 
-        public void Generate(LevelElementsGroup elementsGroup, Foods foods) {
+        public void Generate(LevelElementsGroup elementsGroup) {
             GetComponentsInChildren<LevelElement>(false, _allElements);
 
             var rowCount = LevelGrind.Cells.GetLength(1);
@@ -32,14 +41,14 @@ namespace Grigorov.LeapAndJump.Level {
 
                 var trySpawnElement = false;
                 do {
-                    trySpawnElement = TrySpawnElement(elementsGroup.GetRandomObject(), gridRow, foods);
+                    trySpawnElement = TrySpawnElement(elementsGroup.GetRandomObject(), gridRow);
                 } while (trySpawnElement);
 
-                elementsGroup.RandomizeObjects.ForEach(element => TrySpawnElement(element, gridRow, foods));
+                elementsGroup.RandomizeObjects.ForEach(element => TrySpawnElement(element, gridRow));
             }
         }
 
-        bool TrySpawnElement(LevelElement prefabElement, List<Bounds> gridRow, Foods foods) {
+        bool TrySpawnElement(LevelElement prefabElement, List<Bounds> gridRow) {
             if ( !prefabElement ) {
                 return false;
             }
@@ -61,12 +70,8 @@ namespace Grigorov.LeapAndJump.Level {
             position -= localCenter;
             element.transform.position = position;
             element.TryMirror();
-
-            if ( foods ) {
-                element.SpawnFood(foods.GetRandomObject());
-            }
-
             _allElements.Add(element);
+            EventManager.Fire(new SpawnLevelElementEvent(element));
             return true;
         }
 

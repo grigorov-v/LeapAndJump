@@ -14,7 +14,6 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         LevelBlocks              _levelBlocks    = null;
         List<LevelElementsGroup> _elementsGroups = new List<LevelElementsGroup>();
-        Foods                    _foods          = null;
 
         Stack<LevelElementsGroup> _stackElementsGroups = new Stack<LevelElementsGroup>();
         List<LevelBlock>          _activeBlocks        = new List<LevelBlock>();
@@ -58,7 +57,6 @@ namespace Grigorov.LeapAndJump.Controllers {
             var allGroupsNames = bc.GetElementsGroups(level);
            
             _levelBlocks = LevelBlocks.Load("LevelBlocks", $"{level.World}_LevelBlocks");
-            _foods = Foods.Load("Foods", $"{level.World}_Foods");
             foreach ( var groupName in allGroupsNames ) {
                 var element = Resources.Load<LevelElementsGroup>($"Elements_Groups/{level.World}/{groupName}");
                 _elementsGroups.Add(element);
@@ -77,7 +75,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             var newBlock = _levelBlocks.GetRandomObject(notRepetitive: false, filter: block => block.IsWinBlock == isWinBlock);
             newBlock = GameObject.Instantiate(newBlock);
             newBlock.SetPosition(LastBlock);
-            newBlock.GenerateLevelElements(StackElementsGroups.Pop(), _foods);
+            newBlock.GenerateLevelElements(StackElementsGroups.Pop());
             _activeBlocks.Add(newBlock);
 
             for ( var i = 0; i < _activeBlocks.Count; i++ ) {
