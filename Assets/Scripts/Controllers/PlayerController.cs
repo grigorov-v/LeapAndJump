@@ -8,12 +8,8 @@ using Grigorov.LeapAndJump.UI;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class PlayerController : AbstractController, IInit, IDeinit, IUpdate, IFixedUpdate {
+    public class PlayerController : Controller, IInit, IDeinit, IUpdate, IFixedUpdate {
         Player _player = null;
-
-        public Player Player {
-            get => ComponentHelper.GetOrFindComponent(ref _player, () => GameObject.FindObjectOfType<Player>());
-        }
 
         void IInit.OnInit() {
             EventManager.Subscribe<TapZone_PointerDown>(this, OnPointerDown);
@@ -24,26 +20,17 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         void IUpdate.OnUpdate() {
-            if ( !Player ) {
-                return;
-            }
             if ( Input.GetKeyDown(KeyCode.Space) ) {
-                Player.JumpInput();
+                Player.AllObjects.ForEach(player => player.JumpInput());
             }
         }
 
         void IFixedUpdate.OnFixedUpdate() {
-            if ( !Player ) {
-                return;
-            }
-            Player.OnUpdate();
+            Player.AllObjects.ForEach(player => player.OnUpdate());
         }
 
         void OnPointerDown(TapZone_PointerDown e) {
-            if ( !Player ) {
-                return;
-            }
-            Player.JumpInput();
+            Player.AllObjects.ForEach(player => player.JumpInput());
         }
     }
 }

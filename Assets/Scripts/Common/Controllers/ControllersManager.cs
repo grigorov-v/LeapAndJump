@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
-using System.Reflection;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Grigorov.Controllers {
     public class ControllersManager : MonoBehaviour {
@@ -12,78 +10,40 @@ namespace Grigorov.Controllers {
             get => (_firstControllersManager == this);
         }
 
+        List<Controller> AllControllers {
+            get => Controller.AllControllers;
+        }
+
         void Awake() {
             if ( !_firstControllersManager ) {
-                InitControllers();
+                AllControllers.ForEach(controller => (controller as IInit)?.OnInit());
                 DontDestroyOnLoad(gameObject);
                 _firstControllersManager = this;
             }
 
-            AwakeControllers();
+            AllControllers.ForEach(controller => (controller as IAwake)?.OnAwake());
             
             var sceneName = SceneManager.GetActiveScene().name;
             gameObject.name = IsCommonManager ? "[Common_Controllers_Manager]" : $"[{sceneName}_Controllers_Manager]";
-
-            var ourtype = typeof(AbstractController); 
-            var list = Assembly.GetAssembly(ourtype).GetTypes().Where(type => type.IsSubclassOf(ourtype)).ToList();
-            Debug.Log(list.Count);
         }
 
         void Update() {
             if ( IsCommonManager ) {
-                UpdateControllers();
+                AllControllers.ForEach(controller => (controller as IUpdate)?.OnUpdate());
             }
         }
 
         void FixedUpdate() {
             if ( IsCommonManager ) {
-                FixedUpdateControllers();
+                AllControllers.ForEach(controller => (controller as IFixedUpdate)?.OnFixedUpdate());
             }
         }
 
         void OnDestroy() {
+            AllControllers.ForEach(controller => (controller as IDestroy)?.OnDestroy());
+            
             if ( IsCommonManager ) {
-                ReinitControllers();
-            }
-        }
-
-        void InitControllers() {
-            foreach ( var controller in ControllersRegister.AllControllers ) {
-                if ( controller is IInit ) {
-                    (controller as IInit).OnInit();
-                }
-            }
-        }
-
-        void AwakeControllers() {
-            foreach ( var controller in ControllersRegister.AllControllers ) {
-                if ( controller is IAwake ) {
-                    (controller as IAwake).OnAwake();
-                }
-            }
-        }
-
-        void UpdateControllers() {
-            foreach ( var controller in ControllersRegister.AllControllers ) {
-                if ( controller is IUpdate ) {
-                    (controller as IUpdate).OnUpdate();
-                }
-            }
-        }
-
-        void FixedUpdateControllers() {
-            foreach ( var controller in ControllersRegister.AllControllers ) {
-                if ( controller is IFixedUpdate ) {
-                    (controller as IFixedUpdate).OnFixedUpdate();
-                }
-            }
-        }
-
-        void ReinitControllers() {
-            foreach ( var controller in ControllersRegister.AllControllers ) {
-                if ( controller is IDeinit ) {
-                    (controller as IDeinit).OnDeinit();
-                }
+                AllControllers.ForEach(controller => (controller as IDeinit)?.OnDeinit());
             }
         }
     }

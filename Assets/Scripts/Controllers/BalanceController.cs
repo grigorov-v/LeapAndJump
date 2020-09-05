@@ -4,7 +4,7 @@ using Grigorov.LeapAndJump.Level;
 using Grigorov.Controllers;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class BalanceController : AbstractController {
+    public class BalanceController : Controller {
         Balance _lastLoadedBalance = null;
 
         public List<string> GetElementsGroups(LevelId levelId) {
