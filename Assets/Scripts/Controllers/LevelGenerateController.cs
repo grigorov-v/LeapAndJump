@@ -9,7 +9,7 @@ using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class LevelGenerateController : Controller, IInit, IDeinit, IAwake {
+    public class LevelGenerateController : Controller {
         const int MinCountBlocks = 4;
 
         LevelBlocks              _levelBlocks    = null;
@@ -38,12 +38,12 @@ namespace Grigorov.LeapAndJump.Controllers {
             }
         }
 
-        void IInit.OnInit() {
+        public override void OnInit() {
             _levelController = Controller.FindController<LevelController>();
             EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
         }
 
-        void IAwake.OnAwake() {
+        public override void OnAwake() {
             var sc = Controller.FindController<ScenesController>();
             if ( !sc.IsActiveWorldScene ) {
                 return;
@@ -69,7 +69,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             }
         }
 
-        void IDeinit.OnDeinit() {
+        public override void OnDeinit() {
             EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
         }
 

@@ -24,7 +24,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         World_1
     }
 
-    public class ScenesController : Controller, IInit {
+    public class ScenesController : Controller {
         const string LoadingUIResource = "Prefabs/LoadingUI";
         const string WorldScenePrefix  = "World_";
 
@@ -51,7 +51,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             }
         }
 
-        void IInit.OnInit() {
+        public override void OnInit() {
             if ( SceneManager.GetActiveScene().name == "Loading" ) {
                 OpenScene(Scenes.MainMenu);
             }

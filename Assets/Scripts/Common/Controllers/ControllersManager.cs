@@ -16,34 +16,34 @@ namespace Grigorov.Controllers {
 
         void Awake() {
             if ( !_firstControllersManager ) {
-                AllControllers.ForEach(controller => (controller as IInit)?.OnInit());
+                AllControllers.ForEach(controller => controller?.OnInit());
                 DontDestroyOnLoad(gameObject);
                 _firstControllersManager = this;
             }
 
-            AllControllers.ForEach(controller => (controller as IAwake)?.OnAwake());
-            
+            AllControllers.ForEach(controller => controller?.OnAwake());
+        
             var sceneName = SceneManager.GetActiveScene().name;
             gameObject.name = IsCommonManager ? "[Common_Controllers_Manager]" : $"[{sceneName}_Controllers_Manager]";
         }
 
         void Update() {
             if ( IsCommonManager ) {
-                AllControllers.ForEach(controller => (controller as IUpdate)?.OnUpdate());
+                AllControllers.ForEach(controller => controller?.OnUpdate());
             }
         }
 
         void FixedUpdate() {
             if ( IsCommonManager ) {
-                AllControllers.ForEach(controller => (controller as IFixedUpdate)?.OnFixedUpdate());
+                AllControllers.ForEach(controller => controller?.OnFixedUpdate());
             }
         }
 
         void OnDestroy() {
-            AllControllers.ForEach(controller => (controller as IDestroy)?.OnDestroy());
+            AllControllers.ForEach(controller => controller?.OnDestroy());
             
             if ( IsCommonManager ) {
-                AllControllers.ForEach(controller => (controller as IDeinit)?.OnDeinit());
+                AllControllers.ForEach(controller => controller?.OnDeinit());
             }
         }
     }

@@ -18,6 +18,18 @@ namespace Grigorov.Controllers {
             }
         }
 
+        public virtual void OnInit() {}
+
+        public virtual void OnAwake() {}
+
+        public virtual void OnUpdate() {}
+
+        public virtual void OnFixedUpdate() {}
+
+        public virtual void OnDeinit() {}
+
+        public virtual void OnDestroy() {}
+
         public static T FindController<T>() where T: Controller {
             var controller = _allControllers.Find(c => c is T);
             return ( controller != null ) ? controller as T : null;

@@ -2,30 +2,29 @@
 
 using Grigorov.Events;
 using Grigorov.Controllers;
-using Grigorov.Helpers;
 
 using Grigorov.LeapAndJump.UI;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public class PlayerController : Controller, IInit, IDeinit, IUpdate, IFixedUpdate {
+    public class PlayerController : Controller {
         Player _player = null;
 
-        void IInit.OnInit() {
+        public override void OnInit() {
             EventManager.Subscribe<TapZone_PointerDown>(this, OnPointerDown);
         }
 
-        void IDeinit.OnDeinit() {
+        public override void OnDeinit() {
             EventManager.Unsubscribe<TapZone_PointerDown>(OnPointerDown);
         }
 
-        void IUpdate.OnUpdate() {
+        public override void OnUpdate() {
             if ( Input.GetKeyDown(KeyCode.Space) ) {
                 Player.AllObjects.ForEach(player => player.JumpInput());
             }
         }
 
-        void IFixedUpdate.OnFixedUpdate() {
+        public override void OnFixedUpdate() {
             Player.AllObjects.ForEach(player => player.OnUpdate());
         }
 

@@ -16,7 +16,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
     }
 
-    public class FoodCollectController : Controller, IInit, IDeinit, IAwake {
+    public class FoodCollectController : Controller {
         SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
 
         public int CurrentFoodCount { get; private set; }
@@ -25,19 +25,19 @@ namespace Grigorov.LeapAndJump.Controllers {
             get => _totalFoodCount.Value;
         }
 
-        void IInit.OnInit() {
+        public override void OnInit() {
             _totalFoodCount.Load();
             EventManager.Subscribe<FoodCollectEvent>(this, OnFoodCollect);
         }
 
-        void IAwake.OnAwake() {
+        public override void OnAwake() {
             CurrentFoodCount = 0;
             var bc = Controller.FindController<BalanceController>();
             var lc = Controller.FindController<LevelController>(); 
             TargetFoodCount = bc.GetFoodsCount(lc.CurrentLevel);
         }
 
-        void IDeinit.OnDeinit() {
+        public override void OnDeinit() {
             _totalFoodCount.Save();
             EventManager.Unsubscribe<FoodCollectEvent>(OnFoodCollect);
         }
