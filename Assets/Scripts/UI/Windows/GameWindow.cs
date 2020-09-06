@@ -21,7 +21,7 @@ namespace Grigorov.LeapAndJump.UI {
         }
 
         void Start() {
-            var fcc = Controller.Get<BonusesController>();
+            var fcc = Controller.Get<FoodsController>();
             _foodCountText.text = GetFoodCountText(fcc.CurrentFoodCount, fcc.TargetFoodCount);
         }
 

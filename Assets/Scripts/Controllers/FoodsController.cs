@@ -6,32 +6,36 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public struct CreateFoodEvent {
-        public int Count { get; private set; }
+        public int SpawnCount  { get; private set; }
+        public int TargetCount { get; private set; }
 
-        public CreateFoodEvent(int count) {
-            Count = count;
+        public CreateFoodEvent(int spawnCount, int targetCount) {
+            SpawnCount  = spawnCount;
+            TargetCount = targetCount;
         }
     }
 
     public struct FoodCalculateEvent {
-        public int CurCount;
-        public int TargetCount;
-        public int TotalCount;
+        public int CurCount    { get; private set; }
+        public int TargetCount { get; private set; }
+        public int TotalCount  { get; private set; }
 
         public FoodCalculateEvent(int curCount, int targetCount, int totalCount) {
-            CurCount = curCount;
+            CurCount    = curCount;
             TargetCount = targetCount;
-            TotalCount = totalCount;
+            TotalCount  = totalCount;
         }
     }
 
-    public class BonusesController : Controller {
+    public class FoodsController : Controller {
         SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
         Foods              _foods          = null;
 
         public int CurrentFoodCount { get; private set; }
         public int TargetFoodCount  { get; private set; }
         public int TotalFoodCount   { get => _totalFoodCount.Value; }
+
+        public int SpawnCountFoods  { get; private set; }
 
         public override void OnInit() {
             _totalFoodCount.Load();
@@ -41,6 +45,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public override void OnAwake() {
             CurrentFoodCount = 0;
+            SpawnCountFoods = 0;
             var bc = Controller.Get<BalanceController>();
             var lc = Controller.Get<LevelController>(); 
             TargetFoodCount = bc.GetFoodsCount(lc.CurrentLevel);
@@ -61,8 +66,8 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         void OnSpawnLevelElement(SpawnLevelElementEvent e) {
             var element = e.LevelElement;
-            var foodsCount = element.SpawnFoods(_foods);
-            EventManager.Fire(new CreateFoodEvent(foodsCount));
+            SpawnCountFoods += element.SpawnFoods(_foods);
+            EventManager.Fire(new CreateFoodEvent(SpawnCountFoods, TargetFoodCount));
         }
 
         void OnFoodCollect(FoodCollectEvent e) {

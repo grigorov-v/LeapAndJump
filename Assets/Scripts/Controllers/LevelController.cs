@@ -7,7 +7,7 @@ using Grigorov.LeapAndJump.Level;
 namespace Grigorov.LeapAndJump.Controllers {
     public class LevelController : Controller {
         SaveableField<LevelId> _currentLevel      = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_1", 0));
-        BonusesController      _bonusesController = null;
+        FoodsController        _bonusesController = null;
 
         public bool IsLevelFinish { get; private set; }
         
@@ -17,7 +17,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public override void OnInit() {
             _currentLevel.Load();
-            _bonusesController = Controller.Get<BonusesController>();
+            _bonusesController = Controller.Get<FoodsController>();
             
             EventManager.Subscribe<CreateFoodEvent>(this, OnCreateFood);
             EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
@@ -38,9 +38,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         void OnCreateFood(CreateFoodEvent e) {
             if ( !IsLevelFinish ) {
-                var curFoodsCount = _bonusesController.CurrentFoodCount;
-                var targetFoodCount = _bonusesController.TargetFoodCount;
-                IsLevelFinish = (curFoodsCount + e.Count) >= targetFoodCount;
+                IsLevelFinish = e.SpawnCount >= e.TargetCount;
             }
         }
 
