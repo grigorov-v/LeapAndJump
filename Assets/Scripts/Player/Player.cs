@@ -7,11 +7,10 @@ using Grigorov.LeapAndJump.Animations;
 using Grigorov.LeapAndJump.Effects;
 using Grigorov.LeapAndJump.Controllers;
 
-using KeyAnim = Grigorov.LeapAndJump.Animations.BaseAnimation.KeyAnim;
 
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(BaseAnimation))]
+    [RequireComponent(typeof(PlayerAnimations))]
     public class Player : ControlledBehaviour<Player> {
         const float CheckAngle = 10f;
 
@@ -22,13 +21,13 @@ namespace Grigorov.LeapAndJump.Level {
         [Space]
         [SerializeField] List<Trail> _jumpTrails = new List<Trail>();
 
-        Rigidbody2D   _rb               = null;
-        BaseAnimation _animationControl = null;
-        Collider2D    _wallTrigger      = null;
-        Collider2D    _floorTrigger     = null;
-        Vector2       _wallNormal       = Vector2.zero;
-        bool          _jump             = false;
-        bool          _allowSecondJump  = false;
+        Rigidbody2D      _rb               = null;
+        PlayerAnimations _animationControl = null;
+        Collider2D       _wallTrigger      = null;
+        Collider2D       _floorTrigger     = null;
+        Vector2          _wallNormal       = Vector2.zero;
+        bool             _jump             = false;
+        bool             _allowSecondJump  = false;
 
         bool CanJump {
             get => (_floorTrigger || _wallTrigger) && _jump;
@@ -54,7 +53,7 @@ namespace Grigorov.LeapAndJump.Level {
         protected override void Awake() {
             base.Awake();
             _rb = GetComponent<Rigidbody2D>();
-            _animationControl = GetComponent<BaseAnimation>();
+            _animationControl = GetComponent<PlayerAnimations>();
             var pc = Controller.Get<PlayerController>();
         }
 

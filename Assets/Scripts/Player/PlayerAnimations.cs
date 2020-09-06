@@ -1,16 +1,34 @@
 ﻿using UnityEngine;
 using Spine.Unity;
 
-using Grigorov.Extensions;
-using Grigorov.LeapAndJump.Level;
+using System.Collections.Generic;
+
+using NaughtyAttributes;
 
 namespace Grigorov.LeapAndJump.Animations {
-    public class PlayerAnimations : BaseAnimation {
+    public enum KeyAnim {
+        None,
+        Walk,
+        Jump,
+        SlideInWall,
+        SecondJump,
+        Idle
+    }
+
+    [System.Serializable]
+    public struct AnimInfo {
+        public KeyAnim Key;
+        public string  StateName;
+    }
+
+    public class PlayerAnimations : MonoBehaviour {
         [SerializeField] SkeletonAnimation _skeletonAnimation = null;
+        [ReorderableList] [SerializeField]
+        protected List<AnimInfo> _animations = new List<AnimInfo>();
 
         KeyAnim _curAnim = KeyAnim.None;
 
-        public override void PlayAnimation(KeyAnim key) {
+        public void PlayAnimation(KeyAnim key) {
             if ( _curAnim == key ) {
                 return;
             }
