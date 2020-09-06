@@ -17,7 +17,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public override void OnInit() {
             _currentLevel.Load();
-            _bonusesController = Controller.FindController<BonusesController>();
+            _bonusesController = Controller.Get<BonusesController>();
             
             EventManager.Subscribe<CreateFoodEvent>(this, OnCreateFood);
             EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);

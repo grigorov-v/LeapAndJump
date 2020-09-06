@@ -38,12 +38,12 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         public override void OnInit() {
-            _levelController = Controller.FindController<LevelController>();
+            _levelController = Controller.Get<LevelController>();
             EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
         }
 
         public override void OnAwake() {
-            var sc = Controller.FindController<ScenesController>();
+            var sc = Controller.Get<ScenesController>();
             if ( !sc.IsActiveWorldScene ) {
                 return;
             }
@@ -52,7 +52,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             _stackElementsGroups.Clear();
             _activeBlocks.Clear();
 
-            var bc = Controller.FindController<BalanceController>();
+            var bc = Controller.Get<BalanceController>();
             var level = _levelController.CurrentLevel;
             var allGroupsNames = bc.GetElementsGroups(level);
            

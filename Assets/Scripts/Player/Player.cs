@@ -55,7 +55,7 @@ namespace Grigorov.LeapAndJump.Level {
             base.Awake();
             _rb = GetComponent<Rigidbody2D>();
             _animationControl = GetComponent<BaseAnimation>();
-            var pc = Controller.FindController<PlayerController>();
+            var pc = Controller.Get<PlayerController>();
         }
 
         public void JumpInput() {

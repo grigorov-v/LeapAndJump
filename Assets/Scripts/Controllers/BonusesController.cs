@@ -43,11 +43,11 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public override void OnAwake() {
             CurrentFoodCount = 0;
-            var bc = Controller.FindController<BalanceController>();
-            var lc = Controller.FindController<LevelController>(); 
+            var bc = Controller.Get<BalanceController>();
+            var lc = Controller.Get<LevelController>(); 
             TargetFoodCount = bc.GetFoodsCount(lc.CurrentLevel);
 
-            var level = Controller.FindController<LevelController>()?.CurrentLevel;
+            var level = Controller.Get<LevelController>()?.CurrentLevel;
             _foods = Foods.Load("Foods", $"{level.Value.World}_Foods");
         }
 
