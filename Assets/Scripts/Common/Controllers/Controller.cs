@@ -31,7 +31,7 @@ namespace Grigorov.Controllers {
         public virtual void OnDestroy() {}
 
         public static T Get<T>() where T: Controller {
-            var controller = _allControllers.Find(c => c is T);
+            var controller = AllControllers.Find(c => c is T);
             return ( controller != null ) ? controller as T : null;
         }
 
