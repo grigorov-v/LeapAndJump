@@ -24,7 +24,9 @@ namespace Grigorov.LeapAndJump.Level {
         void StartCollect() {
             ResetTween();
             
+            Rigidbody.Sleep();
             Rigidbody.isKinematic = true;
+            
             var colliders = new Collider2D[Rigidbody.attachedColliderCount];
             Rigidbody.GetAttachedColliders(colliders);
             Array.ForEach(colliders, coll => coll.enabled = false);
