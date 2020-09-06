@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 namespace Grigorov.Controllers {
@@ -11,6 +12,12 @@ namespace Grigorov.Controllers {
 
         protected virtual void OnDestroy() {
             AllObjects.Remove(this as T);
+        }
+
+        public static void ForAll(Action<T> action) {
+            foreach ( var obj in AllObjects ) {
+                action?.Invoke(obj);
+            }
         }
     }
 }

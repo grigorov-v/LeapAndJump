@@ -20,16 +20,16 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public override void OnUpdate() {
             if ( Input.GetKeyDown(KeyCode.Space) ) {
-                Player.AllObjects.ForEach(player => player.JumpInput());
+                Player.ForAll(player => player.JumpInput());
             }
         }
 
         public override void OnFixedUpdate() {
-            Player.AllObjects.ForEach(player => player.OnUpdate());
+            Player.ForAll(player => player.OnUpdate());
         }
 
         void OnPointerDown(TapZone_PointerDown e) {
-            Player.AllObjects.ForEach(player => player.JumpInput());
+            Player.ForAll(player => player.JumpInput());
         }
     }
 }
