@@ -23,8 +23,9 @@ namespace Grigorov.LeapAndJump.Animations {
 
     public class PlayerAnimations : MonoBehaviour {
         [SerializeField] SkeletonAnimation _skeletonAnimation = null;
+        
         [ReorderableList] [SerializeField]
-        protected List<AnimInfo> _animations = new List<AnimInfo>();
+        List<AnimInfo> _animations = new List<AnimInfo>();
 
         KeyAnim _curAnim = KeyAnim.None;
 
