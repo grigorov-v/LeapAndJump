@@ -3,6 +3,7 @@ using Grigorov.Save;
 using Grigorov.Events;
 
 using Grigorov.LeapAndJump.Level;
+using Grigorov.LeapAndJump.Controllers.Events;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public class LevelController : Controller {
@@ -19,7 +20,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             _currentLevel.Load();
             _bonusesController = Controller.Get<FoodsController>();
             
-            EventManager.Subscribe<CreateFoodEvent>(this, OnCreateFood);
+            EventManager.Subscribe<FoodsController_CreateFoodEvent>(this, OnCreateFood);
             EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
         }
 
@@ -28,7 +29,7 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         public override void OnDeinit() {
-            EventManager.Unsubscribe<CreateFoodEvent>(OnCreateFood);
+            EventManager.Unsubscribe<FoodsController_CreateFoodEvent>(OnCreateFood);
             EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
         }
 
@@ -36,7 +37,7 @@ namespace Grigorov.LeapAndJump.Controllers {
             UnityEngine.Debug.Log("Win level");
         }
 
-        void OnCreateFood(CreateFoodEvent e) {
+        void OnCreateFood(FoodsController_CreateFoodEvent e) {
             if ( !IsLevelFinish ) {
                 IsLevelFinish = e.SpawnCount >= e.TargetCount;
             }

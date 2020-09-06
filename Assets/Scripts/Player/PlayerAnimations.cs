@@ -9,7 +9,6 @@ namespace Grigorov.LeapAndJump.Animations {
         [SerializeField] SkeletonAnimation _skeletonAnimation = null;
 
         KeyAnim _curAnim = KeyAnim.None;
-        Player  _player  = null;
 
         public override void PlayAnimation(KeyAnim key) {
             if ( _curAnim == key ) {

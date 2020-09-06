@@ -8,8 +8,6 @@ using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public class PlayerController : Controller {
-        Player _player = null;
-
         public override void OnInit() {
             EventManager.Subscribe<TapZone_PointerDown>(this, OnPointerDown);
         }

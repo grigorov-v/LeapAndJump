@@ -4,18 +4,18 @@ using UnityEngine;
 using Grigorov.Events;
 using Grigorov.Helpers;
 
+using Grigorov.LeapAndJump.Level.Events;
+
 using DG.Tweening;
 
 namespace Grigorov.LeapAndJump.Level {
-    public struct FoodCollectEvent {}
-
     [RequireComponent(typeof(Rigidbody2D))]
     public class Food : BaseLevelElement {
         [SerializeField] float _tweenDuration = 0.5f;
 
-        bool  _isCollecting = false;
-        Tween _tweenCollect = null;
-        Rigidbody2D _rb     = null;
+        bool        _isCollecting = false;
+        Tween       _tweenCollect = null;
+        Rigidbody2D _rb           = null;
 
         Rigidbody2D Rigidbody {
             get => ComponentHelper.GetOrFindComponent(ref _rb, () => GetComponent<Rigidbody2D>());

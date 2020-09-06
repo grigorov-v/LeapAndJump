@@ -1,32 +1,14 @@
-﻿using Grigorov.Controllers;
-using Grigorov.Save;
+﻿using Grigorov.Save;
 using Grigorov.Events;
+using Grigorov.Controllers;
+
 using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
+using Grigorov.LeapAndJump.Level.Events;
+using Grigorov.LeapAndJump.Controllers.Events;
+
 namespace Grigorov.LeapAndJump.Controllers {
-    public struct CreateFoodEvent {
-        public int SpawnCount  { get; private set; }
-        public int TargetCount { get; private set; }
-
-        public CreateFoodEvent(int spawnCount, int targetCount) {
-            SpawnCount  = spawnCount;
-            TargetCount = targetCount;
-        }
-    }
-
-    public struct FoodCalculateEvent {
-        public int CurCount    { get; private set; }
-        public int TargetCount { get; private set; }
-        public int TotalCount  { get; private set; }
-
-        public FoodCalculateEvent(int curCount, int targetCount, int totalCount) {
-            CurCount    = curCount;
-            TargetCount = targetCount;
-            TotalCount  = totalCount;
-        }
-    }
-
     public class FoodsController : Controller {
         SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
         Foods              _foods          = null;
@@ -67,13 +49,13 @@ namespace Grigorov.LeapAndJump.Controllers {
         void OnSpawnLevelElement(SpawnLevelElementEvent e) {
             var element = e.LevelElement;
             SpawnCountFoods += element.SpawnFoods(_foods);
-            EventManager.Fire(new CreateFoodEvent(SpawnCountFoods, TargetFoodCount));
+            EventManager.Fire(new FoodsController_CreateFoodEvent(SpawnCountFoods, TargetFoodCount));
         }
 
         void OnFoodCollect(FoodCollectEvent e) {
             _totalFoodCount.Value ++;
             CurrentFoodCount ++;
-            EventManager.Fire(new FoodCalculateEvent(CurrentFoodCount, TargetFoodCount, TotalFoodCount));
+            EventManager.Fire(new FoodsController_FoodCalculateEvent(CurrentFoodCount, TargetFoodCount, TotalFoodCount));
         }
     }
 }
