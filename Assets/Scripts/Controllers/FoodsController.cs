@@ -31,9 +31,7 @@ namespace Grigorov.LeapAndJump.Controllers {
 
         public int CurrentFoodCount { get; private set; }
         public int TargetFoodCount  { get; private set; }
-        public int TotalFoodCount {
-            get => _totalFoodCount.Value;
-        }
+        public int TotalFoodCount   { get => _totalFoodCount.Value; }
 
         public override void OnInit() {
             _totalFoodCount.Load();
