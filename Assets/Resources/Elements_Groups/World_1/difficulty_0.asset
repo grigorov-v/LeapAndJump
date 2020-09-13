@@ -13,13 +13,9 @@ MonoBehaviour:
   m_Name: difficulty_0
   m_EditorClassIdentifier: 
   _objects:
+  - {fileID: 7002873223997072891, guid: 5078681c37f0c044ba80ae630d4da32c, type: 3}
   - {fileID: 7002873223997072891, guid: 4b64fdf49c9cd03459198be4f92305dd, type: 3}
   - {fileID: 7002873223997072891, guid: f68f3202cc0eb434cb1da8be1a4be781, type: 3}
   - {fileID: 7002873223997072891, guid: 8a3674a475afc4340b6e0839c929ffc1, type: 3}
   - {fileID: 7002873223997072891, guid: 7d9482e750ca94742985455fc5663cb9, type: 3}
-  - {fileID: 7002873223997072891, guid: 474c055cd8a9467459ba30cc7c168d26, type: 3}
   - {fileID: 6613303876238653272, guid: 7a49dbf4340dffc4ca42e000513f83a1, type: 3}
-  - {fileID: 149574325092969003, guid: 13d5fb0f98dcf6541a59596796246056, type: 3}
-  - {fileID: 149574325092969003, guid: 426856728cbb2ca4da78960b795a6dae, type: 3}
-  - {fileID: 149574325092969003, guid: 1ed52a8a435866449beb8150b8cb2a06, type: 3}
-  - {fileID: 7002873223997072891, guid: 5078681c37f0c044ba80ae630d4da32c, type: 3}

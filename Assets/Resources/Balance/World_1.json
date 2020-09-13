@@ -6,7 +6,8 @@
         "0" : {
             "foods_count" : 10,
             "elements_groups" : [
-                "difficulty_test"
+                "difficulty_0",
+                "difficulty_1"
             ]
         }
     }
