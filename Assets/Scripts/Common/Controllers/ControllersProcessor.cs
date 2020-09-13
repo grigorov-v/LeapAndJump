@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Grigorov.Controllers {
@@ -18,6 +19,7 @@ namespace Grigorov.Controllers {
             if ( !_firstControllersManager ) {
                 AllControllers.ForEach(controller => controller?.OnInit());
                 DontDestroyOnLoad(gameObject);
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 _firstControllersManager = this;
             }
 
@@ -44,7 +46,25 @@ namespace Grigorov.Controllers {
             
             if ( IsCommonManager ) {
                 AllControllers.ForEach(controller => controller?.OnDeinit());
+                SceneManager.sceneLoaded -= OnSceneLoaded;
             }
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+            if ( FindObjectsOfType<ControllersProcessor>().Count(cp => cp != _firstControllersManager) == 0 ) { 
+                CreateControllersProcessor();
+            }
+        }
+
+        [RuntimeInitializeOnLoadMethod]
+        static void OnRuntimeInitializeOnLoad() {
+            if ( !FindObjectOfType<ControllersProcessor>() ) {
+                CreateControllersProcessor();
+            } 
+        }
+
+        static void CreateControllersProcessor() {
+            new GameObject().AddComponent<ControllersProcessor>();
         }
     }
 }
