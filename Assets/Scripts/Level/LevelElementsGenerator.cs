@@ -4,17 +4,11 @@ using UnityEngine;
 
 using Grigorov.Helpers;
 using Grigorov.Events;
+
 using Grigorov.LeapAndJump.ResourcesContainers;
+using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Level {
-    public struct SpawnLevelElementEvent {
-        public LevelElement LevelElement { get; private set; }
-
-        public SpawnLevelElementEvent(LevelElement levelElement) {
-            LevelElement = levelElement;
-        }
-    }
-
     [RequireComponent(typeof(LevelGrind))]
     public class LevelElementsGenerator : MonoBehaviour {
         LevelGrind         _levelGrind  = null;
