@@ -3,7 +3,7 @@ using Grigorov.Save;
 using Grigorov.Events;
 
 using Grigorov.LeapAndJump.Level;
-using Grigorov.LeapAndJump.Controllers.Events;
+using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public class LevelController : Controller {

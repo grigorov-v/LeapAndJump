@@ -8,7 +8,7 @@ using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;
 
 using Grigorov.LeapAndJump.Level;
-using Grigorov.LeapAndJump.Controllers.Events;
+using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public enum Scenes {

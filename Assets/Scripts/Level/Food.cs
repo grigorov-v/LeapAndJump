@@ -4,7 +4,7 @@ using UnityEngine;
 using Grigorov.Events;
 using Grigorov.Helpers;
 
-using Grigorov.LeapAndJump.Level.Events;
+using Grigorov.LeapAndJump.Events;
 
 using DG.Tweening;
 

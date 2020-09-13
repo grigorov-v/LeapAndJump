@@ -5,7 +5,7 @@ using Grigorov.UI;
 using Grigorov.Events;
 using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Controllers;
-using Grigorov.LeapAndJump.Controllers.Events;
+using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.UI {
     public class GameWindow : BaseWindow {

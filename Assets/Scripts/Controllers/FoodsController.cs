@@ -5,8 +5,7 @@ using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
-using Grigorov.LeapAndJump.Level.Events;
-using Grigorov.LeapAndJump.Controllers.Events;
+using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public class FoodsController : Controller {
