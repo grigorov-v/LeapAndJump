@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 namespace Grigorov.Controllers {
-    public class ControllersManager : MonoBehaviour {
-        static ControllersManager _firstControllersManager = null;
+    public class ControllersProcessor : MonoBehaviour {
+        static ControllersProcessor _firstControllersManager = null;
 
         bool IsCommonManager {
             get => (_firstControllersManager == this);
