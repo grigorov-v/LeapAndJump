@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
 
-using Grigorov.Controllers;
 using Grigorov.Events;
+using Grigorov.Controllers;
 using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;
 
@@ -11,15 +10,11 @@ using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers {
-    public enum Scenes {
-        Loading,
-        MainMenu,
-        World_1
-    }
-
     public class ScenesController : Controller {
         const string LoadingUIResource = "Prefabs/LoadingUI";
         const string WorldScenePrefix  = "World_";
+        const string MainMenuScene     = "MainMenu";
+        const string LoadingScene      = "Loading";
 
         LoadingUI _loadingUI = null;
 
@@ -45,36 +40,33 @@ namespace Grigorov.LeapAndJump.Controllers {
         }
 
         public override void OnInit() {
-            if ( SceneManager.GetActiveScene().name == "Loading" ) {
-                OpenScene(Scenes.MainMenu);
+            if ( SceneManager.GetActiveScene().name == LoadingScene ) {
+                OpenMainMenu();
             }
         }
 
-        public void OpenScene(Scenes scene) {
-            var sceneName = scene.ToString();
-            SceneLoadingHelper.StartLoadingScene(sceneName, LoadingUI)
+        public void OpenScene(string scene) {
+            SceneLoadingHelper.StartLoadingScene(scene, LoadingUI)
                 .AddLoadedAction(_ => EventManager.Fire(new ScenesController_LoadedSceneEvent(scene)));
         }
 
-        public void OpenScene(LevelId level) {
+        public void OpenLevel(LevelId level) {
             var world = level.World;
-            var scene = SceneEnumFromString(world);
-            OpenScene(scene);
+            OpenScene(world);
+        }
+
+        public void OpenMainMenu() {
+            OpenScene(MainMenuScene);
         }
 
         public void RestartCurrentScene() {
             var curScene = SceneManager.GetActiveScene().name;
-            var scene = SceneEnumFromString(curScene);
-            OpenScene(scene);
+            OpenScene(curScene);
         }
 
         LoadingUI CreateNewLoadingUIFromResources() {
             var obj = Resources.Load<LoadingUI>(LoadingUIResource);
             return MonoBehaviour.Instantiate(obj);
-        }
-
-        Scenes SceneEnumFromString(string sceneName) {
-            return (Scenes)Enum.Parse(typeof(Scenes), sceneName);
         }
     }
 }

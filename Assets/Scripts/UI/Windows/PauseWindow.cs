@@ -28,7 +28,7 @@ namespace Grigorov.LeapAndJump.UI {
 
         void OnMainMenuClick() {
             UnPause();
-            _sceneController?.OpenScene(Scenes.MainMenu);
+            _sceneController?.OpenMainMenu();
         }
 
         void OnRestartClick() {

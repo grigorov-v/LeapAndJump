@@ -7,7 +7,7 @@ using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public class LevelController : Controller {
-        SaveableField<LevelId> _currentLevel      = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_1", 0));
+        SaveableField<LevelId> _currentLevel      = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_0", 0));
         FoodsController        _bonusesController = null;
 
         public bool IsLevelFinish { get; private set; }

@@ -19,7 +19,7 @@ namespace Grigorov.LeapAndJump.UI {
 
         void OnStartClick() {
             var lc = Controller.Get<LevelController>();
-            _sceneController?.OpenScene(lc.CurrentLevel);
+            _sceneController?.OpenLevel(lc.CurrentLevel);
         }
     }
 }
