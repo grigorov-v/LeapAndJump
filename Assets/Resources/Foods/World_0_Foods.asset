@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b08f47871279bb49a36b8e9c83e7a45, type: 3}
-  m_Name: World_1_Foods
+  m_Name: World_0_Foods
   m_EditorClassIdentifier: 
   _objects:
   - {fileID: 4789946700157314394, guid: d8bdb1a1136c78d4593ddfa43a6616e7, type: 3}

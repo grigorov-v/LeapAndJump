@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace Grigorov.Controllers {
     public class ControllersProcessor : MonoBehaviour {
-        static ControllersProcessor _firstControllersManager = null;
+        public static ControllersProcessor Main { get; private set; }
 
         bool IsCommonManager {
-            get => (_firstControllersManager == this);
+            get => (Main == this);
         }
 
         List<Controller> AllControllers {
@@ -16,11 +16,11 @@ namespace Grigorov.Controllers {
         }
 
         void Awake() {
-            if ( !_firstControllersManager ) {
+            if ( !Main ) {
                 AllControllers.ForEach(controller => controller?.OnInit());
                 DontDestroyOnLoad(gameObject);
                 SceneManager.sceneLoaded += OnSceneLoaded;
-                _firstControllersManager = this;
+                Main = this;
             }
 
             AllControllers.ForEach(controller => controller?.OnAwake());
@@ -51,7 +51,7 @@ namespace Grigorov.Controllers {
         }
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-            if ( FindObjectsOfType<ControllersProcessor>().Count(cp => cp != _firstControllersManager) == 0 ) { 
+            if ( FindObjectsOfType<ControllersProcessor>().Count(cp => cp != Main) == 0 ) { 
                 CreateControllersProcessor();
             }
         }

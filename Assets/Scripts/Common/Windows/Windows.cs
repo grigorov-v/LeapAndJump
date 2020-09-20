@@ -19,64 +19,20 @@ namespace Grigorov.UI {
             }
         }
 
-        public static void ShowWindow<T>() where T: BaseWindow {
-            var window = FindWindow<T>();
-            if ( !window ) {
-                return;
-            }
-
-            ShowWindow(window);
-        }
-
-        public static void HideWindow<T>() where T: BaseWindow {
-            var window = FindWindow<T>();
-            if ( !window ) {
-                return;
-            }
-
-            HideWindow(window);
-        }
-
-        public static void TakeWindow<T>() where T: BaseWindow {
-            var window = FindWindow<T>();
-            if ( !window ) {
-                return;
-            }
-
-            if ( window.IsActive ) {
-                HideWindow(window);
-            } else {
-                ShowWindow(window);
-            }
-        }
-
         public static void HideAllWindows() {
             _allWindows.ForEach(win => win.Hide());
         } 
 
-        public static BaseWindow FindWindow<T>() where T: BaseWindow {
+        public static T Get<T>() where T: BaseWindow {
             TryFindAllWindows();
+            
             var window = _allWindows.Find(win => win is T);
             if ( !window ) {
                 Debug.LogErrorFormat("Not found window {0}", typeof(T).ToString());
                 return null;
             }
 
-            return window;
-        }
-
-        static void ShowWindow(BaseWindow window) {
-            if ( !window.IsPopup ) {
-                HideAllWindows();
-            } else {
-                window.Canvas.sortingOrder = NewSortingOrder;
-            }
-
-            window.Show();
-        }
-
-        static void HideWindow(BaseWindow window) {
-            window.Hide();
+            return window as T;
         }
 
         static void TryFindAllWindows() {

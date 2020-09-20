@@ -4,20 +4,21 @@ using UnityEngine.UI;
 namespace Grigorov.UI {
     [RequireComponent(typeof(GraphicRaycaster))]
     public abstract class BaseWindow : MonoBehaviour {
-        [SerializeField] protected bool _isPopup = false;
+        [SerializeField] bool _isPopup = false;
 
-        Canvas _canvas = null;
+        Canvas _canvas        = null;
+        float  _lastTimeScale = 1;
 
         public bool IsPopup {
-            get {
-                return _isPopup;
-            }
+            get => _isPopup;
         }
 
         public bool IsActive {
-            get {
-                return gameObject.activeSelf;
-            }
+            get => gameObject.activeSelf;
+        }
+
+        protected virtual bool PauseEnabled {
+            get => false;
         }
 
         public Canvas Canvas {
@@ -34,11 +35,29 @@ namespace Grigorov.UI {
         }
 
         public virtual void Show() {
+            if ( PauseEnabled ) {
+                _lastTimeScale = Time.timeScale;
+                Time.timeScale = 0;
+            }
+
+            if ( !IsPopup ) {
+                Windows.HideAllWindows();
+            }
+            
             gameObject.SetActive(true);
         }
 
         public virtual void Hide() {
+            if ( PauseEnabled ) {
+                Time.timeScale = _lastTimeScale;
+            }
             gameObject.SetActive(false);
+        }
+
+        void OnDestroy() {
+            if ( PauseEnabled ) {
+                Time.timeScale = _lastTimeScale;
+            }
         }
     }
 }

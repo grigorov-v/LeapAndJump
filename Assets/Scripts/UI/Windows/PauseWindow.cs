@@ -14,6 +14,10 @@ namespace Grigorov.LeapAndJump.UI {
 
         ScenesController _sceneController = null;
 
+        protected override bool PauseEnabled {
+            get => true;
+        }
+
         void Awake() {
             _closeButton.onClick.AddListener(OnCloseClick);
             _mainMenuButton.onClick.AddListener(OnMainMenuClick);
@@ -22,22 +26,15 @@ namespace Grigorov.LeapAndJump.UI {
         }
 
         void OnCloseClick() {
-            UnPause();
             Hide();
         }
 
         void OnMainMenuClick() {
-            UnPause();
             _sceneController?.OpenMainMenu();
         }
 
         void OnRestartClick() {
-            UnPause();
             _sceneController?.RestartCurrentScene();
-        }
-
-        void UnPause() {
-            Time.timeScale = 1;
         }
     }
 }

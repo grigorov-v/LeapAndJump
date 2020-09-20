@@ -2,21 +2,19 @@
 using Grigorov.Events;
 using Grigorov.Controllers;
 
-using Grigorov.LeapAndJump.Level;
-using Grigorov.LeapAndJump.ResourcesContainers;
-
 using Grigorov.LeapAndJump.Events;
+using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers {
     public class FoodsController : Controller {
         SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
         Foods              _foods          = null;
 
-        public int CurrentFoodCount { get; private set; }
-        public int TargetFoodCount  { get; private set; }
-        public int TotalFoodCount   { get => _totalFoodCount.Value; }
+        public int CurrentFoodCount { get; private set; } = 0;
+        public int TargetFoodCount  { get; private set; } = 0;
+        public int SpawnCountFoods  { get; private set; } = 0;
 
-        public int SpawnCountFoods  { get; private set; }
+        public int TotalFoodCount   { get => _totalFoodCount.Value; }
 
         public override void OnInit() {
             _totalFoodCount.Load();

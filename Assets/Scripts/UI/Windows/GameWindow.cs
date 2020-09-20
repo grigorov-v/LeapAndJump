@@ -34,8 +34,7 @@ namespace Grigorov.LeapAndJump.UI {
         }
 
         void OnClickPause() {
-            Windows.ShowWindow<PauseWindow>();
-            Time.timeScale = 0;
+            Windows.Get<PauseWindow>().Show();
         }
 
         void OnFoodCalculate(FoodsController_FoodCalculateEvent e) {
