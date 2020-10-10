@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using Grigorov.Extensions;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.CameraManagement {
@@ -8,12 +9,13 @@ namespace Grigorov.LeapAndJump.CameraManagement {
         [SerializeField] Vector2   _offset    = new Vector2(0, 0.1f);
         [SerializeField] Transform _edgePoint = null;
         
-        Transform _player = null;
-        Camera    _camera = null;
+        Player _player = null;
+        Camera _camera = null;
+
+        Camera Camera => this.GetComponent(ref _camera);
 
         void Awake() {
-            _player = FindObjectOfType<Player>()?.transform;
-            _camera = GetComponent<Camera>();
+            _player = FindObjectOfType<Player>();
         }
 
         void FixedUpdate() {
@@ -22,7 +24,7 @@ namespace Grigorov.LeapAndJump.CameraManagement {
 
         Vector3 CalculateCameraPosition() {
             var curPos = transform.position;
-            curPos = Vector2.Lerp(curPos, _player.position, _lerp * Time.deltaTime);
+            curPos = Vector2.Lerp(curPos, _player.transform.position, _lerp * Time.deltaTime);
             curPos += (Vector3)_offset;
             curPos.z = -10;
             curPos.x = 0;
@@ -31,16 +33,16 @@ namespace Grigorov.LeapAndJump.CameraManagement {
         }
 
         float CalculateMinYPos() {
-            var bottomLeft = _camera.ViewportToWorldPoint(new Vector2 (0, 0));
+            var bottomLeft = Camera.ViewportToWorldPoint(new Vector2 (0, 0));
             var minYPos = _edgePoint.position.y + (transform.position.y - bottomLeft.y);
             return minYPos;
         }
 
         float CalculateMaxYPos() {
-            var bottomLeft = _camera.ViewportToWorldPoint(new Vector2 (0, 0));
-            var topLeft = _camera.ViewportToWorldPoint(new Vector2 (0, 1));
+            var bottomLeft = Camera.ViewportToWorldPoint(new Vector2 (0, 0));
+            var topLeft = Camera.ViewportToWorldPoint(new Vector2 (0, 1));
             var cameraYScale = topLeft.y - bottomLeft.y;
-            var maxYPos = _player.position.y + (cameraYScale / 2);
+            var maxYPos = _player.transform.position.y + (cameraYScale / 2);
             return maxYPos;
         }
     }

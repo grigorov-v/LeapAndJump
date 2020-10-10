@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using Grigorov.Extensions;
 
 namespace Grigorov.LeapAndJump.CameraManagement {
     public class CameraScaler : MonoBehaviour {
         [SerializeField]
-        Vector2      _defaultResolution = new Vector2(720, 1280);
+        Vector2 _defaultResolution = new Vector2(720, 1280);
         
         [Range(0f, 1f)] [SerializeField]
-        public float _widthOrHeight     = 0;
+        float _widthOrHeight = 0;
 
         Camera _camera        = null;
         float  _initialSize   = 0;
@@ -14,21 +15,22 @@ namespace Grigorov.LeapAndJump.CameraManagement {
         float  _initialFov    = 0;
         float  _horizontalFov = 120f;
 
+        Camera Camera => this.GetComponent(ref _camera);
+
         void Start() {
-            _camera = GetComponent<Camera>();
-            _initialSize = _camera.orthographicSize;
+            _initialSize = Camera.orthographicSize;
             _targetAspect = _defaultResolution.x / _defaultResolution.y;
-            _initialFov = _camera.fieldOfView;
+            _initialFov = Camera.fieldOfView;
             _horizontalFov = CalcVerticalFov(_initialFov, 1 / _targetAspect);
         }
 
         void Update() {
-            if (_camera.orthographic) {
-                var constantWidthSize = _initialSize * (_targetAspect / _camera.aspect);
-                _camera.orthographicSize = Mathf.Lerp(constantWidthSize, _initialSize, _widthOrHeight);
+            if (Camera.orthographic) {
+                var constantWidthSize = _initialSize * (_targetAspect / Camera.aspect);
+                Camera.orthographicSize = Mathf.Lerp(constantWidthSize, _initialSize, _widthOrHeight);
             } else {
-                var constantWidthFov = CalcVerticalFov(_horizontalFov, _camera.aspect);
-                _camera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, _widthOrHeight);
+                var constantWidthFov = CalcVerticalFov(_horizontalFov, Camera.aspect);
+                Camera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, _widthOrHeight);
             }
         }
 

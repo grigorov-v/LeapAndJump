@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+using Grigorov.Extensions;
 using Grigorov.Controllers;
 
 using Grigorov.LeapAndJump.Animations;
 using Grigorov.LeapAndJump.Effects;
-using Grigorov.LeapAndJump.Controllers;
-
 
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(Rigidbody2D))]
@@ -22,39 +21,27 @@ namespace Grigorov.LeapAndJump.Level {
         [SerializeField] List<Trail> _jumpTrails = new List<Trail>();
 
         Rigidbody2D      _rb               = null;
-        PlayerAnimations _animationControl = null;
+        PlayerAnimations _playerAnimations = null;
         Collider2D       _wallTrigger      = null;
         Collider2D       _floorTrigger     = null;
         Vector2          _wallNormal       = Vector2.zero;
         bool             _jump             = false;
         bool             _allowSecondJump  = false;
 
-        bool CanJump {
-            get => (_floorTrigger || _wallTrigger) && _jump;
-        }
+        Rigidbody2D      Rigidbody        => this.GetComponent(ref _rb);
+        PlayerAnimations PlayerAnimations => this.GetComponent(ref _playerAnimations);
 
-        bool CanSecondJump {
-            get => !_floorTrigger && !_wallTrigger && _allowSecondJump && _jump && (_rb.velocity.y <= 0);
-        }
+        bool CanJump        => (_floorTrigger || _wallTrigger) && _jump;
+        bool CanSecondJump  => !_floorTrigger && !_wallTrigger && _allowSecondJump && _jump && (Rigidbody.velocity.y <= 0);
+        bool CanSlideInWall => !_floorTrigger && _wallTrigger && !_jump && (Rigidbody.velocity.y < 0);
 
         bool CanMoveLeftOrRight {
             get {
-                if ( !_floorTrigger && !_wallTrigger && (_rb.velocity == Vector2.zero) && _jump ) {//если застряли
+                if ( !_floorTrigger && !_wallTrigger && (Rigidbody.velocity == Vector2.zero) && _jump ) {//если застряли
                     return true;
                 }
                 return _floorTrigger && !_jump;
             }
-        }
-
-        bool CanSlideInWall {
-            get => !_floorTrigger && _wallTrigger && !_jump && (_rb.velocity.y < 0);
-        }
-
-        protected override void Awake() {
-            base.Awake();
-            _rb = GetComponent<Rigidbody2D>();
-            _animationControl = GetComponent<PlayerAnimations>();
-            var pc = Controller.Get<PlayerController>();
         }
 
         public void JumpInput() {
@@ -64,12 +51,12 @@ namespace Grigorov.LeapAndJump.Level {
         public void OnUpdate() {
             if ( CanMoveLeftOrRight ) {
                 MoveLeftOrRight();
-                _animationControl.PlayAnimation(KeyAnim.Walk);
+                PlayerAnimations.PlayAnimation(KeyAnim.Walk);
             }
             
             if ( CanSlideInWall ) {
                 SlideInWall();
-                _animationControl.PlayAnimation(KeyAnim.SlideInWall);
+                PlayerAnimations.PlayAnimation(KeyAnim.SlideInWall);
             }
 
             if ( CanJump ) {
@@ -78,14 +65,14 @@ namespace Grigorov.LeapAndJump.Level {
                 }
                 Jump();
                 _jump = false;
-                _animationControl.PlayAnimation(KeyAnim.Jump);
+                PlayerAnimations.PlayAnimation(KeyAnim.Jump);
             }
 
             if ( CanSecondJump ) {  
                 Jump(true);
                 _jump = false;
                 _allowSecondJump = false;
-                _animationControl.PlayAnimation(KeyAnim.SecondJump);
+                PlayerAnimations.PlayAnimation(KeyAnim.SecondJump);
             }
 
             if ( _floorTrigger && _wallTrigger ) {
@@ -104,27 +91,24 @@ namespace Grigorov.LeapAndJump.Level {
         void Jump(bool secondJump = false) {
             var jumpForce = _jumpForce;
             jumpForce.x = (transform.localScale.x > 0) ? -Mathf.Abs(jumpForce.x) : Mathf.Abs(jumpForce.x);
-            _rb.velocity = Vector2.zero;
-            _rb.AddForce(jumpForce, ForceMode2D.Impulse);
-            
+            Rigidbody.velocity = Vector2.zero;
+            Rigidbody.AddForce(jumpForce, ForceMode2D.Impulse);
             PlayJumpTrails();
         }
 
         void SlideInWall() {
             var slideVelosity = _slideVelosity;
             slideVelosity.x = (transform.localScale.x > 0) ? -Mathf.Abs(slideVelosity.x) : Mathf.Abs(slideVelosity.x);
-            _rb.velocity = slideVelosity;
-
+            Rigidbody.velocity = slideVelosity;
             StopJumpTrails();
         }
 
         void MoveLeftOrRight() {
-            if ( _rb.velocity.y > 0 ) {
+            if ( Rigidbody.velocity.y > 0 ) {
                 return;
             }
             var dir = (transform.localScale.x > 0) ? Vector2.left : Vector2.right;
-            _rb.velocity = dir * _speed;
-
+            Rigidbody.velocity = dir * _speed;
             StopJumpTrails();
         }
 
@@ -155,13 +139,14 @@ namespace Grigorov.LeapAndJump.Level {
                 if ( IsWall(normal) && !_wallTrigger ) {
                     _wallTrigger = other.collider;
                     _wallNormal = normal;
-                    _rb.velocity = Vector2.zero;
+                    Rigidbody.velocity = Vector2.zero;
                 }
                 
                 if ( IsFloor(normal) && !_floorTrigger ) {
                     _floorTrigger = other.collider;
                 }
             }
+
             _allowSecondJump = false;
         }
 

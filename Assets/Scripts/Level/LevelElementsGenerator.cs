@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Grigorov.Helpers;
 using Grigorov.Events;
+using Grigorov.Extensions;
 
-using Grigorov.LeapAndJump.ResourcesContainers;
 using Grigorov.LeapAndJump.Events;
+using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
     [RequireComponent(typeof(LevelGrind))]
@@ -14,9 +14,7 @@ namespace Grigorov.LeapAndJump.Level {
         LevelGrind         _levelGrind  = null;
         List<LevelElement> _allElements = new List<LevelElement>();
 
-        LevelGrind LevelGrind {
-            get => ComponentHelper.GetOrFindComponent(ref _levelGrind, () => GetComponent<LevelGrind>());
-        }
+        LevelGrind LevelGrind => this.GetComponent(ref _levelGrind);
 
         public void Generate(LevelElementsGroup elementsGroup) {
             GetComponentsInChildren<LevelElement>(false, _allElements);

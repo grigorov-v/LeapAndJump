@@ -2,7 +2,7 @@
 using UnityEngine;
 
 using Grigorov.Events;
-using Grigorov.Helpers;
+using Grigorov.Extensions;
 
 using Grigorov.LeapAndJump.Events;
 
@@ -17,9 +17,7 @@ namespace Grigorov.LeapAndJump.Level {
         Tween       _tweenCollect = null;
         Rigidbody2D _rb           = null;
 
-        Rigidbody2D Rigidbody {
-            get => ComponentHelper.GetOrFindComponent(ref _rb, () => GetComponent<Rigidbody2D>());
-        }
+        Rigidbody2D Rigidbody => this.GetComponent(ref _rb);
         
         void StartCollect() {
             ResetTween();

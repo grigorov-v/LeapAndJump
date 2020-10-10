@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Grigorov.Events;
+using Grigorov.Extensions;
+
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Level {
@@ -27,9 +29,9 @@ namespace Grigorov.LeapAndJump.Level {
         LevelElementsGenerator _elementsGenerator = null;
         List<int>              _layers            = new List<int>();
 
-        public bool IsWinBlock {
-            get => _winBlock;
-        }
+        public bool IsWinBlock => _winBlock;
+        
+        LevelElementsGenerator LevelElementsGenerator => this.GetComponent(ref _elementsGenerator);
 
         void OnValidate() {
             var boxTrigger = GetComponent<BoxCollider2D>();
@@ -38,13 +40,9 @@ namespace Grigorov.LeapAndJump.Level {
             }
         }
 
-        void Awake() {
-            _elementsGenerator = GetComponent<LevelElementsGenerator>();
-        }
-
         public void GenerateLevelElements(LevelElementsGroup elementsGroup) {
-            if ( _elementsGenerator ) {
-                _elementsGenerator.Generate(elementsGroup);
+            if ( LevelElementsGenerator ) {
+                LevelElementsGenerator.Generate(elementsGroup);
             }
         }
 
