@@ -7,3 +7,6 @@
 [submodule "Assets/Scripts/Submodules/Unity-SceneManagement"]
 	path = Assets/Scripts/Submodules/Unity-SceneManagement
 	url = https://github.com/grigorov-v/Unity-SceneManagement
+[submodule "Assets/Scripts/Submodules/MiniJSON"]
+	path = Assets/Scripts/Submodules/MiniJSON
+	url = https://github.com/grigorov-v/MiniJSON
