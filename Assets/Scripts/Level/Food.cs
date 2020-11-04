@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-using Grigorov.Events;
+using Grigorov.Unity.Events;
 using Grigorov.Extensions;
 
 using Grigorov.LeapAndJump.Events;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Grigorov.Extensions;
-using Grigorov.Events;
+using Grigorov.Unity.Events;
 using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.ResourcesContainers;

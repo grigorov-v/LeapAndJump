@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace Grigorov.Events {
+namespace Grigorov.Unity.Events {
 	/// <summary>
 	/// Event system implementation
 	/// </summary>

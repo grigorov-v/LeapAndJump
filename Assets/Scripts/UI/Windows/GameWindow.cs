@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.Events;
+using Grigorov.Unity.Events;
 using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Controllers;
 using Grigorov.LeapAndJump.Events;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Grigorov.Events {
+namespace Grigorov.Unity.Events {
 	public abstract class HandlerBase {
 		public static bool LogsEnabled { get { return false;       }}
 		public static bool AllFireLogs { get { return LogsEnabled; }}

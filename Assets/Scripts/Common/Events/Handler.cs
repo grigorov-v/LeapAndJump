@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace Grigorov.Events {
+namespace Grigorov.Unity.Events {
 	sealed class Handler<T> : HandlerBase {
 		List<Action<T>> _actions  = new List<Action<T>>(100);
 		List<Action<T>> _removed  = new List<Action<T>>(100);

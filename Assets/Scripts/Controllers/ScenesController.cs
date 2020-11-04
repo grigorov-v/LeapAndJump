@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using Grigorov.Events;
+using Grigorov.Unity.Events;
 using Grigorov.Controllers;
 using Grigorov.SceneManagement;
 using Grigorov.SceneManagement.UI;

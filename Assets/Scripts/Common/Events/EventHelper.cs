@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections.Generic;
 
-namespace Grigorov.Events {
+namespace Grigorov.Unity.Events {
 	/// <summary>
 	/// Helper class to clean up unwanted subscribers on scene load and debug active subscriptions
 	/// </summary>
