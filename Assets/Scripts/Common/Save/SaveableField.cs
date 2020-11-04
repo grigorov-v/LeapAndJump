@@ -2,16 +2,11 @@
 
 namespace Grigorov.Save {
     public class SaveableField<T> {
-        [System.Serializable]
-        struct ValueContainer {
-            public T Value;
-        }
-
-        string         _key            = string.Empty;
-        bool           _autosave       = false;
-        bool           _isLoaded       = false;
-        T              _defaultValue   = default;
-        ValueContainer _valueContainer = new ValueContainer();
+        string            _key            = string.Empty;
+        bool              _autosave       = false;
+        bool              _isLoaded       = false;
+        T                 _defaultValue   = default;
+        ValueContainer<T> _valueContainer = new ValueContainer<T>();
 
         public T Value {
             get {
@@ -28,21 +23,20 @@ namespace Grigorov.Save {
             }
         }
 
-        public SaveableField(string key, bool autosave = false, T defaultValue = default) {
+        public SaveableField(string key, bool autosaveOnChange = false, T defaultValue = default) {
             _key = key;
-            _autosave = autosave;
+            _autosave = autosaveOnChange;
             _defaultValue = defaultValue;
         }
 
         public void Load() {
             var json = PlayerPrefs.GetString(_key, null);
             if ( string.IsNullOrEmpty(json) ) {
-                _valueContainer = new ValueContainer();
                 _valueContainer.Value = _defaultValue;
                 return;
             }
             
-            _valueContainer = JsonUtility.FromJson<ValueContainer>(json);
+            _valueContainer = JsonUtility.FromJson<ValueContainer<T>>(json);
             _isLoaded = true;
         }
 
