@@ -4,3 +4,6 @@
 [submodule "Assets/Scripts/Submodules/Unity-Events"]
 	path = Assets/Scripts/Submodules/Unity-Events
 	url = https://github.com/grigorov-v/Unity-Events
+[submodule "Assets/Scripts/Submodules/Unity-SceneManagement"]
+	path = Assets/Scripts/Submodules/Unity-SceneManagement
+	url = https://github.com/grigorov-v/Unity-SceneManagement
