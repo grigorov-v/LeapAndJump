@@ -16,7 +16,7 @@ namespace Grigorov.Events {
 				_actions.Add(action);
 				_watchers.Add(watcher);
 			} else if ( LogsEnabled ) {
-				//Log.TraceWarningFormat(LogTag.Event, "{0} tries to subscribe to {1} again.", watcher, action);
+				Debug.LogWarningFormat("{0} tries to subscribe to {1} again.", watcher, action);
 			}
 		}
 
@@ -28,7 +28,7 @@ namespace Grigorov.Events {
 			var index = _actions.IndexOf(action);
 			SafeUnsubscribe(index);
 			if ( (index < 0) && LogsEnabled ) {
-				//Log.TraceWarningFormat(LogTag.Event, "Trying to unsubscribe action {0} without watcher.", action);
+				Debug.LogWarningFormat("Trying to unsubscribe action {0} without watcher.", action);
 			}
 		}
 
@@ -58,14 +58,14 @@ namespace Grigorov.Events {
 				if ( !_removed.Contains(current) ) {
 					try {
 						current.Invoke(arg);
-					} catch {
-						//Log.TraceException(new EventCallbackException(typeof(T), e));
+					} catch (Exception e) {
+						throw new EventCallbackException(typeof(T), e);
 					}
 				}
 			}
 			CleanUp();
 			if ( AllFireLogs ) {
-				//Log.TraceFormat(LogTag.Event, "[{0}] fired (Listeners: {1})", typeof(T).Name, _watchers.Count);
+				Debug.LogWarningFormat("[{0}] fired (Listeners: {1})", typeof(T).Name, _watchers.Count);
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace Grigorov.Events {
 				CleanUp();
 			}
 			if ( (count > 0) && LogsEnabled ) {
-				//Log.TraceErrorFormat(LogTag.Event, "{0} destroyed scripts subscribed to event {1}.", count, typeof(T));
+				Debug.LogWarningFormat("{0} destroyed scripts subscribed to event {1}.", count, typeof(T));
 			}
 			return (count == 0);
 		}
