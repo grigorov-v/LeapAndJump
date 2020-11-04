@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 using Grigorov.Extensions;
 
-namespace Grigorov.SceneManagement {
+namespace Grigorov.Unity.SceneManagement {
     public class SceneWrapper {
         string         _sceneName      = null;
         AsyncOperation _asyncOperation = null;

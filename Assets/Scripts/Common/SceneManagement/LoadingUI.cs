@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Grigorov.SceneManagement.UI {
+namespace Grigorov.Unity.SceneManagement.UI {
     public class LoadingUI : MonoBehaviour {
         [SerializeField] Image _bar = null;
 

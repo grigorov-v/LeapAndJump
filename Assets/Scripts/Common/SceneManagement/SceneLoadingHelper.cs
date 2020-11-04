@@ -1,6 +1,6 @@
-﻿using Grigorov.SceneManagement.UI;
+﻿using Grigorov.Unity.SceneManagement.UI;
 
-namespace Grigorov.SceneManagement {
+namespace Grigorov.Unity.SceneManagement {
     public static class SceneLoadingHelper {
         static SceneWrapper _targetSceneHandler = new SceneWrapper();
 

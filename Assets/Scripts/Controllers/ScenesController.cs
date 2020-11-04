@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 using Grigorov.Unity.Events;
 using Grigorov.Controllers;
-using Grigorov.SceneManagement;
-using Grigorov.SceneManagement.UI;
+using Grigorov.Unity.SceneManagement;
+using Grigorov.Unity.SceneManagement.UI;
 
 using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.Events;
