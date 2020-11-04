@@ -1,3 +1,6 @@
 [submodule "Assets/Scripts/Submodules/NaughtyAttributes"]
 	path = Assets/Scripts/Submodules/NaughtyAttributes
 	url = https://github.com/grigorov-v/NaughtyAttributes
+[submodule "Assets/Scripts/Submodules/Unity-Events"]
+	path = Assets/Scripts/Submodules/Unity-Events
+	url = https://github.com/grigorov-v/Unity-Events
