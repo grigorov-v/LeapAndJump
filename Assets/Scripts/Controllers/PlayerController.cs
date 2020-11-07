@@ -8,20 +8,20 @@ using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[ControllerAttribute]
-	public class PlayerController : Controller
+	[Controller]
+	public class PlayerController : IAwake, IDestroy, IUpdate, IFixedUpdate
 	{
-		public override void OnAwake()
+		public void OnAwake()
 		{
 			EventManager.Subscribe<TapZone_PointerDown>(this, OnPointerDown);
 		}
 
-		public override void OnDestroy()
+		public void OnDestroy()
 		{
 			EventManager.Unsubscribe<TapZone_PointerDown>(OnPointerDown);
 		}
 
-		public override void OnUpdate()
+		public void OnUpdate()
 		{
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
@@ -29,9 +29,9 @@ namespace Grigorov.LeapAndJump.Controllers
 			}
 		}
 
-		public override void OnFixedUpdate()
+		public void OnFixedUpdate()
 		{
-			Player.ForAll(player => player.OnUpdate());
+			Player.ForAll(player => player.OnFixedUpdate());
 		}
 
 		void OnPointerDown(TapZone_PointerDown e)

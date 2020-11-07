@@ -12,8 +12,8 @@ using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[ControllerAttribute]
-	public class LevelController : Controller
+	[Controller]
+	public class LevelController : IAwake, IDestroy
 	{
 		SaveableField<LevelId> _currentLevel = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_0", 0));
 
@@ -25,7 +25,7 @@ namespace Grigorov.LeapAndJump.Controllers
 
 		ScenesController ScenesController => Controller.Get<ScenesController>();
 
-		public override void OnAwake()
+		public void OnAwake()
 		{
 			IsLevelFinish = false;
 			_isCanShowEndLevelWindow = false;
@@ -35,7 +35,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
 		}
 
-		public override void OnDestroy()
+		public void OnDestroy()
 		{
 			EventManager.Unsubscribe<FoodsController_CreateFoodEvent>(OnCreateFood);
 			EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);

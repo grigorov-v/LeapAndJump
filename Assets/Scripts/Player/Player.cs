@@ -11,7 +11,7 @@ namespace Grigorov.LeapAndJump.Level
 {
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(PlayerAnimations))]
-	public class Player : ControlledBehaviour<Player>
+	public class Player : ControlledBehaviour<Player>, IFixedUpdate
 	{
 		const float CheckAngle = 10f;
 
@@ -41,8 +41,8 @@ namespace Grigorov.LeapAndJump.Level
 		{
 			get
 			{
-				if (!_floorTrigger && !_wallTrigger && (Rigidbody.velocity == Vector2.zero) && _jump)
-				{//если застряли
+				if (!_floorTrigger && !_wallTrigger && (Rigidbody.velocity == Vector2.zero) && _jump) //если застряли
+				{
 					return true;
 				}
 				return _floorTrigger && !_jump;
@@ -54,7 +54,7 @@ namespace Grigorov.LeapAndJump.Level
 			_jump = true;
 		}
 
-		public void OnUpdate()
+		public void OnFixedUpdate()
 		{
 			if (CanMoveLeftOrRight)
 			{

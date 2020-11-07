@@ -10,8 +10,8 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[ControllerAttribute]
-	public class LevelGenerateController : Controller
+	[Controller]
+	public class LevelGenerateController : IAwake, IDestroy
 	{
 		const int MinCountBlocks = 4;
 
@@ -35,7 +35,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			}
 		}
 
-		public override void OnAwake()
+		public void OnAwake()
 		{
 			var sc = Controller.Get<ScenesController>();
 			if (!sc.IsActiveWorldScene)
@@ -66,7 +66,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
 		}
 
-		public override void OnDestroy()
+		public void OnDestroy()
 		{
 			EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
 		}

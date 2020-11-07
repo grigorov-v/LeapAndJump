@@ -7,8 +7,8 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[ControllerAttribute]
-	public class FoodsController : Controller
+	[Controller]
+	public class FoodsController : IAwake, IDestroy
 	{
 		SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
 		Foods              _foods          = null;
@@ -19,7 +19,7 @@ namespace Grigorov.LeapAndJump.Controllers
 
 		public int TotalFoodCount => _totalFoodCount.Value;
 
-		public override void OnAwake()
+		public void OnAwake()
 		{
 			_totalFoodCount.Load();
 
@@ -36,7 +36,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			EventManager.Subscribe<FoodCollectEvent>(this, OnFoodCollect);
 		}
 
-		public override void OnDestroy()
+		public void OnDestroy()
 		{
 			_totalFoodCount.Save();
 			EventManager.Unsubscribe<SpawnLevelElementEvent>(OnSpawnLevelElement);

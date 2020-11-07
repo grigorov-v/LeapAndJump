@@ -5,8 +5,8 @@ using Grigorov.Controllers;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[ControllerAttribute]
-	public class BalanceController : Controller
+	[Controller]
+	public class BalanceController
 	{
 		Balance _lastLoadedBalance = null;
 
