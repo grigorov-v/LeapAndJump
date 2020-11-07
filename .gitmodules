@@ -10,3 +10,6 @@
 [submodule "Assets/Scripts/Submodules/MiniJSON"]
 	path = Assets/Scripts/Submodules/MiniJSON
 	url = https://github.com/grigorov-v/MiniJSON
+[submodule "Assets/Scripts/Submodules/Unity-Controllers"]
+	path = Assets/Scripts/Submodules/Unity-Controllers
+	url = https://github.com/grigorov-v/Unity-Controllers
