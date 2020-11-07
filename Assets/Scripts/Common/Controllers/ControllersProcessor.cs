@@ -1,70 +1,38 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Linq;
 using System.Collections.Generic;
 
-namespace Grigorov.Controllers {
-    public class ControllersProcessor : MonoBehaviour {
-        public static ControllersProcessor Main { get; private set; }
+namespace Grigorov.Controllers
+{
+	public class ControllersProcessor : MonoBehaviour
+	{
+		public static ControllersProcessor Instance { get; private set; }
 
-        bool IsCommonManager {
-            get => (Main == this);
-        }
+		List<Controller> AllControllers => Controller.AllControllers;
 
-        List<Controller> AllControllers {
-            get => Controller.AllControllers;
-        }
+		void Awake()
+		{
+			AllControllers.ForEach(controller => controller?.OnAwake());
+			Instance = this;
+		}
 
-        void Awake() {
-            if ( !Main ) {
-                AllControllers.ForEach(controller => controller?.OnInit());
-                DontDestroyOnLoad(gameObject);
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                Main = this;
-            }
+		void Start()
+		{
+			AllControllers.ForEach(controller => controller?.OnStart());
+		}
 
-            AllControllers.ForEach(controller => controller?.OnAwake());
-        
-            var sceneName = SceneManager.GetActiveScene().name;
-            gameObject.name = IsCommonManager ? "[Common_Controllers_Manager]" : $"[{sceneName}_Controllers_Manager]";
-        }
+		void Update()
+		{
+			AllControllers.ForEach(controller => controller?.OnUpdate());
+		}
 
-        void Update() {
-            if ( IsCommonManager ) {
-                AllControllers.ForEach(controller => controller?.OnUpdate());
-            }
-        }
+		void FixedUpdate()
+		{
+			AllControllers.ForEach(controller => controller?.OnFixedUpdate());
+		}
 
-        void FixedUpdate() {
-            if ( IsCommonManager ) {
-                AllControllers.ForEach(controller => controller?.OnFixedUpdate());
-            }
-        }
-
-        void OnDestroy() {
-            AllControllers.ForEach(controller => controller?.OnDestroy());
-            
-            if ( IsCommonManager ) {
-                AllControllers.ForEach(controller => controller?.OnDeinit());
-                SceneManager.sceneLoaded -= OnSceneLoaded;
-            }
-        }
-
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-            if ( FindObjectsOfType<ControllersProcessor>().Count(cp => cp != Main) == 0 ) { 
-                CreateControllersProcessor();
-            }
-        }
-
-        [RuntimeInitializeOnLoadMethod]
-        static void OnRuntimeInitializeOnLoad() {
-            if ( !FindObjectOfType<ControllersProcessor>() ) {
-                CreateControllersProcessor();
-            } 
-        }
-
-        static void CreateControllersProcessor() {
-            new GameObject().AddComponent<ControllersProcessor>();
-        }
-    }
+		void OnDestroy()
+		{
+			AllControllers.ForEach(controller => controller?.OnDestroy());
+		}
+	}
 }

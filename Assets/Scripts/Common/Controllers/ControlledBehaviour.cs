@@ -2,22 +2,25 @@
 using System;
 using System.Collections.Generic;
 
-namespace Grigorov.Controllers {
-    public class ControlledBehaviour<T> : MonoBehaviour where T : ControlledBehaviour<T> {
-        public static List<T> AllObjects { get; private set; } = new List<T>();
+namespace Grigorov.Controllers
+{
+	public class ControlledBehaviour<T> : MonoBehaviour where T : ControlledBehaviour<T>
+	{
+		static List<T> _allObjects = new List<T>();
 
-        protected virtual void Awake() {
-            AllObjects.Add(this as T);
-        }
+		protected virtual void Awake()
+		{
+			_allObjects.Add(this as T);
+		}
 
-        protected virtual void OnDestroy() {
-            AllObjects.Remove(this as T);
-        }
+		protected virtual void OnDestroy()
+		{
+			_allObjects.Remove(this as T);
+		}
 
-        public static void ForAll(Action<T> action) {
-            foreach ( var obj in AllObjects ) {
-                action?.Invoke(obj);
-            }
-        }
-    }
+		public static void ForAll(Action<T> action)
+		{
+			_allObjects.ForEach(obj => action?.Invoke(obj));
+		}
+	}
 }
