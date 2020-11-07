@@ -25,18 +25,18 @@ namespace Grigorov.LeapAndJump.Controllers
 		{
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				Player.ForAll(player => player.JumpInput());
+				Player.CallAction(player => player.JumpInput());
 			}
 		}
 
 		public void OnFixedUpdate()
 		{
-			Player.ForAll(player => player.OnFixedUpdate());
+			Player.CallFixedUpdate();
 		}
 
 		void OnPointerDown(TapZone_PointerDown e)
 		{
-			Player.ForAll(player => player.JumpInput());
+			Player.CallAction(player => player.JumpInput());
 		}
 	}
 }
