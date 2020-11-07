@@ -10,6 +10,7 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
+	[ControllerAttribute]
 	public class LevelGenerateController : Controller
 	{
 		const int MinCountBlocks = 4;

@@ -11,6 +11,7 @@ using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
+	[ControllerAttribute]
 	public class ScenesController : Controller
 	{
 		const string LoadingUIResource = "Prefabs/LoadingUI";

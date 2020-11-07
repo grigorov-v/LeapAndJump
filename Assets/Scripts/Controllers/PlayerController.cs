@@ -8,6 +8,7 @@ using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
+	[ControllerAttribute]
 	public class PlayerController : Controller
 	{
 		public override void OnAwake()
