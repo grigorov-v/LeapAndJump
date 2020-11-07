@@ -1,48 +1,60 @@
 ﻿using UnityEngine;
 
-namespace Grigorov.Save {
-    public class SaveableField<T> {
-        string            _key            = string.Empty;
-        bool              _autosave       = false;
-        bool              _isLoaded       = false;
-        T                 _defaultValue   = default;
-        ValueContainer<T> _valueContainer = new ValueContainer<T>();
+namespace Grigorov.Save
+{
+	public class SaveableField<T>
+	{
+		string _key          = string.Empty;
+		bool   _autosave     = false;
+		bool   _isLoaded     = false;
+		T      _defaultValue = default;
 
-        public T Value {
-            get {
-                if ( !_isLoaded ) {
-                    Load();
-                }
-                return _valueContainer.Value;
-            } 
-            set {
-                _valueContainer.Value = value;
-                if ( _autosave ) {
-                    Save();
-                }
-            }
-        }
+		ValueContainer<T> _valueContainer = new ValueContainer<T>();
 
-        public SaveableField(string key, bool autosaveOnChange = false, T defaultValue = default) {
-            _key = key;
-            _autosave = autosaveOnChange;
-            _defaultValue = defaultValue;
-        }
+		public T Value
+		{
+			get
+			{
+				if (!_isLoaded)
+				{
+					Load();
+				}
+				return _valueContainer.Value;
+			}
+			set
+			{
+				_valueContainer.Value = value;
+				if (_autosave)
+				{
+					Save();
+				}
+			}
+		}
 
-        public void Load() {
-            var json = PlayerPrefs.GetString(_key, null);
-            if ( string.IsNullOrEmpty(json) ) {
-                _valueContainer.Value = _defaultValue;
-                return;
-            }
-            
-            _valueContainer = JsonUtility.FromJson<ValueContainer<T>>(json);
-            _isLoaded = true;
-        }
+		public SaveableField(string key, bool autosaveOnChange = false, T defaultValue = default)
+		{
+			_key = key;
+			_autosave = autosaveOnChange;
+			_defaultValue = defaultValue;
+		}
 
-        public void Save() {
-            var json = JsonUtility.ToJson(_valueContainer);
-            PlayerPrefs.SetString(_key, json);
-        }
-    }
+		public void Load()
+		{
+			var json = PlayerPrefs.GetString(_key, null);
+			if (string.IsNullOrEmpty(json))
+			{
+				_valueContainer.Value = _defaultValue;
+				return;
+			}
+
+			_valueContainer = JsonUtility.FromJson<ValueContainer<T>>(json);
+			_isLoaded = true;
+		}
+
+		public void Save()
+		{
+			var json = JsonUtility.ToJson(_valueContainer);
+			PlayerPrefs.SetString(_key, json);
+		}
+	}
 }

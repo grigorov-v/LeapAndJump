@@ -1,3 +1,4 @@
-﻿namespace Grigorov.LeapAndJump.Events {
-    public struct FoodCollectEvent {}
+﻿namespace Grigorov.LeapAndJump.Events
+{
+	public struct FoodCollectEvent { }
 }

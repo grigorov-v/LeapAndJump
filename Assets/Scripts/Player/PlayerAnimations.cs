@@ -5,41 +5,47 @@ using System.Collections.Generic;
 
 using NaughtyAttributes;
 
-namespace Grigorov.LeapAndJump.Animations {
-    public enum KeyAnim {
-        None,
-        Walk,
-        Jump,
-        SlideInWall,
-        SecondJump,
-        Idle
-    }
+namespace Grigorov.LeapAndJump.Animations
+{
+	public enum KeyAnim
+	{
+		None,
+		Walk,
+		Jump,
+		SlideInWall,
+		SecondJump,
+		Idle
+	}
 
-    [System.Serializable]
-    public struct AnimInfo {
-        public KeyAnim Key;
-        public string  StateName;
-    }
+	[System.Serializable]
+	public struct AnimInfo
+	{
+		public KeyAnim Key;
+		public string  StateName;
+	}
 
-    public class PlayerAnimations : MonoBehaviour {
-        [SerializeField] SkeletonAnimation _skeletonAnimation = null;
-        
-        [ReorderableList] [SerializeField]
-        List<AnimInfo> _animations = new List<AnimInfo>();
+	public class PlayerAnimations : MonoBehaviour
+	{
+		[SerializeField] SkeletonAnimation _skeletonAnimation = null;
 
-        KeyAnim _curAnim = KeyAnim.None;
+		[ReorderableList]
+		[SerializeField] List<AnimInfo> _animations = new List<AnimInfo>();
 
-        public void PlayAnimation(KeyAnim key) {
-            if ( _curAnim == key ) {
-                return;
-            }
+		KeyAnim _curAnim = KeyAnim.None;
 
-            var animName = _animations.Find(anim => anim.Key == key).StateName;
-            _skeletonAnimation.loop = (key == KeyAnim.Walk) || (key == KeyAnim.SecondJump) || 
-                                      (key == KeyAnim.SlideInWall) || (key == KeyAnim.Idle);
-                                      
-            _skeletonAnimation.AnimationName = animName;
-            _curAnim = key;
-        }
-    }
+		public void PlayAnimation(KeyAnim key)
+		{
+			if (_curAnim == key)
+			{
+				return;
+			}
+
+			var animName = _animations.Find(anim => anim.Key == key).StateName;
+			_skeletonAnimation.loop = (key == KeyAnim.Walk) || (key == KeyAnim.SecondJump) ||
+											  (key == KeyAnim.SlideInWall) || (key == KeyAnim.Idle);
+
+			_skeletonAnimation.AnimationName = animName;
+			_curAnim = key;
+		}
+	}
 }

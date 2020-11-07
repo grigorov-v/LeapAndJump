@@ -1,11 +1,14 @@
 ﻿using Grigorov.LeapAndJump.Level;
 
-namespace Grigorov.LeapAndJump.Events {
-    public struct SpawnLevelElementEvent {
-        public LevelElement LevelElement { get; private set; }
+namespace Grigorov.LeapAndJump.Events
+{
+	public struct SpawnLevelElementEvent
+	{
+		public LevelElement LevelElement { get; private set; }
 
-        public SpawnLevelElementEvent(LevelElement levelElement) {
-            LevelElement = levelElement;
-        }
-    }
+		public SpawnLevelElementEvent(LevelElement levelElement)
+		{
+			LevelElement = levelElement;
+		}
+	}
 }

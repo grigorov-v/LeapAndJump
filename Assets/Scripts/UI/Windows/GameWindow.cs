@@ -7,38 +7,44 @@ using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Controllers;
 using Grigorov.LeapAndJump.Events;
 
-namespace Grigorov.LeapAndJump.UI {
-    public class GameWindow : BaseWindow {
-        [Space]
-        [SerializeField] Button _pauseButton = null;
-        
-        [Space]
-        [SerializeField] Text _foodCountText = null;
+namespace Grigorov.LeapAndJump.UI
+{
+	public class GameWindow : BaseWindow
+	{
+		[Space] [SerializeField] Button _pauseButton   = null;
 
-        void Awake() {
-            _pauseButton.onClick.AddListener(OnClickPause);
-            EventManager.Subscribe<FoodsController_FoodCalculateEvent>(this, OnFoodCalculate);
-        }
+		[Space] [SerializeField] Text   _foodCountText = null;
 
-        void Start() {
-            var fcc = Controller.Get<FoodsController>();
-            _foodCountText.text = GetFoodCountText(fcc.CurrentFoodCount, fcc.TargetFoodCount);
-        }
+		void Awake()
+		{
+			_pauseButton.onClick.AddListener(OnClickPause);
+			EventManager.Subscribe<FoodsController_FoodCalculateEvent>(this, OnFoodCalculate);
+		}
 
-        void OnDestroy() {
-            EventManager.Unsubscribe<FoodsController_FoodCalculateEvent>(OnFoodCalculate);
-        }
+		void Start()
+		{
+			var fcc = Controller.Get<FoodsController>();
+			_foodCountText.text = GetFoodCountText(fcc.CurrentFoodCount, fcc.TargetFoodCount);
+		}
 
-        string GetFoodCountText(int currentCount, int targetCount) {
-            return $"{currentCount}/{targetCount}";
-        }
+		void OnDestroy()
+		{
+			EventManager.Unsubscribe<FoodsController_FoodCalculateEvent>(OnFoodCalculate);
+		}
 
-        void OnClickPause() {
-            Windows.Get<PauseWindow>().Show();
-        }
+		string GetFoodCountText(int currentCount, int targetCount)
+		{
+			return $"{currentCount}/{targetCount}";
+		}
 
-        void OnFoodCalculate(FoodsController_FoodCalculateEvent e) {
-            _foodCountText.text = GetFoodCountText(e.CurCount, e.TargetCount);
-        }
-    }
+		void OnClickPause()
+		{
+			Windows.Get<PauseWindow>().Show();
+		}
+
+		void OnFoodCalculate(FoodsController_FoodCalculateEvent e)
+		{
+			_foodCountText.text = GetFoodCountText(e.CurCount, e.TargetCount);
+		}
+	}
 }

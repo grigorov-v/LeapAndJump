@@ -6,21 +6,23 @@ using Grigorov.Controllers;
 
 using Grigorov.LeapAndJump.Controllers;
 
-namespace Grigorov.LeapAndJump.UI {
-    public class WinWindow : BaseWindow {
-        [SerializeField] Button _btnNextLevel = null;
+namespace Grigorov.LeapAndJump.UI
+{
+	public class WinWindow : BaseWindow
+	{
+		[SerializeField] Button _btnNextLevel = null;
 
-        protected override bool PauseEnabled {
-            get => true;
-        }
+		protected override bool PauseEnabled => true;
 
-        void Awake() {
-            _btnNextLevel.onClick.AddListener(OnClickNextLevel);
-        }
+		void Awake()
+		{
+			_btnNextLevel.onClick.AddListener(OnClickNextLevel);
+		}
 
-        void OnClickNextLevel() {
-            Hide();
-            Controller.Get<LevelController>().CompleteLevel();
-        }
-    }
+		void OnClickNextLevel()
+		{
+			Hide();
+			Controller.Get<LevelController>().CompleteLevel();
+		}
+	}
 }
