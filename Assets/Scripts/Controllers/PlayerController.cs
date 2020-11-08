@@ -9,7 +9,7 @@ using Grigorov.LeapAndJump.Level;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public class PlayerController : IAwake, IDestroy, IUpdate, IFixedUpdate
+	public class PlayerController : ControllerForComponent<Player>, IAwake, IDestroy, IUpdate, IFixedUpdate
 	{
 		public void OnAwake()
 		{
@@ -25,18 +25,18 @@ namespace Grigorov.LeapAndJump.Controllers
 		{
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				Player.CallAction(player => player.JumpInput());
+				CallAction(player => player.JumpInput());
 			}
 		}
 
 		public void OnFixedUpdate()
 		{
-			Player.CallFixedUpdate();
+			CallAction(player => player.OnFixedUpdate());
 		}
 
 		void OnPointerDown(TapZone_PointerDown e)
 		{
-			Player.CallAction(player => player.JumpInput());
+			CallAction(player => player.JumpInput());
 		}
 	}
 }

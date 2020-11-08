@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using Grigorov.Extensions;
-using Grigorov.Controllers;
 
 using Grigorov.LeapAndJump.Animations;
 using Grigorov.LeapAndJump.Effects;
@@ -11,7 +10,7 @@ namespace Grigorov.LeapAndJump.Level
 {
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(PlayerAnimations))]
-	public class Player : ControlledBehaviour<Player>, IFixedUpdate
+	public class Player : MonoBehaviour
 	{
 		const float CheckAngle = 10f;
 
