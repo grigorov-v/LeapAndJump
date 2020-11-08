@@ -11,17 +11,17 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public class LevelGenerateController : IAwake, IDestroy
+	public class LevelGenerateController : ControllerForComponent<LevelBlock>, IAwake, IDestroy
 	{
 		const int MinCountBlocks = 4;
 
 		LevelBlocks               _levelBlocks         = null;
 		List<LevelElementsGroup>  _elementsGroups      = new List<LevelElementsGroup>();
 		Stack<LevelElementsGroup> _stackElementsGroups = new Stack<LevelElementsGroup>();
-		List<LevelBlock>          _activeBlocks        = new List<LevelBlock>();
 
 		LevelController LevelController => Controller.Get<LevelController>();
-		LevelBlock      LastBlock       => _activeBlocks.LastOrDefault();
+		LevelBlock      LastBlock       => _components.LastOrDefault();
+		LevelBlock      FirstBlock      => _components.FirstOrDefault();
 
 		Stack<LevelElementsGroup> StackElementsGroups
 		{
@@ -45,7 +45,6 @@ namespace Grigorov.LeapAndJump.Controllers
 
 			_elementsGroups.Clear();
 			_stackElementsGroups.Clear();
-			_activeBlocks.Clear();
 
 			var bc = Controller.Get<BalanceController>();
 			var level = LevelController.CurrentLevel;
@@ -77,12 +76,12 @@ namespace Grigorov.LeapAndJump.Controllers
 			newBlock = GameObject.Instantiate(newBlock);
 			newBlock.SetPosition(LastBlock);
 			newBlock.GenerateLevelElements(StackElementsGroups.Pop());
-			_activeBlocks.Add(newBlock);
+			AddComponent(newBlock);
 
-			for (var i = 0; i < _activeBlocks.Count; i++)
+			for (var i = 0; i < _components.Count; i++)
 			{
 				var factor = i + 1;
-				_activeBlocks[i].SetBackOrderLayer(factor);
+				_components[i].SetBackOrderLayer(factor);
 			}
 		}
 
@@ -90,8 +89,8 @@ namespace Grigorov.LeapAndJump.Controllers
 		{
 			if (LastBlock && (LastBlock == e.LevelBlock) && !e.LevelBlock.IsWinBlock)
 			{
-				var firstBlock = _activeBlocks.First();
-				_activeBlocks.Remove(firstBlock);
+				var firstBlock = FirstBlock;
+				RemoveComponent(firstBlock);
 				GameObject.Destroy(firstBlock.gameObject);
 				CreateNewBlock(LevelController.IsLevelFinish);
 			}
