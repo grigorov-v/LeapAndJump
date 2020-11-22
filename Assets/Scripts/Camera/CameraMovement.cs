@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
 using Grigorov.Extensions;
+using Grigorov.Controllers;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.CameraManagement
 {
-	public class CameraMovement : MonoBehaviour
+	public class CameraMovement : MonoBehaviour, IFixedUpdate
 	{
 		[SerializeField] float     _lerp      = 3;
 		[SerializeField] Vector2   _offset    = new Vector2(0, 0.1f);
@@ -16,14 +17,26 @@ namespace Grigorov.LeapAndJump.CameraManagement
 
 		Camera Camera => this.GetComponent(ref _camera);
 
+		UpdateController UpdateController => Controller.Get<UpdateController>();
+
 		void Awake()
 		{
 			_player = FindObjectOfType<Player>();
+			UpdateController.AddUpdate(this);
 		}
 
-		void FixedUpdate()
+		public void OnFixedUpdate()
 		{
+			if (!_player)
+			{
+				return;
+			}
 			transform.position = CalculateCameraPosition();
+		}
+
+		void OnDestroy()
+		{
+			UpdateController.RemoveUpdate(this);
 		}
 
 		Vector3 CalculateCameraPosition()

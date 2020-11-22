@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using UnityEngine;
+using System.Linq;
 using System.Collections.Generic;
-using UnityEngine;
 
 using Grigorov.Extensions;
 using Grigorov.Unity.Events;
@@ -11,17 +11,18 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public class LevelGenerateController : ControllerForComponent<LevelBlock>, IAwake, IDestroy
+	public class LevelGenerateController : IAwake, IDestroy
 	{
 		const int MinCountBlocks = 4;
 
 		LevelBlocks               _levelBlocks         = null;
 		List<LevelElementsGroup>  _elementsGroups      = new List<LevelElementsGroup>();
 		Stack<LevelElementsGroup> _stackElementsGroups = new Stack<LevelElementsGroup>();
+		List<LevelBlock>          _activeLevelBlocks   = new List<LevelBlock>();
 
 		LevelController LevelController => Controller.Get<LevelController>();
-		LevelBlock      LastBlock       => _components.LastOrDefault();
-		LevelBlock      FirstBlock      => _components.FirstOrDefault();
+		LevelBlock      LastBlock       => _activeLevelBlocks.LastOrDefault();
+		LevelBlock      FirstBlock      => _activeLevelBlocks.FirstOrDefault();
 
 		Stack<LevelElementsGroup> StackElementsGroups
 		{
@@ -45,6 +46,7 @@ namespace Grigorov.LeapAndJump.Controllers
 
 			_elementsGroups.Clear();
 			_stackElementsGroups.Clear();
+			_activeLevelBlocks.Clear();
 
 			var bc = Controller.Get<BalanceController>();
 			var level = LevelController.CurrentLevel;
@@ -76,13 +78,27 @@ namespace Grigorov.LeapAndJump.Controllers
 			newBlock = GameObject.Instantiate(newBlock);
 			newBlock.SetPosition(LastBlock);
 			newBlock.GenerateLevelElements(StackElementsGroups.Pop());
-			AddComponent(newBlock);
+			AddBlock(newBlock);
 
-			for (var i = 0; i < _components.Count; i++)
+			for (var i = 0; i < _activeLevelBlocks.Count; i++)
 			{
 				var factor = i + 1;
-				_components[i].SetBackOrderLayer(factor);
+				_activeLevelBlocks[i].SetBackOrderLayer(factor);
 			}
+		}
+
+		void AddBlock(LevelBlock levelBlock)
+		{
+			if (_activeLevelBlocks.Exists(block => block == levelBlock))
+			{
+				return;
+			}
+			_activeLevelBlocks.Add(levelBlock);
+		}
+
+		void RemoveBlock(LevelBlock levelBlock)
+		{
+			_activeLevelBlocks.Remove(levelBlock);
 		}
 
 		void OnPlayerIntoBlockTriggerEnter(PlayerIntoBlockTriggerEnter e)
@@ -90,7 +106,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			if (LastBlock && (LastBlock == e.LevelBlock) && !e.LevelBlock.IsWinBlock)
 			{
 				var firstBlock = FirstBlock;
-				RemoveComponent(firstBlock);
+				RemoveBlock(firstBlock);
 				GameObject.Destroy(firstBlock.gameObject);
 				CreateNewBlock(LevelController.IsLevelFinish);
 			}

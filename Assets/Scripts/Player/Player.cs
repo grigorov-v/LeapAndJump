@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 using Grigorov.Extensions;
+using Grigorov.Unity.Events;
+using Grigorov.Controllers;
+using Grigorov.LeapAndJump.UI;
 
 using Grigorov.LeapAndJump.Animations;
 using Grigorov.LeapAndJump.Effects;
@@ -10,7 +13,7 @@ namespace Grigorov.LeapAndJump.Level
 {
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(PlayerAnimations))]
-	public class Player : MonoBehaviour
+	public class Player : MonoBehaviour, IFixedUpdate, IUpdate
 	{
 		const float CheckAngle = 10f;
 
@@ -48,9 +51,28 @@ namespace Grigorov.LeapAndJump.Level
 			}
 		}
 
-		public void JumpInput()
+		UpdateController UpdateController => Controller.Get<UpdateController>();
+
+		public void Awake()
 		{
-			_jump = true;
+			EventManager.Subscribe<TapZone_PointerDown>(this, OnPointerDown);
+			UpdateController.AddUpdate(this as IUpdate);
+			UpdateController.AddUpdate(this as IFixedUpdate);
+		}
+
+		public void OnDestroy()
+		{
+			EventManager.Unsubscribe<TapZone_PointerDown>(OnPointerDown);
+			UpdateController.RemoveUpdate(this as IUpdate);
+			UpdateController.RemoveUpdate(this as IFixedUpdate);
+		}
+
+		public void OnUpdate()
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				_jump = true;
+			}
 		}
 
 		public void OnFixedUpdate()
@@ -95,6 +117,11 @@ namespace Grigorov.LeapAndJump.Level
 		void PlayJumpTrails()
 		{
 			_jumpTrails.ForEach(trail => trail.Play());
+		}
+
+		void OnPointerDown(TapZone_PointerDown e)
+		{
+			_jump = true;
 		}
 
 		void StopJumpTrails()
