@@ -11,7 +11,7 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public class LevelGenerateController : IAwake, IDestroy
+	public sealed class LevelGenerateController : IAwake, IDestroy
 	{
 		const int MinCountBlocks = 4;
 

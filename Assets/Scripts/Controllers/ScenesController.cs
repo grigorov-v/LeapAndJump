@@ -12,7 +12,7 @@ using Grigorov.LeapAndJump.Events;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public class ScenesController : IAwake
+	public sealed class ScenesController : IAwake
 	{
 		const string LoadingUIResource = "Prefabs/LoadingUI";
 		const string WorldScenePrefix  = "World_";

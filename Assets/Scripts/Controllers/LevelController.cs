@@ -13,7 +13,7 @@ using Grigorov.LeapAndJump.Events;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public class LevelController : IAwake, IDestroy
+	public sealed class LevelController : IAwake, IDestroy
 	{
 		SaveableField<LevelId> _currentLevel = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_0", 0));
 
