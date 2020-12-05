@@ -13,7 +13,7 @@ using Grigorov.LeapAndJump.Events;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public sealed class LevelController : IInit, IDeinit
+	public sealed class LevelController : IInit, IReset
 	{
 		SaveableField<LevelId> _currentLevel = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_0", 0));
 
@@ -37,7 +37,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			UnityEngine.Debug.Log(typeof(LevelController).ToString());
 		}
 
-		public void OnDeinit()
+		public void OnReset()
 		{
 			EventManager.Unsubscribe<FoodsController_CreateFoodEvent>(OnCreateFood);
 			EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);

@@ -11,7 +11,7 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public sealed class LevelGenerateController : IInit, IDeinit
+	public sealed class LevelGenerateController : IInit, IReset
 	{
 		const int MinCountBlocks = 4;
 
@@ -63,7 +63,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			UnityEngine.Debug.Log(typeof(LevelGenerateController).ToString());
 		}
 
-		public void OnDeinit()
+		public void OnReset()
 		{
 			EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
 		}

@@ -8,7 +8,7 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller] 
-	public sealed class FoodsController : IInit, IDeinit
+	public sealed class FoodsController : IInit, IReset
 	{
 		SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
 		Foods              _foods          = null;
@@ -43,7 +43,7 @@ namespace Grigorov.LeapAndJump.Controllers
 			UnityEngine.Debug.Log(typeof(FoodsController).ToString());
 		}
 
-		public void OnDeinit()
+		public void OnReset()
 		{
 			_totalFoodCount.Save();
 			EventManager.Unsubscribe<SpawnLevelElementEvent>(OnSpawnLevelElement);
