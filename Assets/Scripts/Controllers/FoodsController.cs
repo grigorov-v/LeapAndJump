@@ -1,14 +1,14 @@
 ﻿using Grigorov.Save;
 using Grigorov.Unity.Events;
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[Controller]
-	public sealed class FoodsController : IAwake, IDestroy
+	[Controller] 
+	public sealed class FoodsController : IInit, IDeinit
 	{
 		SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
 		Foods              _foods          = null;
@@ -19,24 +19,31 @@ namespace Grigorov.LeapAndJump.Controllers
 
 		public int TotalFoodCount => _totalFoodCount.Value;
 
-		public void OnAwake()
+		LevelConfigController LevelConfigController => ControllersBox.Get<LevelConfigController>();
+		LevelController       LevelController       => ControllersBox.Get<LevelController>();
+		ScenesController      ScenesController      => ControllersBox.Get<ScenesController>();
+
+		public void OnInit()
 		{
+			if (!ScenesController.IsActiveWorldScene)
+			{
+				return;
+			}
+			
 			_totalFoodCount.Load();
+			_foods = LevelConfigController.Config.Foods;
 
 			CurrentFoodCount = 0;
-			SpawnCountFoods = 0;
-			var bc = Controller.Get<BalanceController>();
-			var lc = Controller.Get<LevelController>();
-			TargetFoodCount = bc.GetFoodsCount(lc.CurrentLevel);
-
-			var level = Controller.Get<LevelController>()?.CurrentLevel;
-			_foods = Foods.Load("Foods", $"{level.Value.World}_Foods");
+			SpawnCountFoods  = 0;
+			TargetFoodCount  = LevelConfigController.Config.GetFoodsCount(LevelController.CurrentLevel.Level);
 
 			EventManager.Subscribe<SpawnLevelElementEvent>(this, OnSpawnLevelElement);
 			EventManager.Subscribe<FoodCollectEvent>(this, OnFoodCollect);
+
+			UnityEngine.Debug.Log(typeof(FoodsController).ToString());
 		}
 
-		public void OnDestroy()
+		public void OnDeinit()
 		{
 			_totalFoodCount.Save();
 			EventManager.Unsubscribe<SpawnLevelElementEvent>(OnSpawnLevelElement);

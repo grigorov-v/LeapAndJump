@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 using Grigorov.Unity.Events;
 using Grigorov.Unity.SceneManagement;
 using Grigorov.Unity.SceneManagement.UI;
@@ -12,7 +12,7 @@ using Grigorov.LeapAndJump.Events;
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public sealed class ScenesController : IAwake
+	public sealed class ScenesController : IInit
 	{
 		const string LoadingUIResource = "Prefabs/LoadingUI";
 		const string WorldScenePrefix  = "World_";
@@ -36,18 +36,20 @@ namespace Grigorov.LeapAndJump.Controllers
 			}
 		}
 
-		public void OnAwake()
+		public void OnInit()
 		{
 			if (SceneManager.GetActiveScene().name == LoadingScene)
 			{
 				OpenMainMenu();
 			}
+
+			UnityEngine.Debug.Log(typeof(ScenesController).ToString());
 		}
 
 		public void OpenScene(string scene)
 		{
 			SceneLoadingHelper.StartLoadingScene(scene, LoadingUI)
-				 .AddLoadedAction(_ => EventManager.Fire(new ScenesController_LoadedSceneEvent(scene)));
+				.AddLoadedAction(_ => EventManager.Fire(new ScenesController_LoadedSceneEvent(scene)));
 		}
 
 		public void OpenLevel(LevelId level)

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8de182d5ef153648b007a994b25b7b9, type: 3}
-  m_Name: difficulty_0
+  m_Name: World_0_Elements_difficulty_0
   m_EditorClassIdentifier: 
   _objects:
   - {fileID: 7002873223997072891, guid: 5078681c37f0c044ba80ae630d4da32c, type: 3}

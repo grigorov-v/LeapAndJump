@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 using Grigorov.UI;
 using Grigorov.Unity.Events;
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 using Grigorov.LeapAndJump.Controllers;
 using Grigorov.LeapAndJump.Events;
 
@@ -23,7 +23,7 @@ namespace Grigorov.LeapAndJump.UI
 
 		void Start()
 		{
-			var fcc = Controller.Get<FoodsController>();
+			var fcc = ControllersBox.Get<FoodsController>();
 			_foodCountText.text = GetFoodCountText(fcc.CurrentFoodCount, fcc.TargetFoodCount);
 		}
 

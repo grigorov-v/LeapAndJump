@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 using Grigorov.Extensions;
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.CameraManagement
@@ -17,7 +17,7 @@ namespace Grigorov.LeapAndJump.CameraManagement
 
 		Camera Camera => this.GetComponent(ref _camera);
 
-		UpdateController UpdateController => Controller.Get<UpdateController>();
+		UpdateController UpdateController => ControllersBox.Get<UpdateController>();
 
 		void Awake()
 		{

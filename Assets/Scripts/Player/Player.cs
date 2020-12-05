@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Grigorov.Extensions;
 using Grigorov.Unity.Events;
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 using Grigorov.LeapAndJump.UI;
 
 using Grigorov.LeapAndJump.Animations;
@@ -51,7 +51,7 @@ namespace Grigorov.LeapAndJump.Level
 			}
 		}
 
-		UpdateController UpdateController => Controller.Get<UpdateController>();
+		UpdateController UpdateController => ControllersBox.Get<UpdateController>();
 
 		public void Awake()
 		{

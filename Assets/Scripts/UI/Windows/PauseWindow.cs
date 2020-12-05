@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 using Grigorov.LeapAndJump.Controllers;
 
 namespace Grigorov.LeapAndJump.UI
@@ -23,7 +23,7 @@ namespace Grigorov.LeapAndJump.UI
 			_closeButton.onClick.AddListener(OnCloseClick);
 			_mainMenuButton.onClick.AddListener(OnMainMenuClick);
 			_restartButton.onClick.AddListener(OnRestartClick);
-			_sceneController = Controller.Get<ScenesController>();
+			_sceneController = Unity.Controllers.ControllersBox.Get<ScenesController>();
 		}
 
 		void OnCloseClick()

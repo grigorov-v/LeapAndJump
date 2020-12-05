@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 using Grigorov.Extensions;
 using Grigorov.Unity.Events;
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 using Grigorov.LeapAndJump.Level;
 using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
 	[Controller]
-	public sealed class LevelGenerateController : IAwake, IDestroy
+	public sealed class LevelGenerateController : IInit, IDeinit
 	{
 		const int MinCountBlocks = 4;
 
@@ -20,7 +20,7 @@ namespace Grigorov.LeapAndJump.Controllers
 		Stack<LevelElementsGroup> _stackElementsGroups = new Stack<LevelElementsGroup>();
 		List<LevelBlock>          _activeLevelBlocks   = new List<LevelBlock>();
 
-		LevelController LevelController => Controller.Get<LevelController>();
+		LevelController LevelController => Unity.Controllers.ControllersBox.Get<LevelController>();
 		LevelBlock      LastBlock       => _activeLevelBlocks.LastOrDefault();
 		LevelBlock      FirstBlock      => _activeLevelBlocks.FirstOrDefault();
 
@@ -36,28 +36,22 @@ namespace Grigorov.LeapAndJump.Controllers
 			}
 		}
 
-		public void OnAwake()
+		public void OnInit()
 		{
-			var sc = Controller.Get<ScenesController>();
+			var sc = ControllersBox.Get<ScenesController>();
 			if (!sc.IsActiveWorldScene)
 			{
 				return;
 			}
 
-			_elementsGroups.Clear();
 			_stackElementsGroups.Clear();
 			_activeLevelBlocks.Clear();
 
-			var bc = Controller.Get<BalanceController>();
-			var level = LevelController.CurrentLevel;
-			var allGroupsNames = bc.GetElementsGroups(level);
-
-			_levelBlocks = LevelBlocks.Load("LevelBlocks", $"{level.World}_LevelBlocks");
-			foreach (var groupName in allGroupsNames)
-			{
-				var element = Resources.Load<LevelElementsGroup>($"Elements_Groups/{level.World}/{groupName}");
-				_elementsGroups.Add(element);
-			}
+			var lcc = ControllersBox.Get<LevelConfigController>();
+			var levelId = LevelController.CurrentLevel;
+			
+			_elementsGroups = lcc.Config.GetElementsGroups(levelId.Level);
+			_levelBlocks    = lcc.Config.LevelBlocks; 
 
 			for (var i = 0; i < MinCountBlocks; i++)
 			{
@@ -65,9 +59,11 @@ namespace Grigorov.LeapAndJump.Controllers
 			}
 
 			EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
+
+			UnityEngine.Debug.Log(typeof(LevelGenerateController).ToString());
 		}
 
-		public void OnDestroy()
+		public void OnDeinit()
 		{
 			EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
 		}

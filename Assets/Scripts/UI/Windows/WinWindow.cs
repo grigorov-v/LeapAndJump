@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 using Grigorov.UI;
-using Grigorov.Controllers;
+using Grigorov.Unity.Controllers;
 
 using Grigorov.LeapAndJump.Controllers;
 
@@ -22,7 +22,7 @@ namespace Grigorov.LeapAndJump.UI
 		void OnClickNextLevel()
 		{
 			Hide();
-			Controller.Get<LevelController>().CompleteLevel();
+			Unity.Controllers.ControllersBox.Get<LevelController>().CompleteLevel();
 		}
 	}
 }
