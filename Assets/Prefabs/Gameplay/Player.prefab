@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 408455588}
   - component: {fileID: 408455587}
   - component: {fileID: 408455586}
+  - component: {fileID: 9087815474972993092}
   m_Layer: 12
   m_Name: SkeletonAnimation
   m_TagString: Untagged
@@ -116,6 +117,18 @@ MonoBehaviour:
   _animationName: 
   loop: 0
   timeScale: 1
+--- !u!114 &9087815474972993092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408455584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3701dc9470a9b05469655bc48f44ffc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &533661716
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,8 +573,6 @@ MonoBehaviour:
   _jumpTrails:
   - {fileID: 2270227173098887882}
   - {fileID: 911496920}
-  AutoPlay: 0
-  DebugText: {fileID: 0}
 --- !u!114 &3308466354060759633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bcbfe7d10cf5f04680d580ac90fce0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skeletonAnimation: {fileID: 408455586}
   _animations:
   - Key: 1
     StateName: Walk
@@ -585,4 +597,3 @@ MonoBehaviour:
     StateName: Roll
   - Key: 5
     StateName: Idle
-  _skeletonAnimation: {fileID: 408455586}

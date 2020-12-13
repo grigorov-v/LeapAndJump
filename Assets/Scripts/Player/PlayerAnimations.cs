@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-using Spine.Unity;
+
+using Grigorov.Extensions;
+using Grigorov.LeapAndJump.Animations.Wrappers;
 
 using System.Collections.Generic;
 
@@ -25,13 +27,13 @@ namespace Grigorov.LeapAndJump.Animations
 	}
 
 	public class PlayerAnimations : MonoBehaviour
-	{
-		[SerializeField] SkeletonAnimation _skeletonAnimation = null;
+	{ 
+		[ReorderableList][SerializeField] List<AnimInfo> _animations = new List<AnimInfo>();
 
-		[ReorderableList]
-		[SerializeField] List<AnimInfo> _animations = new List<AnimInfo>();
+		SkeletonAnimationWrapper _skeletonAnimation = null;
+		KeyAnim                  _curAnim           = KeyAnim.None;
 
-		KeyAnim _curAnim = KeyAnim.None;
+		SkeletonAnimationWrapper AnimationWrapper => this.GetComponentInChildren(ref _skeletonAnimation);
 
 		public void PlayAnimation(KeyAnim key)
 		{
@@ -41,10 +43,10 @@ namespace Grigorov.LeapAndJump.Animations
 			}
 
 			var animName = _animations.Find(anim => anim.Key == key).StateName;
-			_skeletonAnimation.loop = (key == KeyAnim.Walk) || (key == KeyAnim.SecondJump) ||
+			var loop = (key == KeyAnim.Walk) || (key == KeyAnim.SecondJump) ||
 											  (key == KeyAnim.SlideInWall) || (key == KeyAnim.Idle);
 
-			_skeletonAnimation.AnimationName = animName;
+			AnimationWrapper.SetupAnimation(animName, loop);
 			_curAnim = key;
 		}
 	}
