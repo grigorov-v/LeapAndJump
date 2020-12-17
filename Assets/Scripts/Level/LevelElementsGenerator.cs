@@ -18,7 +18,7 @@ namespace Grigorov.LeapAndJump.Level
 
 		LevelGrind LevelGrind => this.GetComponent(ref _levelGrind);
 
-		public void Generate(LevelElementsGroup elementsGroup)
+		public void Generate(LevelElementsContainer elementsGroup)
 		{
 			GetComponentsInChildren<LevelElement>(false, _allElements);
 

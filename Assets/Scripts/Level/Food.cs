@@ -15,9 +15,12 @@ namespace Grigorov.LeapAndJump.Level
 	{
 		[SerializeField] float _tweenDuration = 0.5f;
 
-		bool        _isCollecting = false;
-		Tween       _tweenCollect = null;
-		Rigidbody2D _rb           = null;
+		bool           _isCollecting = false;
+		Tween          _tweenCollect = null;
+		Rigidbody2D    _rb           = null;
+		SpriteRenderer _renderer     = null;
+
+		public SpriteRenderer Renderer => this.GetComponentInChildren(ref _renderer);
 
 		Rigidbody2D Rigidbody => this.GetComponent(ref _rb);
 
@@ -37,6 +40,7 @@ namespace Grigorov.LeapAndJump.Level
 			{
 				if (gameObject)
 				{
+					Collect();
 					Destroy(gameObject);
 				}
 			};
@@ -44,13 +48,12 @@ namespace Grigorov.LeapAndJump.Level
 			_isCollecting = true;
 		}
 
-		void FinishCollect()
+		void Collect()
 		{
 			if (!_isCollecting)
 			{
 				return;
 			}
-			print("Collect");
 			EventManager.Fire(new FoodCollectEvent());
 		}
 
@@ -76,7 +79,6 @@ namespace Grigorov.LeapAndJump.Level
 		void OnDestroy()
 		{
 			ResetTween();
-			FinishCollect();
 		}
 	}
 }

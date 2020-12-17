@@ -10,21 +10,21 @@ namespace Grigorov.LeapAndJump.Level
 	[System.Serializable]
 	public struct LevelInfo
 	{
-		public List<LevelElementsGroup> ElementsGroups;
+		public List<LevelElementsContainer> ElementsGroups;
 		public int FoodsCount;
 	}
 
 	[CreateAssetMenu(fileName = "LevelConfig", menuName = "Configs/LevelConfig", order = 1)]
 	public class LevelConfig : ScriptableObject
 	{
-		[SerializeField] LevelBlocks     _levelBlocks = null;
-		[SerializeField] Foods           _foods       = null;
+		[SerializeField] LevelBlocksContainer     _levelBlocks = null;
+		[SerializeField] FoodsContainer           _foods       = null;
 		[SerializeField] List<LevelInfo> _levels      = new List<LevelInfo>();
 
-		public LevelBlocks LevelBlocks => _levelBlocks;
-		public Foods       Foods       => _foods;
+		public LevelBlocksContainer LevelBlocks => _levelBlocks;
+		public FoodsContainer       Foods       => _foods;
 
-		public List<LevelElementsGroup> GetElementsGroups(int levelIndex)
+		public List<LevelElementsContainer> GetElementsGroups(int levelIndex)
 		{
 			return CheckLevelIndex(levelIndex) ? _levels[levelIndex].ElementsGroups : null;
 		}

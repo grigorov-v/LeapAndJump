@@ -25,7 +25,7 @@ namespace Grigorov.LeapAndJump.Level
 			transform.localScale = scale;
 		}
 
-		public int SpawnFoods(Foods foods)
+		public int SpawnFoods(FoodsContainer foods)
 		{
 			if (!foods)
 			{

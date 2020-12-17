@@ -33,6 +33,7 @@ namespace Grigorov.LeapAndJump.ResourcesContainers
 			{
 				_randomizeObjects = objects.Randomize();
 			}
+			
 			var obj = _randomizeObjects.GetRandomValue();
 			_randomizeObjects.Remove(obj);
 			return obj;

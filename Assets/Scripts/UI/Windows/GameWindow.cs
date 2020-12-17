@@ -11,9 +11,12 @@ namespace Grigorov.LeapAndJump.UI
 {
 	public class GameWindow : BaseWindow
 	{
-		[Space] [SerializeField] Button _pauseButton   = null;
-
-		[Space] [SerializeField] Text   _foodCountText = null;
+		[Space]
+		[SerializeField] Button _pauseButton   = null;
+		
+		[Space]
+		[SerializeField] Text   _foodCountText = null;
+		[SerializeField] Image  _foodImage     = null;
 
 		void Awake()
 		{
@@ -24,17 +27,12 @@ namespace Grigorov.LeapAndJump.UI
 		void Start()
 		{
 			var fcc = ControllersBox.Get<FoodsController>();
-			_foodCountText.text = GetFoodCountText(fcc.CurrentFoodCount, fcc.TargetFoodCount);
+			_foodCountText.text = fcc.CurrentFoodCount.ToString();
 		}
 
 		void OnDestroy()
 		{
 			EventManager.Unsubscribe<FoodsController_FoodCalculateEvent>(OnFoodCalculate);
-		}
-
-		string GetFoodCountText(int currentCount, int targetCount)
-		{
-			return $"{currentCount}/{targetCount}";
 		}
 
 		void OnClickPause()
@@ -44,7 +42,7 @@ namespace Grigorov.LeapAndJump.UI
 
 		void OnFoodCalculate(FoodsController_FoodCalculateEvent e)
 		{
-			_foodCountText.text = GetFoodCountText(e.CurCount, e.TargetCount);
+			_foodCountText.text = e.CurCount.ToString();
 		}
 	}
 }

@@ -47,7 +47,7 @@ namespace Grigorov.LeapAndJump.Level
 			}
 		}
 
-		public void GenerateLevelElements(LevelElementsGroup elementsGroup)
+		public void GenerateLevelElements(LevelElementsContainer elementsGroup)
 		{
 			if (LevelElementsGenerator)
 			{

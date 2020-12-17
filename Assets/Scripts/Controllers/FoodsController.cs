@@ -11,7 +11,7 @@ namespace Grigorov.LeapAndJump.Controllers
 	public sealed class FoodsController : IInit, IReset
 	{
 		SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
-		Foods              _foods          = null;
+		FoodsContainer              _foods          = null;
 
 		public int CurrentFoodCount { get; private set; } = 0;
 		public int TargetFoodCount  { get; private set; } = 0;
