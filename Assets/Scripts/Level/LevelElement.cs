@@ -50,7 +50,7 @@ namespace Grigorov.LeapAndJump.Level
 				}
 
 				var food = Instantiate(foodPrefab, transform);
-				food.transform.SetParent(transform);
+				food.transform.rotation = Quaternion.identity;
 				var pos = point.position;
 				pos.y = elemBounds.center.y + elemBounds.extents.y + food.Bounds.extents.y;
 				food.transform.position = pos;
