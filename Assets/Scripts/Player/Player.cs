@@ -13,7 +13,7 @@ namespace Grigorov.LeapAndJump.Level
 {
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(PlayerAnimations))]
-	public class PlayerController : MonoBehaviour, IFixedUpdate, IUpdate
+	public class Player : MonoBehaviour, IFixedUpdate, IUpdate
 	{
 		const float CheckAngle = 10f;
 
