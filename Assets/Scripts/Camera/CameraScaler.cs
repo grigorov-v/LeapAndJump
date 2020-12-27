@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using Grigorov.Extensions;
+using Grigorov.Unity.Controllers;
 
 namespace Grigorov.LeapAndJump.CameraManagement
 {
-	public class CameraScaler : MonoBehaviour
+	public class CameraScaler : MonoBehaviour, IUpdate
 	{
 		[SerializeField]
 		Vector2 _defaultResolution = new Vector2(720, 1280);
@@ -17,7 +18,8 @@ namespace Grigorov.LeapAndJump.CameraManagement
 		float  _initialFov    = 0;
 		float  _horizontalFov = 120f;
 
-		Camera Camera => this.GetComponent(ref _camera);
+		Camera           Camera           => this.GetComponent(ref _camera);
+		UpdateController UpdateController => ControllersBox.Get<UpdateController>();
 
 		void Start()
 		{
@@ -25,9 +27,15 @@ namespace Grigorov.LeapAndJump.CameraManagement
 			_targetAspect = _defaultResolution.x / _defaultResolution.y;
 			_initialFov = Camera.fieldOfView;
 			_horizontalFov = CalcVerticalFov(_initialFov, 1 / _targetAspect);
+			UpdateController.AddUpdate(this);
 		}
 
-		void Update()
+		void OnDestroy()
+		{
+			UpdateController.RemoveUpdate(this);
+		}
+
+		public void OnUpdate()
 		{
 			if (Camera.orthographic)
 			{
