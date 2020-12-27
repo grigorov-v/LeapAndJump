@@ -3,8 +3,7 @@ using Grigorov.LeapAndJump.Level;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[Controller]
-	public sealed class LevelConfigController : IInit
+	public sealed class LevelConfigController : IController
 	{
 		public LevelConfig Config { get; private set; }
 
@@ -13,8 +12,9 @@ namespace Grigorov.LeapAndJump.Controllers
 		public void OnInit()
 		{
 			Config = LevelConfig.Load(ScenesController.CurrentSceneName);
-			
 			UnityEngine.Debug.Log(typeof(LevelConfigController).ToString());
 		}
+
+		public void OnReset() { }
 	}
 }

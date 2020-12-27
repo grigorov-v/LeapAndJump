@@ -11,8 +11,7 @@ using Grigorov.LeapAndJump.Events;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[Controller]
-	public sealed class ScenesController : IInit
+	public sealed class ScenesController : IController
 	{
 		const string LoadingUIResource = "Prefabs/LoadingUI";
 		const string WorldScenePrefix  = "World_";
@@ -45,6 +44,8 @@ namespace Grigorov.LeapAndJump.Controllers
 
 			UnityEngine.Debug.Log(typeof(ScenesController).ToString());
 		}
+
+		public void OnReset() { }
 
 		public void OpenScene(string scene)
 		{

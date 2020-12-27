@@ -7,8 +7,7 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 
 namespace Grigorov.LeapAndJump.Controllers
 {
-	[Controller] 
-	public sealed class FoodsController : IInit, IReset
+	public sealed class FoodsController : IController
 	{
 		SaveableField<int> _totalFoodCount = new SaveableField<int>("FoodCount", true, 0);
 		FoodsContainer              _foods          = null;
