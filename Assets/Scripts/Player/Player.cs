@@ -21,9 +21,6 @@ namespace Grigorov.LeapAndJump.Level
 		[SerializeField] Vector2 _jumpForce     = new Vector2(60, 140);
 		[SerializeField] Vector2 _slideVelosity = new Vector2(0.2f, -2);
 
-		[Space]
-		[SerializeField] List<Trail> _jumpTrails = new List<Trail>();
-
 		Rigidbody2D      _rb               = null;
 		PlayerAnimations _playerAnimations = null;
 		Collider2D       _wallTrigger      = null;
@@ -114,19 +111,9 @@ namespace Grigorov.LeapAndJump.Level
 			}
 		}
 
-		void PlayJumpTrails()
-		{
-			_jumpTrails.ForEach(trail => trail.Play());
-		}
-
 		void OnPointerDown(TapZone_PointerDown e)
 		{
 			_jump = true;
-		}
-
-		void StopJumpTrails()
-		{
-			_jumpTrails.ForEach(trail => trail.Stop());
 		}
 
 		void Jump(bool secondJump = false)
@@ -135,7 +122,6 @@ namespace Grigorov.LeapAndJump.Level
 			jumpForce.x = (transform.localScale.x > 0) ? -Mathf.Abs(jumpForce.x) : Mathf.Abs(jumpForce.x);
 			Rigidbody.velocity = Vector2.zero;
 			Rigidbody.AddForce(jumpForce, ForceMode2D.Impulse);
-			PlayJumpTrails();
 		}
 
 		void SlideInWall()
@@ -143,7 +129,6 @@ namespace Grigorov.LeapAndJump.Level
 			var slideVelosity = _slideVelosity;
 			slideVelosity.x = (transform.localScale.x > 0) ? -Mathf.Abs(slideVelosity.x) : Mathf.Abs(slideVelosity.x);
 			Rigidbody.velocity = slideVelosity;
-			StopJumpTrails();
 		}
 
 		void MoveLeftOrRight()
@@ -154,7 +139,6 @@ namespace Grigorov.LeapAndJump.Level
 			}
 			var dir = (transform.localScale.x > 0) ? Vector2.left : Vector2.right;
 			Rigidbody.velocity = dir * _speed;
-			StopJumpTrails();
 		}
 
 		void SetMirrorScale()
