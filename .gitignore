@@ -5,6 +5,7 @@ Builds/
 obj/
 .vs/
 .vscode/
+.idea/
 
 *.sln
 *.csproj
