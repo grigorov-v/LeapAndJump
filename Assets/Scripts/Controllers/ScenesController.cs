@@ -20,8 +20,8 @@ namespace Grigorov.LeapAndJump.Controllers
 
 		LoadingUI _loadingUI = null;
 
-		public bool   IsActiveWorldScene => CurrentSceneName.StartsWith(WorldScenePrefix);
 		public string CurrentSceneName   => SceneManager.GetActiveScene().name;
+		public bool   IsActiveWorldScene => CurrentSceneName.StartsWith(WorldScenePrefix);
 
 		LoadingUI LoadingUI
 		{

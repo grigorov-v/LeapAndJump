@@ -14,10 +14,10 @@ namespace Grigorov.LeapAndJump.Controllers
 	{
 		const int MinCountBlocks = 4;
 
-		LevelBlocksContainer               _levelBlocks         = null;
+		LevelBlocksContainer          _levelBlocks         = null;
 		List<LevelElementsContainer>  _elementsGroups      = new List<LevelElementsContainer>();
 		Stack<LevelElementsContainer> _stackElementsGroups = new Stack<LevelElementsContainer>();
-		List<LevelBlock>          _activeLevelBlocks   = new List<LevelBlock>();
+		List<LevelBlock>              _activeLevelBlocks   = new List<LevelBlock>();
 
 		LevelController LevelController => Unity.Controllers.ControllersBox.Get<LevelController>();
 		LevelBlock      LastBlock       => _activeLevelBlocks.LastOrDefault();

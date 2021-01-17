@@ -14,13 +14,12 @@ namespace Grigorov.LeapAndJump.Controllers
 {
 	public sealed class LevelController : IController
 	{
-		SaveableField<LevelId> _currentLevel = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_0", 0));
-
-		bool _isCanShowEndLevelWindow = false;
-
-		public LevelId CurrentLevel => _currentLevel.Value;
+		SaveableField<LevelId> _currentLevel            = new SaveableField<LevelId>("CurrentLevel", defaultValue: new LevelId("World_0", 0));
+		bool                   _isCanShowEndLevelWindow = false;
 
 		public bool IsLevelFinish { get; private set; } = false;
+
+		public LevelId CurrentLevel => _currentLevel.Value;
 
 		ScenesController ScenesController => ControllersBox.Get<ScenesController>();
 

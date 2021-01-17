@@ -5,7 +5,7 @@ namespace Grigorov.LeapAndJump.Controllers
 {
 	public sealed class LevelConfigController : IController
 	{
-		public LevelConfig Config { get; private set; }
+		public LevelConfig Config { get; private set; } = null;
 
 		ScenesController ScenesController => ControllersBox.Get<ScenesController>();
 
@@ -15,6 +15,9 @@ namespace Grigorov.LeapAndJump.Controllers
 			UnityEngine.Debug.Log(typeof(LevelConfigController).ToString());
 		}
 
-		public void OnReset() { }
+		public void OnReset()
+		{
+			Config = null;
+		}
 	}
 }
