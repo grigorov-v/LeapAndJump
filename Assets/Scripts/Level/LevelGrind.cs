@@ -2,10 +2,11 @@
 
 namespace Grigorov.LeapAndJump.Level {
 	public class LevelGrind : MonoBehaviour {
-		[SerializeField] Vector2 _cellSize = new Vector2(1.29f, 1.29f);
-		[SerializeField] Vector2 _startCenter = new Vector2(-1.93f, -5.87f);
-		[SerializeField] Vector2Int _cellCount = new Vector2Int(4, 10);
-		Bounds[,] _cells;
+		[SerializeField] Vector2    _cellSize    = new Vector2(1.29f, 1.29f);
+		[SerializeField] Vector2    _startCenter = new Vector2(-1.93f, -5.87f);
+		[SerializeField] Vector2Int _cellCount   = new Vector2Int(4, 10);
+		
+		Bounds[,]  _cells;
 		Vector2Int _lastCellCount = Vector2Int.zero;
 
 		Vector2 _lastCellSize = Vector2.zero;

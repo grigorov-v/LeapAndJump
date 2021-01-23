@@ -6,13 +6,11 @@ using Grigorov.Unity.Events;
 using UnityEngine;
 
 namespace Grigorov.LeapAndJump.Level {
-	public struct PlayerIntoBlockTriggerEnter {
-		public LevelBlock LevelBlock { get; }
-		public Player Player { get; }
+	public readonly struct PlayerIntoBlockTriggerEnter {
+		public readonly LevelBlock LevelBlock;
 
 		public PlayerIntoBlockTriggerEnter(LevelBlock levelBlock, Player player) {
 			LevelBlock = levelBlock;
-			Player = player;
 		}
 	}
 
@@ -20,12 +18,13 @@ namespace Grigorov.LeapAndJump.Level {
 	public class LevelBlock : MonoBehaviour {
 		[SerializeField] Transform _beginPoint;
 		[SerializeField] Transform _endPoint;
-		[SerializeField] bool _winBlock;
+		[SerializeField] bool      _winBlock;
 
-		[Space] [SerializeField] List<SpriteRenderer> _backLayers = new List<SpriteRenderer>();
+		[Space] 
+		[SerializeField] List<SpriteRenderer> _backLayers = new List<SpriteRenderer>();
 
 		LevelElementsGenerator _elementsGenerator;
-		List<int> _layers = new List<int>();
+		List<int>              _layers = new List<int>();
 
 		public bool IsWinBlock => _winBlock;
 

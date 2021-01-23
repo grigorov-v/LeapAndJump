@@ -9,13 +9,13 @@ using UnityEditor;
 public static class Version {
 	static List<int> _listVersion;
 
-	public static int ClientVerMajor => ListVersion[0];
-	public static int ClientVerMinor => ListVersion[1];
-	public static int ClientVerRevision => ListVersion[2];
+	static int ClientVerMajor => ListVersion[0];
+	static int ClientVerMinor => ListVersion[1];
+	static int ClientVerRevision => ListVersion[2];
 
-	public static int ClientVerQARevision {
+	static int ClientVerQARevision {
 		get => ListVersion[3];
-		private set {
+		set {
 			ListVersion[3] = value;
 #if UNITY_EDITOR
 			PlayerSettings.bundleVersion = VersionConvertToString();
@@ -26,21 +26,23 @@ public static class Version {
 
 	static List<int> ListVersion {
 		get {
-			if ( _listVersion == null ) {
-				var verArray = Application.version.Split('.');
-				_listVersion = new List<int>();
-				Array.ForEach(verArray, value => _listVersion.Add(int.Parse(value)));
+			if ( _listVersion != null ) {
+				return _listVersion;
 			}
+
+			var verArray = Application.version.Split('.');
+			_listVersion = new List<int>();
+			Array.ForEach(verArray, value => _listVersion.Add(int.Parse(value)));
 
 			return _listVersion;
 		}
 	}
 
 	static string VersionConvertToString() {
-		return string.Format("{0}.{1}.{2}.{3}", ClientVerMajor, ClientVerMinor, ClientVerRevision, ClientVerQARevision);
+		return $"{ClientVerMajor}.{ClientVerMinor}.{ClientVerRevision}.{ClientVerQARevision}";
 	}
 
-	public static void UpdateQARevision() {
+	public static void UpdateQaRevision() {
 		ClientVerQARevision++;
 		Debug.Log("New version: " + Application.version);
 	}

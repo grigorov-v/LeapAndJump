@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEditor;
 
 namespace Grigorov.CustomBuildPipeline {
-	public class BuildOptions {
+	public static class BuildOptions {
 		public static BuildPlayerOptions BuildPlayerOptions = new BuildPlayerOptions {
 			locationPathName = GetApkLocationPath("Builds", "LeapAndJump_QA"),
 			target = BuildTarget.Android,

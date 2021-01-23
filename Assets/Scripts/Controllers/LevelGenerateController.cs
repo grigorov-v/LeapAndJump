@@ -10,19 +10,22 @@ using UnityEngine;
 namespace Grigorov.LeapAndJump.Controllers {
 	public sealed class LevelGenerateController : IController {
 		const int MinCountBlocks = 4;
-		readonly List<LevelBlock> _activeLevelBlocks = new List<LevelBlock>();
-		List<LevelElementsContainer> _elementsGroups = new List<LevelElementsContainer>();
+		
+		public bool IsActive => ControllersBox.Get<ScenesController>()?.IsActiveWorldScene ?? false;
 
-		LevelBlocksContainer _levelBlocks;
-		Stack<LevelElementsContainer> _stackElementsGroups = new Stack<LevelElementsContainer>();
+		List<LevelBlock>             _activeLevelBlocks;
+		List<LevelElementsContainer> _elementsGroups;
+
+		LevelBlocksContainer          _levelBlocks;
+		Stack<LevelElementsContainer> _stackElementsGroups;
 
 		LevelController LevelController => ControllersBox.Get<LevelController>();
-		LevelBlock LastBlock => _activeLevelBlocks.LastOrDefault();
-		LevelBlock FirstBlock => _activeLevelBlocks.FirstOrDefault();
+		LevelBlock      LastBlock       => _activeLevelBlocks.LastOrDefault();
+		LevelBlock      FirstBlock      => _activeLevelBlocks.FirstOrDefault();
 
 		Stack<LevelElementsContainer> StackElementsGroups {
 			get {
-				if ( _stackElementsGroups.Count == 0 ) {
+				if ( _stackElementsGroups == null || _stackElementsGroups.Count == 0 ) {
 					_stackElementsGroups = new Stack<LevelElementsContainer>(_elementsGroups.Randomize());
 				}
 
@@ -31,17 +34,10 @@ namespace Grigorov.LeapAndJump.Controllers {
 		}
 
 		public void OnInit() {
-			var sc = ControllersBox.Get<ScenesController>();
-			if ( !sc.IsActiveWorldScene ) {
-				return;
-			}
-
-			_stackElementsGroups.Clear();
-			_activeLevelBlocks.Clear();
+			_activeLevelBlocks = new List<LevelBlock>();
 
 			var lcc = ControllersBox.Get<LevelConfigController>();
 			var levelId = LevelController.CurrentLevel;
-
 			_elementsGroups = lcc.Config.GetElementsGroups(levelId.Level);
 			_levelBlocks = lcc.Config.LevelBlocks;
 
@@ -50,12 +46,15 @@ namespace Grigorov.LeapAndJump.Controllers {
 			}
 
 			EventManager.Subscribe<PlayerIntoBlockTriggerEnter>(this, OnPlayerIntoBlockTriggerEnter);
-
-			Debug.Log(typeof(LevelGenerateController).ToString());
 		}
 
 		public void OnReset() {
 			EventManager.Unsubscribe<PlayerIntoBlockTriggerEnter>(OnPlayerIntoBlockTriggerEnter);
+
+			_activeLevelBlocks = null;
+			_elementsGroups = null;
+			_levelBlocks = null;
+			_stackElementsGroups = null;
 		}
 
 		void CreateNewBlock(bool isWinBlock) {
@@ -84,12 +83,14 @@ namespace Grigorov.LeapAndJump.Controllers {
 		}
 
 		void OnPlayerIntoBlockTriggerEnter(PlayerIntoBlockTriggerEnter e) {
-			if ( LastBlock && LastBlock == e.LevelBlock && !e.LevelBlock.IsWinBlock ) {
-				var firstBlock = FirstBlock;
-				RemoveBlock(firstBlock);
-				Object.Destroy(firstBlock.gameObject);
-				CreateNewBlock(LevelController.IsLevelFinish);
+			if ( !LastBlock || LastBlock != e.LevelBlock || e.LevelBlock.IsWinBlock ) {
+				return;
 			}
+
+			var firstBlock = FirstBlock;
+			RemoveBlock(firstBlock);
+			Object.Destroy(firstBlock.gameObject);
+			CreateNewBlock(LevelController.IsLevelFinish);
 		}
 	}
 }

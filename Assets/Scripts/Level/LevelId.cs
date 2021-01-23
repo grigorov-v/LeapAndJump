@@ -1,7 +1,7 @@
 ﻿namespace Grigorov.LeapAndJump.Level {
-	public struct LevelId {
-		public string World { get; }
-		public int Level { get; }
+	public readonly struct LevelId {
+		public readonly string World;
+		public readonly int    Level;
 
 		public LevelId(string world, int level) {
 			World = world;

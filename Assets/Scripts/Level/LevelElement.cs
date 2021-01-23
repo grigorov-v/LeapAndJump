@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Grigorov.LeapAndJump.Level {
 	public class LevelElement : BaseLevelElement {
 		[SerializeField] List<Transform> _foodPoints = new List<Transform>();
-		[SerializeField] bool _mirrorXScale;
+		[SerializeField] bool            _mirrorXScale;
 
 		public void TryMirror() {
 			if ( !_mirrorXScale ) {
@@ -40,10 +40,11 @@ namespace Grigorov.LeapAndJump.Level {
 				}
 
 				var food = Instantiate(foodPrefab, transform);
-				food.transform.rotation = Quaternion.identity;
+				var foodTransform = food.transform;
+				foodTransform.rotation = Quaternion.identity;
 				var pos = point.position;
 				pos.y = elemBounds.center.y + elemBounds.extents.y + food.Bounds.extents.y;
-				food.transform.position = pos;
+				foodTransform.position = pos;
 				count++;
 			}
 

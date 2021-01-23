@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Grigorov.LeapAndJump.CameraManagement {
 	public class CameraMovement : MonoBehaviour, IFixedUpdate {
-		[SerializeField] float _lerp = 3;
-		[SerializeField] Vector2 _offset = new Vector2(0, 0.1f);
+		[SerializeField] float     _lerp   = 3;
+		[SerializeField] Vector2   _offset = new Vector2(0, 0.1f);
 		[SerializeField] Transform _edgePoint;
 		
 		Camera _camera;

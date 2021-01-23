@@ -8,13 +8,14 @@ namespace Grigorov.LeapAndJump.CameraManagement {
 
 		[Range(0f, 1f)] [SerializeField] float _widthOrHeight;
 
-		Camera _camera;
 		float _horizontalFov = 120f;
-		float _initialFov;
-		float _initialSize;
-		float _targetAspect;
+		
+		Camera _camera;
+		float  _initialFov;
+		float  _initialSize;
+		float  _targetAspect;
 
-		Camera Camera => this.GetComponent(ref _camera);
+		Camera           Camera           => this.GetComponent(ref _camera);
 		UpdateController UpdateController => ControllersBox.Get<UpdateController>();
 
 		void Start() {

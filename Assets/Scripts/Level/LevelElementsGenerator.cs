@@ -10,6 +10,7 @@ namespace Grigorov.LeapAndJump.Level {
 	[RequireComponent(typeof(LevelGrind))]
 	public class LevelElementsGenerator : MonoBehaviour {
 		readonly List<LevelElement> _allElements = new List<LevelElement>();
+		
 		LevelGrind _levelGrind;
 
 		LevelGrind LevelGrind => this.GetComponent(ref _levelGrind);
@@ -36,16 +37,16 @@ namespace Grigorov.LeapAndJump.Level {
 			var rowCount = LevelGrind.Cells.GetLength(1);
 			for ( var rowIndex = 1; rowIndex < rowCount; rowIndex++ ) {
 				var gridRow = GetGridRow(rowIndex);
-				if ( gridRow.Exists(cell => IsIntersectsWithElement(cell)) ) {
+				if ( gridRow.Exists(IsIntersectsWithElement) ) {
 					continue;
 				}
 
 				var nextGridRow = GetGridRow(rowIndex - 1);
-				if ( nextGridRow.Exists(cell => IsIntersectsWithElement(cell)) ) {
+				if ( nextGridRow.Exists(IsIntersectsWithElement) ) {
 					continue;
 				}
 
-				var trySpawnElement = false;
+				bool trySpawnElement;
 				do {
 					trySpawnElement = TrySpawnElement(elementsGroup.GetRandomObject(), gridRow);
 				} while ( trySpawnElement );
@@ -59,8 +60,7 @@ namespace Grigorov.LeapAndJump.Level {
 				return false;
 			}
 
-			var position = Vector2.zero;
-			var findPos = FindRandomPosition(prefabElement.Bounds, gridRow, out position);
+			var findPos = FindRandomPosition(prefabElement.Bounds, gridRow, out var position);
 			if ( !findPos ) {
 				return false;
 			}
@@ -72,9 +72,10 @@ namespace Grigorov.LeapAndJump.Level {
 			}
 
 			var element = Instantiate(prefabElement, transform);
-			var localCenter = (Vector2)element.transform.InverseTransformPoint(element.Bounds.center);
+			Transform elementTransform;
+			var localCenter = (Vector2)(elementTransform = element.transform).InverseTransformPoint(element.Bounds.center);
 			position -= localCenter;
-			element.transform.position = position;
+			elementTransform.position = position;
 			element.TryMirror();
 			_allElements.Add(element);
 			EventManager.Fire(new SpawnLevelElementEvent(element));

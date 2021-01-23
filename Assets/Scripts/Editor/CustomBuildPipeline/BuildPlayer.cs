@@ -7,7 +7,7 @@ namespace Grigorov.CustomBuildPipeline {
 	public class BuildPlayer {
 		[MenuItem("Build/Android Build")]
 		public static void AndroidBuild() {
-			Version.UpdateQARevision();
+			Version.UpdateQaRevision();
 
 			var report = BuildPipeline.BuildPlayer(BuildOptions.BuildPlayerOptions);
 			var summary = report.summary;
@@ -33,7 +33,7 @@ namespace Grigorov.CustomBuildPipeline {
 
 		[MenuItem("Build/Update QA Revision")]
 		static void UpdateQARevision() {
-			Version.UpdateQARevision();
+			Version.UpdateQaRevision();
 		}
 	}
 }

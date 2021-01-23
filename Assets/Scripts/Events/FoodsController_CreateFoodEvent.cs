@@ -1,5 +1,5 @@
 ﻿namespace Grigorov.LeapAndJump.Events {
-	public struct FoodsController_CreateFoodEvent {
+	public readonly struct FoodsController_CreateFoodEvent {
 		public int SpawnCount { get; }
 		public int TargetCount { get; }
 

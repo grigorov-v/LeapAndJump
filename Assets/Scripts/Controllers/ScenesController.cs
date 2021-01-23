@@ -10,14 +10,15 @@ using UnityEngine.SceneManagement;
 namespace Grigorov.LeapAndJump.Controllers {
 	public sealed class ScenesController : IController {
 		const string LoadingUIResource = "Prefabs/LoadingUI";
-		const string WorldScenePrefix = "World_";
-		const string MainMenuScene = "MainMenu";
-		const string LoadingScene = "Loading";
+		const string WorldScenePrefix  = "World_";
+		const string MainMenuScene     = "MainMenu";
+		const string LoadingScene      = "Loading";
 
 		LoadingUI _loadingUI;
 
-		public string CurrentSceneName => SceneManager.GetActiveScene().name;
-		public bool IsActiveWorldScene => CurrentSceneName.StartsWith(WorldScenePrefix);
+		public bool   IsActive           => true;
+		public string CurrentSceneName   => SceneManager.GetActiveScene().name;
+		public bool   IsActiveWorldScene => CurrentSceneName.StartsWith(WorldScenePrefix);
 
 		LoadingUI LoadingUI {
 			get {
@@ -33,15 +34,10 @@ namespace Grigorov.LeapAndJump.Controllers {
 			if ( SceneManager.GetActiveScene().name == LoadingScene ) {
 				OpenMainMenu();
 			}
-
-			Debug.Log(typeof(ScenesController).ToString());
 		}
 
-		public void OnReset() { }
-
-		public void OpenScene(string scene) {
-			SceneLoadingHelper.StartLoadingScene(scene, LoadingUI)
-				.AddLoadedAction(_ => EventManager.Fire(new ScenesController_LoadedSceneEvent(scene)));
+		public void OnReset() {
+			_loadingUI = null;
 		}
 
 		public void OpenLevel(LevelId level) {
@@ -66,6 +62,11 @@ namespace Grigorov.LeapAndJump.Controllers {
 
 			result = Resources.Load<LoadingUI>(LoadingUIResource);
 			return Object.Instantiate(result);
+		}
+		
+		void OpenScene(string scene) {
+			SceneLoadingHelper.StartLoadingScene(scene, LoadingUI)
+				.AddLoadedAction(_ => EventManager.Fire(new ScenesController_LoadedSceneEvent(scene)));
 		}
 	}
 }

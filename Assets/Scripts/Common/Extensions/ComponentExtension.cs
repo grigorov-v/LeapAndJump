@@ -8,11 +8,7 @@ namespace Grigorov.Extensions {
 				return cache;
 			}
 
-			if ( component.TryGetComponent(out cache) ) {
-				return cache;
-			}
-
-			return null;
+			return component.TryGetComponent(out cache) ? cache : null;
 		}
 
 		public static T GetComponentInChildren<T>(this Component component, ref T cache) where T : Component {

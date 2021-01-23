@@ -11,23 +11,24 @@ namespace Grigorov.LeapAndJump.Level {
 	public class Player : MonoBehaviour, IFixedUpdate, IUpdate {
 		const float CheckAngle = 10f;
 
-		[SerializeField] float _speed = 2.5f;
-		[SerializeField] Vector2 _jumpForce = new Vector2(60, 140);
+		[SerializeField] float   _speed         = 2.5f;
+		[SerializeField] Vector2 _jumpForce     = new Vector2(60, 140);
 		[SerializeField] Vector2 _slideVelosity = new Vector2(0.2f, -2);
-		bool _allowSecondJump;
-		Collider2D _floorTrigger;
-		bool _jump;
+		
+		bool             _allowSecondJump;
+		Collider2D       _floorTrigger;
+		bool             _jump;
 		PlayerAnimations _playerAnimations;
 
 		Rigidbody2D _rb;
-		Vector2 _wallNormal = Vector2.zero;
-		Collider2D _wallTrigger;
+		Vector2     _wallNormal;
+		Collider2D  _wallTrigger;
 
-		Rigidbody2D Rigidbody => this.GetComponent(ref _rb);
+		Rigidbody2D      Rigidbody        => this.GetComponent(ref _rb);
 		PlayerAnimations PlayerAnimations => this.GetComponent(ref _playerAnimations);
 
-		bool CanJump => (_floorTrigger || _wallTrigger) && _jump;
-		bool CanSecondJump => !_floorTrigger && !_wallTrigger && _allowSecondJump && _jump && Rigidbody.velocity.y <= 0;
+		bool CanJump        => (_floorTrigger || _wallTrigger) && _jump;
+		bool CanSecondJump  => !_floorTrigger && !_wallTrigger && _allowSecondJump && _jump && Rigidbody.velocity.y <= 0;
 		bool CanSlideInWall => !_floorTrigger && _wallTrigger && !_jump && Rigidbody.velocity.y < 0;
 
 		bool CanMoveLeftOrRight {
@@ -126,7 +127,7 @@ namespace Grigorov.LeapAndJump.Level {
 			}
 
 			if ( CanSecondJump ) {
-				Jump(true);
+				Jump();
 				_jump = false;
 				_allowSecondJump = false;
 				PlayerAnimations.PlayAnimation(KeyAnim.SecondJump);
@@ -147,7 +148,7 @@ namespace Grigorov.LeapAndJump.Level {
 			_jump = true;
 		}
 
-		void Jump(bool secondJump = false) {
+		void Jump() {
 			var jumpForce = _jumpForce;
 			jumpForce.x = transform.localScale.x > 0 ? -Mathf.Abs(jumpForce.x) : Mathf.Abs(jumpForce.x);
 			Rigidbody.velocity = Vector2.zero;
@@ -155,9 +156,9 @@ namespace Grigorov.LeapAndJump.Level {
 		}
 
 		void SlideInWall() {
-			var slideVelosity = _slideVelosity;
-			slideVelosity.x = transform.localScale.x > 0 ? -Mathf.Abs(slideVelosity.x) : Mathf.Abs(slideVelosity.x);
-			Rigidbody.velocity = slideVelosity;
+			var slideVelocity = _slideVelosity;
+			slideVelocity.x = transform.localScale.x > 0 ? -Mathf.Abs(slideVelocity.x) : Mathf.Abs(slideVelocity.x);
+			Rigidbody.velocity = slideVelocity;
 		}
 
 		void MoveLeftOrRight() {

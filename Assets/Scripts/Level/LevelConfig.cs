@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Grigorov.LeapAndJump.ResourcesContainers;
 using UnityEngine;
 
+using NaughtyAttributes;
+
 namespace Grigorov.LeapAndJump.Level {
 	[Serializable]
 	public struct LevelInfo {
@@ -13,11 +15,13 @@ namespace Grigorov.LeapAndJump.Level {
 	[CreateAssetMenu(fileName = "LevelConfig", menuName = "Configs/LevelConfig", order = 1)]
 	public class LevelConfig : ScriptableObject {
 		[SerializeField] LevelBlocksContainer _levelBlocks;
-		[SerializeField] FoodsContainer _foods;
-		[SerializeField] List<LevelInfo> _levels = new List<LevelInfo>();
+		[SerializeField] FoodsContainer       _foods;
+		
+		[ReorderableList]
+		[SerializeField] List<LevelInfo>      _levels = new List<LevelInfo>();
 
 		public LevelBlocksContainer LevelBlocks => _levelBlocks;
-		public FoodsContainer Foods => _foods;
+		public FoodsContainer       Foods       => _foods;
 
 		public List<LevelElementsContainer> GetElementsGroups(int levelIndex) {
 			return CheckLevelIndex(levelIndex) ? _levels[levelIndex].ElementsGroups : null;

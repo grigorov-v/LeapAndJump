@@ -2,16 +2,17 @@
 
 namespace Grigorov.Save {
 	public class SaveableField<T> {
-		readonly bool _autosave;
-		readonly T _defaultValue;
+		readonly bool   _autoSave;
+		readonly T      _defaultValue;
+		readonly string _key;
+		
 		bool _isLoaded;
-		readonly string _key = string.Empty;
-
+		
 		ValueContainer<T> _valueContainer;
 
-		public SaveableField(string key, bool autosaveOnChange = false, T defaultValue = default) {
+		public SaveableField(string key, bool autoSaveOnChange = false, T defaultValue = default) {
 			_key = key;
-			_autosave = autosaveOnChange;
+			_autoSave = autoSaveOnChange;
 			_defaultValue = defaultValue;
 		}
 
@@ -25,7 +26,7 @@ namespace Grigorov.Save {
 			}
 			set {
 				_valueContainer.Value = value;
-				if ( _autosave ) {
+				if ( _autoSave ) {
 					Save();
 				}
 			}

@@ -1,5 +1,5 @@
 ﻿namespace Grigorov.LeapAndJump.Events {
-	public struct FoodsController_FoodCalculateEvent {
+	public readonly struct FoodsController_FoodCalculateEvent {
 		public int CurCount { get; }
 		public int TargetCount { get; }
 		public int TotalCount { get; }

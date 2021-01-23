@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 namespace Grigorov.LeapAndJump.UI {
 	public class PauseWindow : BaseWindow {
-		[Space] [SerializeField] Button _closeButton;
+		[Space] 
+		[SerializeField] Button _closeButton;
 		[SerializeField] Button _mainMenuButton;
 		[SerializeField] Button _restartButton;
 

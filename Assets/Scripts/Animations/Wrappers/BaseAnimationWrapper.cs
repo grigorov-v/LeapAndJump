@@ -5,11 +5,12 @@ using AnimationState = Spine.AnimationState;
 
 namespace Grigorov.LeapAndJump.Animations.Wrappers {
 	public abstract class BaseAnimationWrapper<T> : MonoBehaviour where T : Component {
-		T _animation;
-		protected float _defaultTimeScale = 1;
+		T     _animation;
+		float _defaultTimeScale = 1;
 
 		public abstract AnimationState AnimationState { get; }
-		protected abstract float TimeScale { get; set; }
+		
+		protected abstract float             TimeScale         { get; set; }
 		protected abstract SkeletonDataAsset SkeletonDataAsset { get; set; }
 
 		public T Animation => this.GetComponent(ref _animation);

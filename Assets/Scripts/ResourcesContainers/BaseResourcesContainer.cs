@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Grigorov.Extensions;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Grigorov.LeapAndJump.ResourcesContainers {
 	public abstract class BaseResourcesContainer<T> : ScriptableObject {
+		[ReorderableList]
 		[SerializeField] List<T> _objects = new List<T>();
 
 		List<T> _randomizeObjects = new List<T>();

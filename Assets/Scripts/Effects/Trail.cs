@@ -4,13 +4,14 @@ using UnityEngine;
 namespace Grigorov.LeapAndJump.Effects {
 	public class Trail : MonoBehaviour {
 		[SerializeField] float _lifeTime = -1;
+		
 		float _lastStartTime = -1;
 
 		TrailRenderer _trailRenderer;
 
-		public bool IsPlaying {
+		bool IsPlaying {
 			get => _trailRenderer.emitting;
-			private set => _trailRenderer.emitting = value;
+			set => _trailRenderer.emitting = value;
 		}
 
 		void Awake() {
