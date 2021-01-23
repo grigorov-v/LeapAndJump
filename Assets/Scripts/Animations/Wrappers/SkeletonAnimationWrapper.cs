@@ -1,33 +1,24 @@
-using UnityEngine;
-
 using Spine.Unity;
+using UnityEngine;
 using AnimationState = Spine.AnimationState;
 
 namespace Grigorov.LeapAndJump.Animations.Wrappers {
 	[RequireComponent(typeof(SkeletonAnimation))]
 	public class SkeletonAnimationWrapper : BaseAnimationWrapper<SkeletonAnimation> {
-		MeshRenderer _meshRenderer = null;
+		MeshRenderer _meshRenderer;
 
-		public bool IsAnimationStateActive => (AnimationState != null);
+		public bool IsAnimationStateActive => AnimationState != null;
 
 		public override AnimationState AnimationState => Animation.AnimationState;
 
 		protected override float TimeScale {
-			get {
-				return Animation.timeScale;
-			} 
-			set {
-				Animation.timeScale = value;
-			}
+			get => Animation.timeScale;
+			set => Animation.timeScale = value;
 		}
 
 		protected override SkeletonDataAsset SkeletonDataAsset {
-			get {
-				return Animation.skeletonDataAsset;
-			} 
-			set {
-				Animation.skeletonDataAsset = value;
-			}
+			get => Animation.skeletonDataAsset;
+			set => Animation.skeletonDataAsset = value;
 		}
 
 		MeshRenderer MeshRenderer {
@@ -35,6 +26,7 @@ namespace Grigorov.LeapAndJump.Animations.Wrappers {
 				if ( !_meshRenderer ) {
 					_meshRenderer = Animation.GetComponent<MeshRenderer>();
 				}
+
 				return _meshRenderer;
 			}
 		}
@@ -49,11 +41,12 @@ namespace Grigorov.LeapAndJump.Animations.Wrappers {
 			if ( Animation.initialSkinName == skinName ) {
 				return;
 			}
+
 			Animation.initialSkinName = skinName;
 			Initialize(true);
 		}
 
-		protected override void Initialize (bool overwrite) {
+		protected override void Initialize(bool overwrite) {
 			Animation.Initialize(true);
 		}
 	}

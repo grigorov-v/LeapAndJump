@@ -1,28 +1,23 @@
-﻿using UnityEngine;
-using Grigorov.Extensions;
+﻿using Grigorov.Extensions;
 using Grigorov.Unity.Controllers;
+using UnityEngine;
 
-namespace Grigorov.LeapAndJump.CameraManagement
-{
-	public class CameraScaler : MonoBehaviour, IUpdate
-	{
-		[SerializeField]
-		Vector2 _defaultResolution = new Vector2(720, 1280);
-		
-		[Range(0f, 1f)][SerializeField]
-		float _widthOrHeight = 0;
+namespace Grigorov.LeapAndJump.CameraManagement {
+	public class CameraScaler : MonoBehaviour, IUpdate {
+		[SerializeField] Vector2 _defaultResolution = new Vector2(720, 1280);
 
-		Camera _camera        = null;
-		float  _initialSize   = 0;
-		float  _targetAspect  = 0;
-		float  _initialFov    = 0;
-		float  _horizontalFov = 120f;
+		[Range(0f, 1f)] [SerializeField] float _widthOrHeight;
 
-		Camera           Camera           => this.GetComponent(ref _camera);
+		Camera _camera;
+		float _horizontalFov = 120f;
+		float _initialFov;
+		float _initialSize;
+		float _targetAspect;
+
+		Camera Camera => this.GetComponent(ref _camera);
 		UpdateController UpdateController => ControllersBox.Get<UpdateController>();
 
-		void Start()
-		{
+		void Start() {
 			_initialSize = Camera.orthographicSize;
 			_targetAspect = _defaultResolution.x / _defaultResolution.y;
 			_initialFov = Camera.fieldOfView;
@@ -30,27 +25,22 @@ namespace Grigorov.LeapAndJump.CameraManagement
 			UpdateController.AddUpdate(this);
 		}
 
-		void OnDestroy()
-		{
+		void OnDestroy() {
 			UpdateController.RemoveUpdate(this);
 		}
 
-		public void OnUpdate()
-		{
-			if (Camera.orthographic)
-			{
+		public void OnUpdate() {
+			if ( Camera.orthographic ) {
 				var constantWidthSize = _initialSize * (_targetAspect / Camera.aspect);
 				Camera.orthographicSize = Mathf.Lerp(constantWidthSize, _initialSize, _widthOrHeight);
 			}
-			else
-			{
+			else {
 				var constantWidthFov = CalcVerticalFov(_horizontalFov, Camera.aspect);
 				Camera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, _widthOrHeight);
 			}
 		}
 
-		float CalcVerticalFov(float hFovInDeg, float aspectRatio)
-		{
+		float CalcVerticalFov(float hFovInDeg, float aspectRatio) {
 			var hFovInRads = hFovInDeg * Mathf.Deg2Rad;
 			var vFovInRads = 2 * Mathf.Atan(Mathf.Tan(hFovInRads / 2) / aspectRatio);
 			return vFovInRads * Mathf.Rad2Deg;

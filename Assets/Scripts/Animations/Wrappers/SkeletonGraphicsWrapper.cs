@@ -1,34 +1,25 @@
-using UnityEngine;
-
 using Spine.Unity;
+using UnityEngine;
 using AnimationState = Spine.AnimationState;
 
 namespace Grigorov.LeapAndJump.Animations.Wrappers {
 	[RequireComponent(typeof(SkeletonGraphic))]
 	public class SkeletonGraphicsWrapper : BaseAnimationWrapper<SkeletonGraphic> {
-		public bool SetupAlphaFromCanvasGroup = false;
+		public bool SetupAlphaFromCanvasGroup;
 
-		Canvas      _canvas      = null;
-		CanvasGroup _canvasGroup = null;
+		Canvas _canvas;
+		CanvasGroup _canvasGroup;
 
 		public override AnimationState AnimationState => Animation.AnimationState;
 
 		protected override float TimeScale {
-			get {
-				return Animation.timeScale;
-			} 
-			set {
-				Animation.timeScale = value;
-			}
+			get => Animation.timeScale;
+			set => Animation.timeScale = value;
 		}
 
 		protected override SkeletonDataAsset SkeletonDataAsset {
-			get {
-				return Animation.skeletonDataAsset;
-			} 
-			set {
-				Animation.skeletonDataAsset = value;
-			}
+			get => Animation.skeletonDataAsset;
+			set => Animation.skeletonDataAsset = value;
 		}
 
 		Canvas Canvas {
@@ -36,6 +27,7 @@ namespace Grigorov.LeapAndJump.Animations.Wrappers {
 				if ( !_canvas ) {
 					_canvas = Animation.GetComponentInParent<Canvas>();
 				}
+
 				return _canvas;
 			}
 		}
@@ -54,6 +46,10 @@ namespace Grigorov.LeapAndJump.Animations.Wrappers {
 			}
 		}
 
+		protected void Update() {
+			UpdateAlpha();
+		}
+
 		public override void SetupSortingLayer(string layer, int order) {
 			var canvas = Canvas;
 			canvas.sortingLayerName = layer;
@@ -64,25 +60,24 @@ namespace Grigorov.LeapAndJump.Animations.Wrappers {
 			if ( Animation.initialSkinName == skinName ) {
 				return;
 			}
+
 			Animation.initialSkinName = skinName;
 			Initialize(true);
 		}
 
-		protected override void Initialize (bool overwrite) {
+		protected override void Initialize(bool overwrite) {
 			Animation.Initialize(true);
-		}
-
-		protected void Update() {
-			UpdateAlpha();
 		}
 
 		void UpdateAlpha() {
 			if ( !SetupAlphaFromCanvasGroup || !_canvasGroup ) {
 				return;
 			}
+
 			if ( Alpha == _canvasGroup.alpha ) {
 				return;
 			}
+
 			Alpha = _canvasGroup.alpha;
 		}
 	}

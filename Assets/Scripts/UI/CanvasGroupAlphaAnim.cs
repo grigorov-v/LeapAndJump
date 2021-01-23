@@ -1,49 +1,40 @@
+using DG.Tweening;
 using UnityEngine;
 
-using DG.Tweening;
-
-namespace Grigorov.LeapAndJump.UI
-{
+namespace Grigorov.LeapAndJump.UI {
 	[RequireComponent(typeof(CanvasGroup))]
-	public sealed class CanvasGroupAlphaAnim : MonoBehaviour
-	{
-		public float Delay    = 0;
+	public sealed class CanvasGroupAlphaAnim : MonoBehaviour {
+		public float Delay;
 		public float Duration = 1;
-		public float Sleep    = 0;
-		public float Hold     = 0;
+		public float Sleep;
+		public float Hold;
 
-		CanvasGroup _group = null;
-		Sequence    _seq   = null;
+		CanvasGroup _group;
+		Sequence _seq;
 
-		void OnEnable()
-		{
+		void OnEnable() {
 			_group = GetComponent<CanvasGroup>();
-			if (!_group)
-			{
+			if ( !_group ) {
 				return;
 			}
 
-			if (Delay > 0)
-			{
+			if ( Delay > 0 ) {
 				_group.alpha = 0;
 				KillSequence();
 				_seq = DOTween.Sequence();
 				_seq.AppendInterval(Delay);
 				_seq.AppendCallback(StartAnim);
 			}
-			else
-			{
+			else {
 				StartAnim();
 			}
 		}
 
-		void OnDisable()
-		{
+		void OnDisable() {
 			StopAnim();
 		}
 
-		void StartAnim()
-		{
+		void StartAnim() {
 			_group.alpha = 0;
 			KillSequence();
 			_seq = DOTween.Sequence();
@@ -54,16 +45,13 @@ namespace Grigorov.LeapAndJump.UI
 			_seq.SetLoops(-1);
 		}
 
-		void StopAnim()
-		{
+		void StopAnim() {
 			KillSequence();
 			_group.alpha = 0;
 		}
 
-		void KillSequence()
-		{
-			if (_seq == null)
-			{
+		void KillSequence() {
+			if ( _seq == null ) {
 				return;
 			}
 

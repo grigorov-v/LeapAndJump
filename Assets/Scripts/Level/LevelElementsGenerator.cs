@@ -1,70 +1,73 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
-
-using Grigorov.Unity.Events;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Grigorov.Extensions;
-
 using Grigorov.LeapAndJump.Events;
 using Grigorov.LeapAndJump.ResourcesContainers;
+using Grigorov.Unity.Events;
+using UnityEngine;
 
-namespace Grigorov.LeapAndJump.Level
-{
+namespace Grigorov.LeapAndJump.Level {
 	[RequireComponent(typeof(LevelGrind))]
-	public class LevelElementsGenerator : MonoBehaviour
-	{
-		LevelGrind         _levelGrind  = null;
-		List<LevelElement> _allElements = new List<LevelElement>();
+	public class LevelElementsGenerator : MonoBehaviour {
+		readonly List<LevelElement> _allElements = new List<LevelElement>();
+		LevelGrind _levelGrind;
 
 		LevelGrind LevelGrind => this.GetComponent(ref _levelGrind);
 
-		public void Generate(LevelElementsContainer elementsGroup)
-		{
-			GetComponentsInChildren<LevelElement>(false, _allElements);
+		void OnDrawGizmos() {
+			if ( !LevelGrind ) {
+				return;
+			}
+
+			GetComponentsInChildren(false, _allElements);
+			var boundsArray = LevelGrind.Cells;
+			for ( var y = 0; y < boundsArray.GetLength(1); y++ ) {
+				for ( var x = 0; x < boundsArray.GetLength(0); x++ ) {
+					var cellBounds = boundsArray[x, y];
+					Gizmos.color = IsIntersectsWithElement(boundsArray[x, y]) ? Color.red : Color.green;
+					Gizmos.DrawWireCube(cellBounds.center, cellBounds.size);
+				}
+			}
+		}
+
+		public void Generate(LevelElementsContainer elementsGroup) {
+			GetComponentsInChildren(false, _allElements);
 
 			var rowCount = LevelGrind.Cells.GetLength(1);
-			for (var rowIndex = 1; rowIndex < rowCount; rowIndex++)
-			{
+			for ( var rowIndex = 1; rowIndex < rowCount; rowIndex++ ) {
 				var gridRow = GetGridRow(rowIndex);
-				if (gridRow.Exists(cell => IsIntersectsWithElement(cell)))
-				{
+				if ( gridRow.Exists(cell => IsIntersectsWithElement(cell)) ) {
 					continue;
 				}
 
 				var nextGridRow = GetGridRow(rowIndex - 1);
-				if (nextGridRow.Exists(cell => IsIntersectsWithElement(cell)))
-				{
+				if ( nextGridRow.Exists(cell => IsIntersectsWithElement(cell)) ) {
 					continue;
 				}
 
 				var trySpawnElement = false;
-				do
-				{
+				do {
 					trySpawnElement = TrySpawnElement(elementsGroup.GetRandomObject(), gridRow);
-				} while (trySpawnElement);
+				} while ( trySpawnElement );
 
 				elementsGroup.RandomizeObjects.ForEach(element => TrySpawnElement(element, gridRow));
 			}
 		}
 
-		bool TrySpawnElement(LevelElement prefabElement, List<Bounds> gridRow)
-		{
-			if (!prefabElement)
-			{
+		bool TrySpawnElement(LevelElement prefabElement, List<Bounds> gridRow) {
+			if ( !prefabElement ) {
 				return false;
 			}
 
 			var position = Vector2.zero;
 			var findPos = FindRandomPosition(prefabElement.Bounds, gridRow, out position);
-			if (!findPos)
-			{
+			if ( !findPos ) {
 				return false;
 			}
 
 			var elementBounds = prefabElement.Bounds;
 			elementBounds.center = position;
-			if (IsIntersectsWithElement(elementBounds))
-			{
+			if ( IsIntersectsWithElement(elementBounds) ) {
 				return false;
 			}
 
@@ -78,24 +81,20 @@ namespace Grigorov.LeapAndJump.Level
 			return true;
 		}
 
-		bool IsIntersectsWithElement(Bounds bounds)
-		{
-			foreach (var elem in _allElements)
-			{
-				if (elem.Bounds.Intersects(bounds))
-				{
+		bool IsIntersectsWithElement(Bounds bounds) {
+			foreach ( var elem in _allElements ) {
+				if ( elem.Bounds.Intersects(bounds) ) {
 					return true;
 				}
 			}
+
 			return false;
 		}
 
-		List<Bounds> GetGridRow(int rowIndex)
-		{
+		List<Bounds> GetGridRow(int rowIndex) {
 			var boundsList = new List<Bounds>();
 			var boundsArray = LevelGrind.Cells;
-			for (var i = 0; i < boundsArray.GetLength(0); i++)
-			{
+			for ( var i = 0; i < boundsArray.GetLength(0); i++ ) {
 				var bounds = boundsArray[i, rowIndex];
 				boundsList.Add(bounds);
 			}
@@ -103,12 +102,10 @@ namespace Grigorov.LeapAndJump.Level
 			return boundsList;
 		}
 
-		bool FindRandomPosition(Bounds elementBounds, List<Bounds> gridRow, out Vector2 position)
-		{
+		bool FindRandomPosition(Bounds elementBounds, List<Bounds> gridRow, out Vector2 position) {
 			position = Vector2.zero;
 			var freeCells = GetFreeCells(elementBounds, gridRow);
-			if (freeCells.Count == 0)
-			{
+			if ( freeCells.Count == 0 ) {
 				return false;
 			}
 
@@ -121,17 +118,13 @@ namespace Grigorov.LeapAndJump.Level
 			return true;
 		}
 
-		List<Bounds> GetFreeCells(Bounds elementBounds, List<Bounds> gridRow)
-		{
+		List<Bounds> GetFreeCells(Bounds elementBounds, List<Bounds> gridRow) {
 			var freeCells = new List<Bounds>();
 			var sumSize = 0f;
-			for (var i = 0; i < gridRow.Count; i++)
-			{
+			for ( var i = 0; i < gridRow.Count; i++ ) {
 				var cell = gridRow[i];
-				if (IsIntersectsWithElement(cell))
-				{
-					if (sumSize >= elementBounds.size.x)
-					{
+				if ( IsIntersectsWithElement(cell) ) {
+					if ( sumSize >= elementBounds.size.x ) {
 						break;
 					}
 
@@ -140,20 +133,16 @@ namespace Grigorov.LeapAndJump.Level
 					continue;
 				}
 
-				if (i > 0)
-				{
+				if ( i > 0 ) {
 					var prevCell = gridRow[i - 1];
-					if (IsIntersectsWithElement(prevCell))
-					{
+					if ( IsIntersectsWithElement(prevCell) ) {
 						continue;
 					}
 				}
 
-				if (i < (gridRow.Count - 1))
-				{
+				if ( i < gridRow.Count - 1 ) {
 					var nextCell = gridRow[i + 1];
-					if (IsIntersectsWithElement(nextCell))
-					{
+					if ( IsIntersectsWithElement(nextCell) ) {
 						continue;
 					}
 				}
@@ -162,32 +151,11 @@ namespace Grigorov.LeapAndJump.Level
 				sumSize += cell.size.x;
 			}
 
-			if (sumSize < elementBounds.size.x)
-			{
+			if ( sumSize < elementBounds.size.x ) {
 				freeCells.Clear();
 			}
 
 			return freeCells;
-		}
-
-		void OnDrawGizmos()
-		{
-			if (!LevelGrind)
-			{
-				return;
-			}
-
-			GetComponentsInChildren<LevelElement>(false, _allElements);
-			var boundsArray = LevelGrind.Cells;
-			for (var y = 0; y < boundsArray.GetLength(1); y++)
-			{
-				for (var x = 0; x < boundsArray.GetLength(0); x++)
-				{
-					var cellBounds = boundsArray[x, y];
-					Gizmos.color = IsIntersectsWithElement(boundsArray[x, y]) ? Color.red : Color.green;
-					Gizmos.DrawWireCube(cellBounds.center, cellBounds.size);
-				}
-			}
 		}
 	}
 }

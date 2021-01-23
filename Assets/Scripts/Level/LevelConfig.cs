@@ -1,46 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
-
 using Grigorov.LeapAndJump.ResourcesContainers;
+using UnityEngine;
 
-using NaughtyAttributes;
-
-namespace Grigorov.LeapAndJump.Level
-{
-	[System.Serializable]
-	public struct LevelInfo
-	{
+namespace Grigorov.LeapAndJump.Level {
+	[Serializable]
+	public struct LevelInfo {
 		public List<LevelElementsContainer> ElementsGroups;
 		public int FoodsCount;
 	}
 
 	[CreateAssetMenu(fileName = "LevelConfig", menuName = "Configs/LevelConfig", order = 1)]
-	public class LevelConfig : ScriptableObject
-	{
-		[SerializeField] LevelBlocksContainer     _levelBlocks = null;
-		[SerializeField] FoodsContainer           _foods       = null;
-		[SerializeField] List<LevelInfo> _levels      = new List<LevelInfo>();
+	public class LevelConfig : ScriptableObject {
+		[SerializeField] LevelBlocksContainer _levelBlocks;
+		[SerializeField] FoodsContainer _foods;
+		[SerializeField] List<LevelInfo> _levels = new List<LevelInfo>();
 
 		public LevelBlocksContainer LevelBlocks => _levelBlocks;
-		public FoodsContainer       Foods       => _foods;
+		public FoodsContainer Foods => _foods;
 
-		public List<LevelElementsContainer> GetElementsGroups(int levelIndex)
-		{
+		public List<LevelElementsContainer> GetElementsGroups(int levelIndex) {
 			return CheckLevelIndex(levelIndex) ? _levels[levelIndex].ElementsGroups : null;
 		}
 
-		public int GetFoodsCount(int levelIndex)
-		{
+		public int GetFoodsCount(int levelIndex) {
 			return CheckLevelIndex(levelIndex) ? _levels[levelIndex].FoodsCount : 0;
 		}
 
-		bool CheckLevelIndex(int levelIndex)
-		{
+		bool CheckLevelIndex(int levelIndex) {
 			return levelIndex < _levels.Count;
 		}
 
-		public static LevelConfig Load(string world)
-		{
+		public static LevelConfig Load(string world) {
 			return Resources.Load<LevelConfig>($"LevelConfigs/{world}");
 		}
 	}

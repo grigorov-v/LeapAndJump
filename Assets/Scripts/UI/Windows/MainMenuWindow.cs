@@ -1,27 +1,21 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
+﻿using Grigorov.LeapAndJump.Controllers;
 using Grigorov.UI;
 using Grigorov.Unity.Controllers;
-using Grigorov.LeapAndJump.Controllers;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace Grigorov.LeapAndJump.UI
-{
-	public class MainMenuWindow : BaseWindow
-	{
-		[Space]
-		[SerializeField] Button _startGameButton = null;
+namespace Grigorov.LeapAndJump.UI {
+	public class MainMenuWindow : BaseWindow {
+		[Space] [SerializeField] Button _startGameButton;
 
-		ScenesController _sceneController = null;
+		ScenesController _sceneController;
 
-		void Awake()
-		{
+		void Awake() {
 			_startGameButton.onClick.AddListener(OnStartClick);
 			_sceneController = ControllersBox.Get<ScenesController>();
 		}
 
-		void OnStartClick()
-		{
+		void OnStartClick() {
 			var lc = ControllersBox.Get<LevelController>();
 			_sceneController?.OpenLevel(lc.CurrentLevel);
 		}

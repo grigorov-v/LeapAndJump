@@ -1,22 +1,19 @@
-﻿using Grigorov.Unity.Controllers;
-using Grigorov.LeapAndJump.Level;
+﻿using Grigorov.LeapAndJump.Level;
+using Grigorov.Unity.Controllers;
+using UnityEngine;
 
-namespace Grigorov.LeapAndJump.Controllers
-{
-	public sealed class LevelConfigController : IController
-	{
-		public LevelConfig Config { get; private set; } = null;
+namespace Grigorov.LeapAndJump.Controllers {
+	public sealed class LevelConfigController : IController {
+		public LevelConfig Config { get; private set; }
 
 		ScenesController ScenesController => ControllersBox.Get<ScenesController>();
 
-		public void OnInit()
-		{
+		public void OnInit() {
 			Config = LevelConfig.Load(ScenesController.CurrentSceneName);
-			UnityEngine.Debug.Log(typeof(LevelConfigController).ToString());
+			Debug.Log(typeof(LevelConfigController).ToString());
 		}
 
-		public void OnReset()
-		{
+		public void OnReset() {
 			Config = null;
 		}
 	}

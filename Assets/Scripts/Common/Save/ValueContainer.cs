@@ -1,8 +1,8 @@
-﻿namespace Grigorov.Save
-{
-	[System.Serializable]
-	struct ValueContainer<T>
-	{
+﻿using System;
+
+namespace Grigorov.Save {
+	[Serializable]
+	internal struct ValueContainer<T> {
 		public T Value;
 	}
 }

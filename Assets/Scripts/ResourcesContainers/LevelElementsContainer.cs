@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using Grigorov.LeapAndJump.Level;
+﻿using Grigorov.LeapAndJump.Level;
+using UnityEngine;
 
-namespace Grigorov.LeapAndJump.ResourcesContainers
-{
+namespace Grigorov.LeapAndJump.ResourcesContainers {
 	[CreateAssetMenu(menuName = "Create ElementsGroup", fileName = "ElementsGroup_Difficulty_{0}")]
-	public class LevelElementsContainer : BaseResourcesContainer<LevelElement>
-	{
+	public class LevelElementsContainer : BaseResourcesContainer<LevelElement> {
 	}
 }
