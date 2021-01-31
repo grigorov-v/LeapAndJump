@@ -761,6 +761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beginPoint: {fileID: 6719573491545316323}
   _endPoint: {fileID: 6719573493073930813}
+  _winBlock: 0
   _backLayers:
   - {fileID: 9077121239620385435}
   - {fileID: 8177616075648463475}

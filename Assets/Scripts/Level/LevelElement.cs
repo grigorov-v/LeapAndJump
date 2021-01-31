@@ -5,6 +5,10 @@ using Grigorov.LeapAndJump.ResourcesContainers;
 using NaughtyAttributes;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace Grigorov.LeapAndJump.Level {
 	public class LevelElement : BaseLevelElement {
 		[SerializeField] List<Transform> _foodPoints = new List<Transform>();
@@ -44,6 +48,8 @@ namespace Grigorov.LeapAndJump.Level {
 				foodTransform.rotation = Quaternion.identity;
 				var pos = point.position;
 				pos.y = elemBounds.center.y + elemBounds.extents.y + food.Bounds.extents.y;
+
+				var posDelta = pos - foodTransform.position;
 				foodTransform.position = pos;
 				count++;
 			}
@@ -56,6 +62,36 @@ namespace Grigorov.LeapAndJump.Level {
 		void TryFindFoodPoints() {
 			_foodPoints = GetComponentsInChildren<Transform>().Where(point => point.gameObject.name == "FoodPoint")
 				.ToList();
+
+#if UNITY_EDITOR
+			EditorUtility.SetDirty(gameObject);
+#endif
+		}
+
+		[Button]
+		void Centring() {
+			var spriteRenderers = new List<SpriteRenderer>();
+			GetComponentsInChildren<SpriteRenderer>(spriteRenderers);
+
+			var parents = new List<Transform>();
+			foreach ( var sr in spriteRenderers) {
+				parents.Add(sr.transform.parent);
+			}
+			
+			foreach ( var sr in spriteRenderers) {
+				sr.transform.SetParent(null);
+			}
+
+			var targetPos = Bounds.center;
+			transform.position = targetPos;
+
+			for ( var i = 0; i < spriteRenderers.Count; i++ ) {
+				spriteRenderers[i].transform.SetParent(parents[i]);
+			}
+			
+#if UNITY_EDITOR
+			EditorUtility.SetDirty(gameObject);
+#endif
 		}
 	}
 }
