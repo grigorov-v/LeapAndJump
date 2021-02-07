@@ -4,13 +4,15 @@ using Grigorov.UI;
 using Grigorov.Unity.Controllers;
 using Grigorov.Unity.Events;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Grigorov.LeapAndJump.UI {
 	public class GameWindow : BaseWindow {
-		[Space] [SerializeField] Button _pauseButton;
-		[Space] [SerializeField] Text   _foodCountText;
+		[Space] 
+		[ExpectNotNull][SerializeField] Button _pauseButton;
+		
+		[Space] 
+		[ExpectNotNull][SerializeField] Text   _foodCountText;
 
 		void Awake() {
 			_pauseButton.onClick.AddListener(OnClickPause);
