@@ -13,3 +13,6 @@
 [submodule "Assets/Scripts/Submodules/Unity-Controllers"]
 	path = Assets/Scripts/Submodules/Unity-Controllers
 	url = https://github.com/grigorov-v/Unity-Controllers
+[submodule "Assets/Scripts/Submodules/SerializedPropertyValidator"]
+	path = Assets/Scripts/Submodules/SerializedPropertyValidator
+	url = https://github.com/grigorov-v/SerializedPropertyValidator
