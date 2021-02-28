@@ -140,8 +140,8 @@ GameObject:
   - component: {fileID: 5071779204071003770}
   - component: {fileID: 5071779204071003769}
   - component: {fileID: 249496763}
-  - component: {fileID: 96096150501621009}
-  - component: {fileID: 3308466354060759633}
+  - component: {fileID: 1651695333993386490}
+  - component: {fileID: 3259031350662598244}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -161,6 +161,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 408455585}
+  - {fileID: 321263409861587109}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -209,9 +210,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4590703, y: 0.7033863}
-  m_EdgeRadius: 0
---- !u!114 &96096150501621009
+  m_Size: {x: 0.45, y: 0.68}
+  m_EdgeRadius: 0.02
+--- !u!114 &1651695333993386490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,13 +221,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5071779204071003774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10beedb0f31dad147a6dc37465f277a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 923817e6fa4f53843aa09360f70c6bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2.5
+  _state: 0
+  _moveSpeed: 2.5
   _jumpForce: {x: 60, y: 140}
-  _slideVelosity: {x: 0.2, y: -2}
---- !u!114 &3308466354060759633
+  _slideVelocity: {x: 2, y: -3}
+  _floorPoint: {fileID: 321263409861587109}
+--- !u!114 &3259031350662598244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,17 +238,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 5071779204071003774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcbfe7d10cf5f04680d580ac90fce0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 059dd8a0d07820541bdf2487bfa0cc80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animations:
-  - Key: 1
-    StateName: Walk
-  - Key: 2
-    StateName: Jump
-  - Key: 3
-    StateName: in Wall
-  - Key: 4
-    StateName: Roll
-  - Key: 5
-    StateName: Idle
+  - State: 0
+    AnimationName: Walk
+  - State: 1
+    AnimationName: Jump
+  - State: 2
+    AnimationName: Roll
+  - State: 3
+    AnimationName: in Wall
+  - State: 4
+    AnimationName: Jump
+--- !u!1 &8438226772349109445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 321263409861587109}
+  m_Layer: 12
+  m_Name: FloorPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &321263409861587109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438226772349109445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.162, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5071779204071003770}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

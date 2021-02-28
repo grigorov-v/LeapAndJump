@@ -9,7 +9,7 @@ namespace Grigorov.LeapAndJump.Level {
 	public readonly struct PlayerIntoBlockTriggerEnter {
 		public readonly LevelBlock LevelBlock;
 
-		public PlayerIntoBlockTriggerEnter(LevelBlock levelBlock, Player player) {
+		public PlayerIntoBlockTriggerEnter(LevelBlock levelBlock) {
 			LevelBlock = levelBlock;
 		}
 	}
@@ -31,8 +31,8 @@ namespace Grigorov.LeapAndJump.Level {
 		LevelElementsGenerator LevelElementsGenerator => this.GetComponent(ref _elementsGenerator);
 
 		void OnTriggerEnter2D(Collider2D other) {
-			if ( other.TryGetComponent(out Player player) ) {
-				EventManager.Fire(new PlayerIntoBlockTriggerEnter(this, player));
+			if ( other.TryGetComponent(out Player player) || other.TryGetComponent(out PlayerStateHandler handler) ) {
+				EventManager.Fire(new PlayerIntoBlockTriggerEnter(this));
 			}
 		}
 

@@ -9,15 +9,17 @@ namespace Grigorov.LeapAndJump.CameraManagement {
 		[SerializeField] Vector2   _offset = new Vector2(0, 0.1f);
 		[SerializeField] Transform _edgePoint;
 		
-		Camera _camera;
-		Player _player;
+		Camera    _camera;
+		Transform _player;
 		
 		Camera Camera => this.GetComponent(ref _camera);
 
 		UpdateController UpdateController => ControllersBox.Get<UpdateController>();
 
 		void Awake() {
-			_player = FindObjectOfType<Player>();
+			var player = FindObjectOfType<Player>();
+			var playerHandler = FindObjectOfType<PlayerStateHandler>();
+			_player = player ? player.transform : playerHandler.transform;
 			UpdateController.AddUpdate(this);
 		}
 

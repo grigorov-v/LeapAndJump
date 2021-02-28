@@ -24,8 +24,7 @@ namespace Grigorov.LeapAndJump.Level {
 		}
 
 		void OnTriggerEnter2D(Collider2D other) {
-			var player = other.GetComponent<Player>();
-			if ( player ) {
+			if ( other.TryGetComponent(out Player player) || other.TryGetComponent(out PlayerStateHandler playerHandler) ) {
 				StartCollect();
 			}
 		}
