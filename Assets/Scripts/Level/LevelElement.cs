@@ -69,7 +69,7 @@ namespace Grigorov.LeapAndJump.Level {
 		}
 
 		[Button]
-		void Centring() {
+		public void Centring() {
 			var spriteRenderers = new List<SpriteRenderer>();
 			GetComponentsInChildren<SpriteRenderer>(spriteRenderers);
 

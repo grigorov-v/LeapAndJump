@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace Grigorov.LeapAndJump.Level {
 	public abstract class BaseLevelElement : MonoBehaviour {
-		Bounds _bounds;
-		Vector3 _lastPosition = Vector3.zero;
 		readonly List<SpriteRenderer> _spritesRenderers = new List<SpriteRenderer>();
+		
+		Bounds  _bounds;
+		Vector3 _lastPosition;
 
 		public Bounds Bounds {
 			get {
