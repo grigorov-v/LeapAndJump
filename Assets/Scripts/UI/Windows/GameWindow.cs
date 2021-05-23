@@ -3,6 +3,7 @@ using Grigorov.LeapAndJump.Events;
 using Grigorov.UI;
 using Grigorov.Unity.Controllers;
 using Grigorov.Unity.Events;
+using Grigorov.Unity.SerializedPropertyValidator.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
